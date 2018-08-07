@@ -1,0 +1,40 @@
+---
+driver:
+  name: vagrant
+  synced_folders:
+      - ['backups', '/tmp/backups', 'create: true', owner: "root", group: "root"]
+  customize:
+    memory: 2048
+    cpus: 2
+
+provisioner:
+  name: chef_zero
+  policyfile: policies/chef-server.rb
+  always_update_cookbooks: true
+  # product_name: chef
+  # product_version: 13.8.5
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: centos-7
+
+suites:
+  - name: default
+    verifier:
+      inspec_tests:
+        - test/integration/default
+  - name: restore
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    attributes:
+      mcs:
+        restorefile: '/tmp/backups/chef-backup.tgz'
+  - name: all
+    provisioner:
+      named_run_list: everything
+    verifier:
+      inspec_tests:
+        - test/integration/default

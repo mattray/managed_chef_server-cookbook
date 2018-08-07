@@ -1,0 +1,100 @@
+{
+  "revision_id": "c7cdf5ce5a85f45d80301f25ec476e1003b1573f7585fe50083ad7ed642931b1",
+  "name": "chef-server",
+  "run_list": [
+    "recipe[managed-chef-server::default]"
+  ],
+  "named_run_lists": {
+    "everything": [
+      "recipe[managed-chef-server::default]",
+      "recipe[managed-chef-server::backup]",
+      "recipe[managed-chef-server::maintenance]"
+    ]
+  },
+  "included_policy_locks": [
+
+  ],
+  "cookbook_locks": {
+    "chef-ingredient": {
+      "version": "2.3.2",
+      "identifier": "6338a2463cea5d72df4c091234666b3e6103444f",
+      "dotted_decimal_identifier": "27928292308609629.32333665007711334.117915659748431",
+      "cache_key": "chef-ingredient-2.3.2-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/chef-ingredient/versions/2.3.2/download",
+      "source_options": {
+        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/chef-ingredient/versions/2.3.2/download",
+        "version": "2.3.2"
+      }
+    },
+    "chef-server": {
+      "version": "5.5.2",
+      "identifier": "a00af378e39de35c74557fb86786013c89ada263",
+      "dotted_decimal_identifier": "45048037095218659.26023608421214086.1359519523427",
+      "cache_key": "chef-server-5.5.2-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/chef-server/versions/5.5.2/download",
+      "source_options": {
+        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/chef-server/versions/5.5.2/download",
+        "version": "5.5.2"
+      }
+    },
+    "managed-chef-server": {
+      "version": "0.4.0",
+      "identifier": "4426dd8ab1d0f4e0c64aa7a99b4ad7914df490bb",
+      "dotted_decimal_identifier": "19183031372861684.63268418725976906.237019078103227",
+      "source": "..",
+      "cache_key": null,
+      "scm_info": {
+        "scm": "git",
+        "remote": null,
+        "revision": null,
+        "working_tree_clean": true,
+        "published": false,
+        "synchronized_remote_branches": [
+
+        ]
+      },
+      "source_options": {
+        "path": ".."
+      }
+    }
+  },
+  "default_attributes": {
+
+  },
+  "override_attributes": {
+
+  },
+  "solution_dependencies": {
+    "Policyfile": [
+      [
+        "chef-ingredient",
+        "= 2.3.2"
+      ],
+      [
+        "chef-server",
+        "= 5.5.2"
+      ],
+      [
+        "managed-chef-server",
+        ">= 0.0.0"
+      ]
+    ],
+    "dependencies": {
+      "chef-ingredient (2.3.2)": [
+
+      ],
+      "chef-server (5.5.2)": [
+        [
+          "chef-ingredient",
+          ">= 2.1.10"
+        ]
+      ],
+      "managed-chef-server (0.4.0)": [
+        [
+          "chef-server",
+          ">= 5.5.2"
+        ]
+      ]
+    }
+  }
+}
