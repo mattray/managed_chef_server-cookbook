@@ -18,14 +18,14 @@
 #
 
 # set location of backup file to restore from
-default['mcs']['restorefile'] = ""
+default['mcs']['restorefile'] = ''
 
 # user and organization for Chef-managed server
-default['mcs']['org']['name'] = "chef_managed_org"
-default['mcs']['org']['full_name'] = "Chef Managed Organization"
-default['mcs']['managed_user']['dir'] = "/etc/opscode/managed"
-default['mcs']['managed_user']['user_name'] = "chef_managed_user"
-default['mcs']['managed_user']['first_name'] = "Chef"
-default['mcs']['managed_user']['last_name'] = "Managed"
-default['mcs']['managed_user']['email'] = "you@example.com"
+default['mcs']['org']['name'] = 'chef_managed_org'
+default['mcs']['org']['full_name'] = 'Chef Managed Organization'
+default['mcs']['managed_user']['dir'] = '/etc/opscode/managed'
+default['mcs']['managed_user']['user_name'] = 'chef_managed_user'
+default['mcs']['managed_user']['first_name'] = 'Chef'
+default['mcs']['managed_user']['last_name'] = 'Managed'
+default['mcs']['managed_user']['email'] = 'you@example.com'
 default['mcs']['managed_user']['password'] = nil
