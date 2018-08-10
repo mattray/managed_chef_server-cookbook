@@ -1,0 +1,224 @@
+{
+  "revision_id": "d99228eafe13624df42011864f0506a05ef62b39ce8c6fdb877ba8a56df2bf4a",
+  "name": "beaglebone",
+  "run_list": [
+    "recipe[chef-client::config]",
+    "recipe[chef-client::service]",
+    "recipe[chef-client::delete_validation]",
+    "recipe[ntp::default]",
+    "recipe[openssh::default]",
+    "recipe[sudo::default]",
+    "recipe[mattray::default]",
+    "recipe[mattray::beaglebone]"
+  ],
+  "included_policy_locks": [
+    {
+      "name": "base",
+      "revision_id": "bea04861beddc0410cbb77f7bc7e1c70f15c29fc3f9b070f01e843962c5d6008",
+      "source_options": {
+        "policy_group": "home",
+        "server": "https://api.chef.io/organizations/matt",
+        "policy_name": "base",
+        "policy_revision_id": "bea04861beddc0410cbb77f7bc7e1c70f15c29fc3f9b070f01e843962c5d6008"
+      }
+    }
+  ],
+  "cookbook_locks": {
+    "chef-client": {
+      "version": "11.0.0",
+      "identifier": "2b9e0b8c40038176c7e475ff14d04ae1c8245a5a",
+      "dotted_decimal_identifier": "12277196433392513.33433831297979600.82333585922650",
+      "cache_key": "chef-client-f3b5a97fe4f47a0041e9f76a60f912a1d82f0e93",
+      "origin": "https://api.chef.io/organizations/matt",
+      "source_options": {
+        "chef_server_artifact": "https://api.chef.io/organizations/matt",
+        "identifier": "f3b5a97fe4f47a0041e9f76a60f912a1d82f0e93"
+      }
+    },
+    "cron": {
+      "version": "6.2.0",
+      "identifier": "a5cc1576282b67be0b926c69123aa6a02a7013d5",
+      "dotted_decimal_identifier": "46667763705981799.53492969086980666.183206836966357",
+      "cache_key": "cron-8fa65311f8e3471f1e405ab3b755d79dee9788ca",
+      "origin": "https://api.chef.io/organizations/matt",
+      "source_options": {
+        "chef_server_artifact": "https://api.chef.io/organizations/matt",
+        "identifier": "8fa65311f8e3471f1e405ab3b755d79dee9788ca"
+      }
+    },
+    "iptables": {
+      "version": "4.3.4",
+      "identifier": "f22c85827ea7aeb84405a95fb970e90adda48bf0",
+      "dotted_decimal_identifier": "68165896295589806.51866186821908848.256232877493232",
+      "cache_key": "iptables-f22c85827ea7aeb84405a95fb970e90adda48bf0",
+      "origin": "https://api.chef.io/organizations/matt",
+      "source_options": {
+        "chef_server_artifact": "https://api.chef.io/organizations/matt",
+        "identifier": "f22c85827ea7aeb84405a95fb970e90adda48bf0"
+      }
+    },
+    "logrotate": {
+      "version": "2.2.0",
+      "identifier": "53e09234a4f73cc13f46d833d2e5075cafddfaa8",
+      "dotted_decimal_identifier": "23609341620057916.54394244012692197.8094668946088",
+      "cache_key": "logrotate-53e09234a4f73cc13f46d833d2e5075cafddfaa8",
+      "origin": "https://api.chef.io/organizations/matt",
+      "source_options": {
+        "chef_server_artifact": "https://api.chef.io/organizations/matt",
+        "identifier": "53e09234a4f73cc13f46d833d2e5075cafddfaa8"
+      }
+    },
+    "mattray": {
+      "version": "0.8.0",
+      "identifier": "e05a337121886cef84c257b2b34afa0ccaa7ec8b",
+      "dotted_decimal_identifier": "63149571771041900.67418489663697738.274932846554251",
+      "cache_key": "mattray-053d4047b435bcc1e984bb4ea15f2af02bd33072",
+      "origin": "https://github.com/mattray/mattray-cookbook.git",
+      "source_options": {
+        "git": "https://github.com/mattray/mattray-cookbook.git",
+        "revision": "053d4047b435bcc1e984bb4ea15f2af02bd33072"
+      }
+    },
+    "ntp": {
+      "version": "3.6.0",
+      "identifier": "5d02ecb058a7cf091e8ba52665cdeed53fb95030",
+      "dotted_decimal_identifier": "26180388428228559.2566859910440397.262599664554032",
+      "cache_key": "ntp-26879ce677e782ce2986d5888c5afea78593cd18",
+      "origin": "https://api.chef.io/organizations/matt",
+      "source_options": {
+        "chef_server_artifact": "https://api.chef.io/organizations/matt",
+        "identifier": "26879ce677e782ce2986d5888c5afea78593cd18"
+      }
+    },
+    "openssh": {
+      "version": "2.7.0",
+      "identifier": "d8b2f1f3b7ee3c826e96cb465849a3f34ff954fb",
+      "dotted_decimal_identifier": "60995347215281724.36713340906920009.180265414120699",
+      "cache_key": "openssh-364454bb9bf013a49f919a66b1234aba8c555380",
+      "origin": "https://api.chef.io/organizations/matt",
+      "source_options": {
+        "chef_server_artifact": "https://api.chef.io/organizations/matt",
+        "identifier": "364454bb9bf013a49f919a66b1234aba8c555380"
+      }
+    },
+    "sudo": {
+      "version": "5.4.0",
+      "identifier": "d144485ec135d28b514bf94bcb90152ed57fb628",
+      "dotted_decimal_identifier": "58903347750581714.39214408509672336.23290894595624",
+      "cache_key": "sudo-e3d9c9b1e8d017ee20de223ba8fe6030015da82b",
+      "origin": "https://api.chef.io/organizations/matt",
+      "source_options": {
+        "chef_server_artifact": "https://api.chef.io/organizations/matt",
+        "identifier": "e3d9c9b1e8d017ee20de223ba8fe6030015da82b"
+      }
+    }
+  },
+  "default_attributes": {
+
+  },
+  "override_attributes": {
+    "authorization": {
+      "sudo": {
+        "groups": [
+          "sudo"
+        ],
+        "include_sudoers_d": true,
+        "passwordless": true,
+        "users": [
+          "mattray"
+        ]
+      }
+    },
+    "chef_client": {
+      "config": {
+        "client_fork": true,
+        "color": false,
+        "http_retry_delay": 10,
+        "interval": 600,
+        "log_level": ":warn",
+        "verbose_logging": true
+      }
+    },
+    "ntp": {
+      "servers": [
+        "0.au.pool.ntp.org",
+        "1.au.pool.ntp.org",
+        "2.au.pool.ntp.org",
+        "3.au.pool.ntp.org"
+      ],
+      "sync_hw_clock": true
+    }
+  },
+  "solution_dependencies": {
+    "Policyfile": [
+      [
+        "chef-client",
+        "= 11.0.0"
+      ],
+      [
+        "cron",
+        "= 6.2.0"
+      ],
+      [
+        "iptables",
+        "= 4.3.4"
+      ],
+      [
+        "logrotate",
+        "= 2.2.0"
+      ],
+      [
+        "mattray",
+        ">= 0.0.0"
+      ],
+      [
+        "ntp",
+        "= 3.6.0"
+      ],
+      [
+        "openssh",
+        "= 2.7.0"
+      ],
+      [
+        "sudo",
+        "= 5.4.0"
+      ]
+    ],
+    "dependencies": {
+      "chef-client (11.0.0)": [
+        [
+          "cron",
+          ">= 4.2.0"
+        ],
+        [
+          "logrotate",
+          ">= 1.9.0"
+        ]
+      ],
+      "cron (6.2.0)": [
+
+      ],
+      "iptables (4.3.4)": [
+
+      ],
+      "logrotate (2.2.0)": [
+
+      ],
+      "mattray (0.8.0)": [
+
+      ],
+      "ntp (3.6.0)": [
+
+      ],
+      "openssh (2.7.0)": [
+        [
+          "iptables",
+          ">= 1.0.0"
+        ]
+      ],
+      "sudo (5.4.0)": [
+
+      ]
+    }
+  }
+}
