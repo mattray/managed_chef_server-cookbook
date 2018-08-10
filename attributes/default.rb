@@ -29,3 +29,5 @@ default['mcs']['managed_user']['first_name'] = 'Chef'
 default['mcs']['managed_user']['last_name'] = 'Managed'
 default['mcs']['managed_user']['email'] = 'you@example.com'
 default['mcs']['managed_user']['password'] = nil
+
+default['mcs']['policyfile-directory'] = nil

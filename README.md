@@ -15,3 +15,7 @@ Runs `chef-server-ctl backup` periodically. Probably should use `knife-ec-backup
 ## maintenance ##
 
 Maintaining the Chef server may involve periodically cleaning up stale nodes and unused policyfiles. This is likely to use `knife-tidy` and various `chef` commands. Scheduling TBD.
+
+## policyfile_loader ##
+
+Takes the `node['mcs']['policyfile-directory']` and to load policyfile archives into the local Chef server.
