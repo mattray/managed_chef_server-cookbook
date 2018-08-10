@@ -2,7 +2,7 @@
 driver:
   name: vagrant
   synced_folders:
-      - ['backups', '/tmp/backups', 'create: true', owner: "root", group: "root"]
+      - ['test', '/tmp/backups', 'create: true', owner: "root", group: "root"]
   customize:
     memory: 2048
     cpus: 2
@@ -32,6 +32,16 @@ suites:
     attributes:
       mcs:
         restorefile: '/tmp/backups/chef-backup.tgz'
+  - name: policyfile
+    provisioner:
+      named_run_list: policyfiles
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    attributes:
+      mcs:
+        policyfile-directory: '/tmp/backups'
+        policygroup: 'mcs'
   - name: all
     provisioner:
       named_run_list: everything
