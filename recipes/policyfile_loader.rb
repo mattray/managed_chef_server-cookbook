@@ -12,19 +12,21 @@ node.override['chefdk']['channel'] = :stable
 # chef export base.rb . -a # generates base-VERSION.tgz
 # chef push-archive POLICY_GROUP base-VERSION.tgz -c config_file --debug
 
+pdir = node['mcs']['policyfile']['dir']
+
 # find the local policyfiles
-Dir.foreach(node['mcs']['policyfile-directory']) do |pfile|
+Dir.foreach(pdir) do |pfile|
   next unless pfile.end_with?('.lock.json')
 
   # parse the filename, drop the .lock.json
   policy = pfile.sub(/\.lock\.json$/, '')
 
   # parse the JSON file, get the revision ID
-  plock = JSON.parse(File.read(node['mcs']['policyfile-directory'] + '/' + pfile))
+  plock = JSON.parse(File.read(pdir + '/' + pfile))
   revision = plock['revision_id']
   short_rev = revision[0, 9]
   # match the right policyfile archive
-  filename = node['mcs']['policyfile-directory'] + '/' + policy + '-' + revision + '.tgz'
+  filename = pdir + '/' + policy + '-' + revision + '.tgz'
   kniferb = node['mcs']['managed_user']['dir'] + '/knife.rb'
 
   # push the archive to the policygroup, currently the name of the policyfile
