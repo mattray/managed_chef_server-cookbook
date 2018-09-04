@@ -1,0 +1,92 @@
+---
+driver:
+  name: dokken
+  privileged: true # because Docker and SystemD/Upstart
+  chef_version: <%= ENV['CHEF_VERSION'] || 'current' %>
+  volumes:
+  - <%= ENV['PWD'] %>/test:/backups
+
+transport:
+  name: dokken
+
+provisioner:
+  name: dokken
+  chef_options: '-z --chef-zero-port 9010'
+  deprecations_as_errors: true
+
+platforms:
+- name: centos-7
+  driver:
+    image: dokken/centos-7
+    pid_one_command: /usr/lib/systemd/systemd
+    intermediate_instructions:
+      - RUN yum install -y crontabs
+
+suites:
+  - name: default
+    attributes:
+      chefdk:
+        package_source: '/backups/chefdk-3.1.0-1.el7.x86_64.rpm'
+      chef-server:
+        package_source: '/backups/chef-server-core-12.17.33-1.el7.x86_64.rpm'
+    verifier:
+      inspec_tests:
+        - test/integration/default
+  - name: backup
+    provisioner:
+      named_run_list: backup
+    attributes:
+      chefdk:
+        package_source: '/backups/chefdk-3.1.0-1.el7.x86_64.rpm'
+      chef-server:
+        package_source: '/backups/chef-server-core-12.17.33-1.el7.x86_64.rpm'
+    verifier:
+      inspec_tests:
+        - test/integration/default
+  - name: restore
+    provisioner:
+      named_run_list: restore
+    attributes:
+      chefdk:
+        package_source: '/backups/chefdk-3.1.0-1.el7.x86_64.rpm'
+      chef-server:
+        package_source: '/backups/chef-server-core-12.17.33-1.el7.x86_64.rpm'
+      mcs:
+        restore:
+          file: '/backups/chef-server-backup-201809030650.tgz'
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/policyfiles
+  - name: policyfile
+    provisioner:
+      named_run_list: policyfiles
+    attributes:
+      chefdk:
+        package_source: '/backups/chefdk-3.1.0-1.el7.x86_64.rpm'
+      chef-server:
+        package_source: '/backups/chef-server-core-12.17.33-1.el7.x86_64.rpm'
+      mcs:
+        policyfile:
+          dir: '/backups'
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/policyfiles
+  - name: everything
+    provisioner:
+      named_run_list: everything
+    attributes:
+      chefdk:
+        package_source: '/backups/chefdk-3.1.0-1.el7.x86_64.rpm'
+      chef-server:
+        package_source: '/backups/chef-server-core-12.17.33-1.el7.x86_64.rpm'
+      mcs:
+        policyfile:
+          dir: '/backups'
+        restore:
+          file: '/backups/chef-server-backup-201809030650.tgz'
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/policyfiles

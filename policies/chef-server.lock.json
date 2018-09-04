@@ -1,10 +1,18 @@
 {
-  "revision_id": "00dab7cbba4cb5729703d6a0708c40224edc54212a5d5debcb412c4a4e62ca00",
+  "revision_id": "917ef45c169d21b343b99853427f4bd600d1eaf13f44112ddefcc18f4236b463",
   "name": "chef-server",
   "run_list": [
     "recipe[managed-chef-server::default]"
   ],
   "named_run_lists": {
+    "backup": [
+      "recipe[managed-chef-server::default]",
+      "recipe[managed-chef-server::backup]"
+    ],
+    "restore": [
+      "recipe[managed-chef-server::default]",
+      "recipe[chefdk::default]"
+    ],
     "policyfiles": [
       "recipe[managed-chef-server::default]",
       "recipe[managed-chef-server::policyfile_loader]"
@@ -43,30 +51,30 @@
       }
     },
     "chefdk": {
-      "version": "1.3.0",
-      "identifier": "45a154120111c7a2fcc69946cd16fe83265777ab",
-      "dotted_decimal_identifier": "19599155844420039.45876876132404502.279839237437355",
-      "cache_key": "chefdk-1.3.0-supermarket.chef.io",
-      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/chefdk/versions/1.3.0/download",
+      "version": "1.4.0",
+      "identifier": "35477a510cfe24a44e3dd4d209fee71f1c9a7c36",
+      "dotted_decimal_identifier": "14996764437052964.46247923651054078.254120809888822",
+      "cache_key": "chefdk-1.4.0-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/chefdk/versions/1.4.0/download",
       "source_options": {
-        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/chefdk/versions/1.3.0/download",
-        "version": "1.3.0"
+        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/chefdk/versions/1.4.0/download",
+        "version": "1.4.0"
       }
     },
     "managed-chef-server": {
-      "version": "0.2.0",
-      "identifier": "239e13d4f26b7f9be5fabc92c0ece9dcfa8a476a",
-      "dotted_decimal_identifier": "10025432199097215.43881486458470636.257135305443178",
+      "version": "0.3.0",
+      "identifier": "0e8755b1070ff01cf6eb17a2f0a28087a077aca3",
+      "dotted_decimal_identifier": "4089451785949168.8152788922200226.141320001137827",
       "source": "..",
       "cache_key": null,
       "scm_info": {
         "scm": "git",
         "remote": "git@github.com:mattray/managed-chef-server.git",
-        "revision": "8710a1bc6a97d34794061dbfc2114dd5bc46b311",
+        "revision": "908f3a22c98066612ded9201e24569a54bdc65b7",
         "working_tree_clean": false,
-        "published": true,
+        "published": false,
         "synchronized_remote_branches": [
-          "origin/master"
+
         ]
       },
       "source_options": {
@@ -92,7 +100,7 @@
       ],
       [
         "chefdk",
-        "= 1.3.0"
+        "= 1.4.0"
       ],
       [
         "managed-chef-server",
@@ -109,20 +117,20 @@
           ">= 2.1.10"
         ]
       ],
-      "chefdk (1.3.0)": [
+      "chefdk (1.4.0)": [
         [
           "chef-ingredient",
           ">= 0.0.0"
         ]
       ],
-      "managed-chef-server (0.2.0)": [
+      "managed-chef-server (0.3.0)": [
         [
           "chef-server",
           "~> 5.5.2"
         ],
         [
           "chefdk",
-          "~> 1.3.0"
+          "~> 1.4"
         ]
       ]
     }

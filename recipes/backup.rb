@@ -3,16 +3,28 @@
 # Recipe:: backup
 #
 
-# put some sort of backup regime in place
-# Implement monitoring and backups: No Chef infrastructure is complete without automated backup and monitoring procedures in place before launch. For backups, take the following 3 tiers as an example:
-#     Hourly backups using snapshots
-#     Daily backups of the filesystem
-#     Weekly full export using knife-ec-backup
+bdir = node['mcs']['backup']['dir']
+command = "#{bdir}/backup.sh"
 
-# Puts the initial backup in the /var/opt/chef-backup directory as a tar.gz file; move this backup to a new location for safe keeping
-execute 'chef-server-ctl backup -y' do
-  only_if { ::File.exist?("#{Chef::Config[:file_cache_path]}/chef-server-core.firstrun") }
+directory bdir
+
+# shell script for backups
+file command do
+  mode '0700'
+  content "#/bin/sh
+cd #{bdir}
+/opt/opscode/embedded/bin/knife ec backup --with-key-sql --with-user-sql -c /etc/opscode/pivotal.rb backup > backup.log 2>&1
+cd backup
+tar -czf ../#{node['mcs']['backup']['prefix']}`date +%Y%m%d%H%M`.tgz *
+cd ..
+rm -rf backup"
 end
 
-# do an object backup occasionally?
-# https://github.com/chef/knife-ec-backup
+# schedule backups on a recurring cron job. Refer to the README for further customization
+cron "knife ec backup" do
+  environment ({'PWD' => bdir})
+  command command
+  minute '*/5'
+  hour '*'
+  day '*'
+end
