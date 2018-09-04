@@ -5,6 +5,7 @@
 \#*#
 .*.sw[a-z]
 *.un~
+*.rpm
 
 # Bundler
 Gemfile.lock
