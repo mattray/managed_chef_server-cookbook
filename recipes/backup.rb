@@ -21,8 +21,8 @@ rm -rf backup"
 end
 
 # schedule backups on a recurring cron job. Refer to the README for further customization
-cron "knife ec backup" do
-  environment ({'PWD' => bdir})
+cron 'knife ec backup' do
+  environment ({ 'PWD' => bdir })
   command command
   minute '*/5'
   hour '*'

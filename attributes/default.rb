@@ -34,4 +34,4 @@ default['mcs']['policyfile']['dir'] = nil
 
 default['mcs']['backup']['dir'] = Chef::Config[:file_cache_path] + '/mcs-backups'
 # this will have the timestamp added
-default['mcs']['backup']['prefix'] = "chef-server-backup-"
+default['mcs']['backup']['prefix'] = 'chef-server-backup-'

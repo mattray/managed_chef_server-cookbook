@@ -82,7 +82,7 @@ template "#{mudir}/knife.rb" do
   source 'knife.erb'
   mode '0700'
   variables(o_key: org_key,
-    o_name: org_name,
-    u_key: user_key,
-    u_name: user_name)
+            o_name: org_name,
+            u_key: user_key,
+            u_name: user_name)
 end
