@@ -9,7 +9,7 @@ describe command('chef') do
   it { should exist }
 end
 
-describe command('chef show-policy -c /etc/opscode/managed/knife.rb') do
+describe command('chef show-policy -c /etc/opscode/managed/config.rb') do
   its ('stdout') { should match /\* base:        bea04861be$/ }
   its ('stdout') { should match /\* beaglebone:  d99228eafe$/ }
   its ('stdout') { should match /\* macbookpro:  3e28786370$/ }

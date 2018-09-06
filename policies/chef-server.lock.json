@@ -1,5 +1,5 @@
 {
-  "revision_id": "917ef45c169d21b343b99853427f4bd600d1eaf13f44112ddefcc18f4236b463",
+  "revision_id": "22afcb74f6f56079c60ec659c10b4780abc9d35f62f332f9651bc04412d5ff53",
   "name": "chef-server",
   "run_list": [
     "recipe[managed-chef-server::default]"
@@ -63,18 +63,18 @@
     },
     "managed-chef-server": {
       "version": "0.3.0",
-      "identifier": "0e8755b1070ff01cf6eb17a2f0a28087a077aca3",
-      "dotted_decimal_identifier": "4089451785949168.8152788922200226.141320001137827",
+      "identifier": "8253b53cfd3f5f48208477a3b55aa90d5a0085ae",
+      "dotted_decimal_identifier": "36683784849801055.20301951638156634.185874809652654",
       "source": "..",
       "cache_key": null,
       "scm_info": {
         "scm": "git",
-        "remote": "git@github.com:mattray/managed-chef-server.git",
-        "revision": "908f3a22c98066612ded9201e24569a54bdc65b7",
+        "remote": null,
+        "revision": "efe8ec0d4ca85ff83edc3b113a5da4bff0a7765e",
         "working_tree_clean": false,
-        "published": false,
+        "published": true,
         "synchronized_remote_branches": [
-
+          "origin/master"
         ]
       },
       "source_options": {

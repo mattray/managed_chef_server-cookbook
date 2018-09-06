@@ -27,7 +27,7 @@ Dir.foreach(pdir) do |pfile|
   short_rev = revision[0, 9]
   # match the right policyfile archive
   filename = pdir + '/' + policy + '-' + revision + '.tgz'
-  kniferb = node['mcs']['managed_user']['dir'] + '/knife.rb'
+  kniferb = node['mcs']['managed_user']['dir'] + '/config.rb'
 
   # push the archive to the policygroup, currently the name of the policyfile
   execute "chef push-archive #{policy} #{policy}-#{revision}.tgz" do

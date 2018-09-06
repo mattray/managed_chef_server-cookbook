@@ -77,9 +77,9 @@ execute 'reset managed user key on restore' do
   not_if { ::File.exist?(user_key) }
 end
 
-# write a knife.rb
-template "#{mudir}/knife.rb" do
-  source 'knife.erb'
+# write a config.rb
+template "#{mudir}/config.rb" do
+  source 'config.erb'
   mode '0700'
   variables(o_key: org_key,
             o_name: org_name,
