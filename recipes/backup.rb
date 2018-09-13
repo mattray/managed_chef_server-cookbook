@@ -9,15 +9,12 @@ command = "#{bdir}/backup.sh"
 directory bdir
 
 # shell script for backups
-file command do
+cookbook_file command do
   mode '0700'
-  content "#/bin/sh
-cd #{bdir}
-/opt/opscode/embedded/bin/knife ec backup --with-key-sql --with-user-sql -c /etc/opscode/pivotal.rb backup > backup.log 2>&1
-cd backup
-tar -czf ../#{node['mcs']['backup']['prefix']}`date +%Y%m%d%H%M`.tgz *
-cd ..
-rm -rf backup"
+  source 'backup.sh'
+  owner 'root'
+  group 'root'
+  action :create
 end
 
 # schedule backups on a recurring cron job. Refer to the README for further customization
