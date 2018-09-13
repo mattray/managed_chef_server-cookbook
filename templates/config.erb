@@ -1,0 +1,10 @@
+# managed Chef config.rb
+chef_server_url        "https://localhost/organizations/<%= @o_name %>"
+client_key             "<%= @u_key %>"
+node_name              "<%= @u_name %>"
+ssl_verify_mode        :verify_none
+validation_client_name "<%= @o_name %>"
+validation_key         "<%= @o_key %>"
+# remove after debugging
+config_log_level       :debug
+config_log_location    "/tmp/<%= @u_name %>.log"

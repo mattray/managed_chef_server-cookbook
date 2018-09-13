@@ -18,7 +18,7 @@
 #
 
 # set location of backup file to restore from
-default['mcs']['restorefile'] = ''
+default['mcs']['restore']['file'] = ''
 
 # user and organization for Chef-managed server
 default['mcs']['org']['name'] = 'chef_managed_org'
@@ -30,4 +30,8 @@ default['mcs']['managed_user']['last_name'] = 'Managed'
 default['mcs']['managed_user']['email'] = 'you@example.com'
 default['mcs']['managed_user']['password'] = nil
 
-default['mcs']['policyfile-directory'] = nil
+default['mcs']['policyfile']['dir'] = nil
+
+default['mcs']['backup']['dir'] = Chef::Config[:file_cache_path] + '/mcs-backups'
+# this will have the timestamp added
+default['mcs']['backup']['prefix'] = 'chef-server-backup-'

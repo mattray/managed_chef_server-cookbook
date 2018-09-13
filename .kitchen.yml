@@ -2,7 +2,7 @@
 driver:
   name: vagrant
   synced_folders:
-      - ['test', '/tmp/backups', 'create: true', owner: "root", group: "root"]
+      - ['test', '/backups', 'create: true', owner: "root", group: "root"]
   customize:
     memory: 2048
     cpus: 2
@@ -11,8 +11,8 @@ provisioner:
   name: chef_zero
   policyfile: policies/chef-server.rb
   always_update_cookbooks: true
-  # product_name: chef
-  # product_version: 13.8.5
+  product_name: chef
+  product_version: 13.8.5
 
 verifier:
   name: inspec
@@ -25,27 +25,46 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-  - name: restore
+  - name: backup
+    provisioner:
+      named_run_list: backup
     verifier:
       inspec_tests:
         - test/integration/default
+  - name: restore
+    provisioner:
+      named_run_list: restore
     attributes:
       mcs:
-        restorefile: '/tmp/backups/chef-backup.tgz'
-  - name: policyfile
-    provisioner:
-      named_run_list: policyfiles
+        policyfile:
+          dir: '/backups'
+        restore:
+          file: '/backups/chef-server-backup-201809030650.tgz'
     verifier:
       inspec_tests:
         - test/integration/default
         - test/integration/policyfiles
+  - name: policyfile
+    provisioner:
+      named_run_list: policyfiles
     attributes:
       mcs:
-        policyfile-directory: '/tmp/backups'
-        policygroup: 'mcs'
-  - name: all
-    provisioner:
-      named_run_list: everything
+        policyfile:
+          dir: '/backups'
     verifier:
       inspec_tests:
         - test/integration/default
+        - test/integration/policyfiles
+  - name: everything
+    provisioner:
+      named_run_list: everything
+    attributes:
+      mcs:
+        policyfile:
+          dir: '/backups'
+        restore:
+          file: '/backups/chef-server-backup-201809030650.tgz'
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/policyfiles

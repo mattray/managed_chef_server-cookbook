@@ -15,4 +15,7 @@ describe directory('/etc/opscode/managed') do
   it { should exist }
 end
 
-# knife.rb
+# config.rb
+describe file ('/etc/opscode/managed/config.rb') do
+  it { should exist }
+end
