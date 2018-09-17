@@ -43,6 +43,14 @@ if [ ! -s $BACKUPFILE ]; then
    exit 2
 fi
 
+# test backup file for validity
+tar xzf $BACKUPFILE > /dev/null 2>&1
+RESULT=$?
+if [ $RESULT -ne 0 ]; then
+   echo "chef-server-ctl backup tarball failed validation with error status $RESULT"
+   exit $RESULT
+fi
+
 ln -f -s $BACKUPFILE $BACKDIR/chef-backup-latest.tgz
 
 exit 0
