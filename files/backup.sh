@@ -35,16 +35,29 @@ fi
 
 # tarball the backup without changing directories
 
+BACKUPFILE="$BACKUPDIR/chef-server-backup-`date +%Y%m%d%H%M`.tgz"
+
 find $BACKUPDIR/backup -printf '%P\0' | \
    tar -C $BACKUPDIR/backup \
        --null --files-from=- \
-       -czf $BACKUPDIR/chef-server-backup-`date +%Y%m%d%H%M`.tgz
+       -czf $BACKUPFILE
 
 RESULT=$?
 if [ $RESULT -ne 0 ]; then
    echo "knife ec backup tarball failed with error status $RESULT"
    exit $RESULT
 fi
+
+# test backup file for validity
+tar xzf $BACKUPFILE > /dev/null 2>&1
+RESULT=$?
+if [ $RESULT -ne 0 ]; then
+   echo "knife ec backup tarball failed validation with error status $RESULT"
+   exit $RESULT
+fi
+
+# update 'latest' link
+ln -f -s $BACKUPFILE $BACKUPDIR/chef-server-backup-latest.tgz
 
 # tidy up
 rm -rf $BACKUPDIR/backup
