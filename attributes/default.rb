@@ -17,9 +17,9 @@
 # limitations under the License.
 #
 
+# default recipe
 # set location of backup file to restore from
 default['mcs']['restore']['file'] = ''
-
 # user and organization for Chef-managed server
 default['mcs']['org']['name'] = 'chef_managed_org'
 default['mcs']['org']['full_name'] = 'Chef Managed Organization'
@@ -30,8 +30,14 @@ default['mcs']['managed_user']['last_name'] = 'Managed'
 default['mcs']['managed_user']['email'] = 'you@example.com'
 default['mcs']['managed_user']['password'] = nil
 
-default['mcs']['policyfile']['dir'] = nil
-
+# backup recipe
+# schedule via cron
+default['mcs']['backup']['cron']['minute'] = '30'
+default['mcs']['backup']['cron']['hour'] = '2'
+default['mcs']['backup']['cron']['day'] = '*'
 default['mcs']['backup']['dir'] = Chef::Config[:file_cache_path] + '/mcs-backups'
 # this will have the timestamp added
 default['mcs']['backup']['prefix'] = 'chef-server-backup-'
+
+# policyfile_loader recipe
+default['mcs']['policyfile']['dir'] = nil

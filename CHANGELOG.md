@@ -17,10 +17,14 @@ This file is used to list changes made in each version of the managed-chef-serve
 
 # 0.3.0
 
-- restore from backups works
+- restore from backup works
 - Chef 13.8.5 testing
 
 # 0.3.1
 
 - switch to config.rb from knife.rb
+
+# 0.4.0
+
 - refactor policyfiles for more straightforward testing
+- backup scheduled via cron and attributes

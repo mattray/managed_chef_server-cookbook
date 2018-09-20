@@ -8,9 +8,13 @@ Deploys and configures the Chef server in a stateless model.
 
 Install or restore the Chef Server in a new deployment, wrapping the [https://github.com/chef-cookbooks/chef-server](Chef-Server) cookbook. It looks for the existence of a knife-ec-backup tarball to restore from, configured with the `node['mcs']['restore']['file']` attribute. It then creates a managed Chef organization and an org-managing admin user.
 
-## backups ##
+## backup ##
 
-Runs `knife-ec-backup` periodically. Scheduling TBD but will likely consist of using `edit_resource!` to override a `cron` resource. Implementation and documentation TBW.
+Runs `knife-ec-backup` via cron. The default is 2:30am daily, but you may change the cron schedule via the following attributes.
+
+    node['mcs']['backup']['cron']['minute'] = '30'
+    node['mcs']['backup']['cron']['hour'] = '2'
+    node['mcs']['backup']['cron']['day'] = '*'
 
 ## cron ##
 
@@ -46,7 +50,7 @@ Checks the chef-client is in the crontab
 
 ## backup
 
-Checks the backup script is in the crontab and backups directories are available.
+Checks the backup script is in the crontab and backup directories are available.
 
 ## policyfile
 
@@ -54,8 +58,7 @@ Adds loading policyfiles from the included [test](test) directory.
 
 ## everything
 
-Installs the Chef server, restores from a backup, attempts to load policyfiles (which are included in the restored backup) and adds backups via cron.
-
+Installs the Chef server, restores from a backup, attempts to load policyfiles (which are included in the restored backup) and adds backup via cron.
 
 ## License and Authors
 

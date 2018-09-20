@@ -45,6 +45,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
+        - test/integration/backup
   - name: cron
     provisioner:
       policyfile: policyfiles/cron.rb
@@ -75,4 +76,6 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
+        - test/integration/backup
+        - test/integration/cron
         - test/integration/policyfiles

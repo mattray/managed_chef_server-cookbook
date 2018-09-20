@@ -1,5 +1,5 @@
 {
-  "revision_id": "0bd609c54ce9e93b899de43d9d91e6dc6cc72a6f49bc039dfac78c9176fb375d",
+  "revision_id": "4f16bc60aaa643ce856a25233f28447a5c6ef178458500365d5e705680e86187",
   "name": "backup",
   "run_list": [
     "recipe[chef-client::config]",
@@ -85,18 +85,18 @@
     },
     "managed-chef-server": {
       "version": "0.3.1",
-      "identifier": "33c6f3b5fe99fe4ec81c2fc80f3019d18e17d002",
-      "dotted_decimal_identifier": "14573973844957694.22175071569710896.28387822784514",
+      "identifier": "bf7a20efc5185e33bd880c8d0e5b2d1a82142521",
+      "dotted_decimal_identifier": "53896002431948894.14563615836016219.49591874757921",
       "source": "..",
       "cache_key": null,
       "scm_info": {
         "scm": "git",
         "remote": null,
-        "revision": "24f2bd6d0502859ff26478eb9f581d9a11ea7d7d",
+        "revision": "0d05d44749df7d36939f8ef0b5b796273dec18c4",
         "working_tree_clean": false,
-        "published": true,
+        "published": false,
         "synchronized_remote_branches": [
-          "origin/master"
+
         ]
       },
       "source_options": {
@@ -108,6 +108,14 @@
 
   },
   "override_attributes": {
+    "mcs": {
+      "backup": {
+        "cron": {
+          "minute": "*/5",
+          "hour": "*"
+        }
+      }
+    },
     "chef_client": {
       "config": {
         "chef_zero.enabled": true,

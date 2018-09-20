@@ -8,7 +8,7 @@ command = "#{backupdir}/backup.sh"
 
 directory backupdir
 
-# shell script for backups
+# shell script for backup
 file command do
   mode '0700'
   content "#/bin/sh
@@ -20,11 +20,11 @@ cd ..
 rm -rf backup"
 end
 
-# schedule backups on a recurring cron job. Refer to the README for further customization
+# schedule backup on a recurring cron job. Override attributes as necessary
 cron 'knife ec backup' do
   environment ({ 'PWD' => backupdir })
   command command
-  minute '*/5'
-  hour '*'
-  day '*'
+  minute node['mcs']['backup']['cron']['minute']
+  hour node['mcs']['backup']['cron']['hour']
+  day node['mcs']['backup']['cron']['day']
 end
