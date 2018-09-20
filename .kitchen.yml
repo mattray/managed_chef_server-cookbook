@@ -9,7 +9,6 @@ driver:
 
 provisioner:
   name: chef_zero
-  policyfile: policies/chef-server.rb
   always_update_cookbooks: true
   product_name: chef
   product_version: 13.8.5
@@ -22,18 +21,14 @@ platforms:
 
 suites:
   - name: default
-    verifier:
-      inspec_tests:
-        - test/integration/default
-  - name: backup
     provisioner:
-      named_run_list: backup
+      policyfile: policyfiles/default.rb
     verifier:
       inspec_tests:
         - test/integration/default
   - name: restore
     provisioner:
-      named_run_list: restore
+      policyfile: policyfiles/default.rb
     attributes:
       mcs:
         policyfile:
@@ -44,9 +39,22 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/policyfiles
+  - name: backup
+    provisioner:
+      policyfile: policyfiles/backup.rb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+  - name: cron
+    provisioner:
+      policyfile: policyfiles/cron.rb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/cron
   - name: policyfile
     provisioner:
-      named_run_list: policyfiles
+      policyfile: policyfiles/policyfile.rb
     attributes:
       mcs:
         policyfile:
@@ -57,7 +65,7 @@ suites:
         - test/integration/policyfiles
   - name: everything
     provisioner:
-      named_run_list: everything
+      policyfile: policyfiles/everything.rb
     attributes:
       mcs:
         policyfile:
