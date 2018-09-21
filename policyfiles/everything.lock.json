@@ -1,9 +1,7 @@
 {
-  "revision_id": "89d661713f2e3a0f36591b50f0d7f588e593782868a794bf8de1ed2f7068c655",
+  "revision_id": "cc9c24ecde384b7abb0d38bf2467c6d72f56945512a432207237952190f69ef1",
   "name": "everything",
   "run_list": [
-    "recipe[chef-client::config]",
-    "recipe[chef-client::cron]",
     "recipe[managed-chef-server::default]",
     "recipe[managed-chef-server::policyfile_loader]",
     "recipe[managed-chef-server::maintenance]",
@@ -12,24 +10,13 @@
   "included_policy_locks": [
     {
       "name": "base",
-      "revision_id": "aa9942d9f898e8a0c01918f2db3b3c9c501cfe1a8aef967924bb33ee3650132e",
+      "revision_id": "d8bbd6a46ddefe4b3546e972325709380cabb0de1bcf955175bd31e41045427c",
       "source_options": {
         "path": "./base.lock.json"
       }
     }
   ],
   "cookbook_locks": {
-    "chef-client": {
-      "version": "11.0.1",
-      "identifier": "de8ed058afeb95a3135fbff676517d5075f18f0e",
-      "dotted_decimal_identifier": "62644470322031509.45901723167258193.137784529620750",
-      "cache_key": "chef-client-11.0.1-supermarket.chef.io",
-      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/chef-client/versions/11.0.1/download",
-      "source_options": {
-        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/chef-client/versions/11.0.1/download",
-        "version": "11.0.1"
-      }
-    },
     "chef-ingredient": {
       "version": "2.3.2",
       "identifier": "6338a2463cea5d72df4c091234666b3e6103444f",
@@ -63,42 +50,20 @@
         "version": "1.4.0"
       }
     },
-    "cron": {
-      "version": "6.2.1",
-      "identifier": "08676b5cc33658430ce04cecc16dd07200380e83",
-      "dotted_decimal_identifier": "2365510629144152.18872980942405997.229188048522883",
-      "cache_key": "cron-6.2.1-supermarket.chef.io",
-      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/cron/versions/6.2.1/download",
-      "source_options": {
-        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/cron/versions/6.2.1/download",
-        "version": "6.2.1"
-      }
-    },
-    "logrotate": {
-      "version": "2.2.0",
-      "identifier": "53e09234a4f73cc13f46d833d2e5075cafddfaa8",
-      "dotted_decimal_identifier": "23609341620057916.54394244012692197.8094668946088",
-      "cache_key": "logrotate-2.2.0-supermarket.chef.io",
-      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/logrotate/versions/2.2.0/download",
-      "source_options": {
-        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/logrotate/versions/2.2.0/download",
-        "version": "2.2.0"
-      }
-    },
     "managed-chef-server": {
       "version": "0.3.1",
-      "identifier": "b47a6ee498624d79451dc53db142d8ea981b1df2",
-      "dotted_decimal_identifier": "50800112508101197.34134466347512130.238502085860850",
+      "identifier": "d531bc46700b4917d8af181d6514c233bb3e7203",
+      "dotted_decimal_identifier": "60008854744730441.6712170999801108.213527440552451",
       "source": "..",
       "cache_key": null,
       "scm_info": {
         "scm": "git",
         "remote": null,
-        "revision": "24f2bd6d0502859ff26478eb9f581d9a11ea7d7d",
+        "revision": "1ce2eb77ad2348ce76a1a6cc11bcd2512f2e8247",
         "working_tree_clean": false,
         "published": true,
         "synchronized_remote_branches": [
-          "origin/master"
+          "origin/0_4_0"
         ]
       },
       "source_options": {
@@ -110,27 +75,10 @@
 
   },
   "override_attributes": {
-    "chef_client": {
-      "config": {
-        "chef_zero.enabled": true,
-        "http_retry_delay": 10,
-        "interval": 100,
-        "local_mode": true,
-        "splay": 10,
-        "verbose_logging": true
-      },
-      "cron": {
-        "hour": "*",
-        "minute": "*/5"
-      }
-    }
+
   },
   "solution_dependencies": {
     "Policyfile": [
-      [
-        "chef-client",
-        "= 11.0.1"
-      ],
       [
         "chef-ingredient",
         "= 2.3.2"
@@ -144,29 +92,11 @@
         "= 1.4.0"
       ],
       [
-        "cron",
-        "= 6.2.1"
-      ],
-      [
-        "logrotate",
-        "= 2.2.0"
-      ],
-      [
         "managed-chef-server",
         "= 0.3.1"
       ]
     ],
     "dependencies": {
-      "chef-client (11.0.1)": [
-        [
-          "cron",
-          ">= 4.2.0"
-        ],
-        [
-          "logrotate",
-          ">= 1.9.0"
-        ]
-      ],
       "chef-ingredient (2.3.2)": [
 
       ],
@@ -181,12 +111,6 @@
           "chef-ingredient",
           ">= 0.0.0"
         ]
-      ],
-      "cron (6.2.1)": [
-
-      ],
-      "logrotate (2.2.0)": [
-
       ],
       "managed-chef-server (0.3.1)": [
         [
