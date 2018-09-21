@@ -8,9 +8,17 @@ Deploys and configures the Chef server in a stateless model.
 
 Install or restore the Chef Server in a new deployment, wrapping the [https://github.com/chef-cookbooks/chef-server](Chef-Server) cookbook. It looks for the existence of a knife-ec-backup tarball to restore from, configured with the `node['mcs']['restore']['file']` attribute. It then creates a managed Chef organization and an org-managing admin user.
 
-## backups ##
+## backup ##
 
-Runs `knife-ec-backup` periodically. Scheduling TBD but will likely consist of using `edit_resource!` to override a `cron` resource. Implementation and documentation TBW.
+Runs `knife-ec-backup` via cron. The default is 2:30am daily, but you may change the cron schedule via the following attributes.
+
+    node['mcs']['backup']['cron']['minute'] = '30'
+    node['mcs']['backup']['cron']['hour'] = '2'
+    node['mcs']['backup']['cron']['day'] = '*'
+
+## cron ##
+
+Installs the Chef server with the chef-client configured to run via cron. This may be set to use chef-zero, for when the Chef server has no other Chef server to reference. See the example [policyfiles/cron.rb](policyfile/cron.rb) and [.kitchen.yml](.kitchen.yml) for reference.
 
 ## maintenance ##
 
@@ -26,19 +34,23 @@ Additional attributes are documented in the [attributes/default.rb](attributes/d
 
 # Testing
 
-There is a [.kitchen.yml](.kitchen.yml) that may be used for testing with Vagrant. The [.kitchen.vagrant.yml](.kitchen.vagrant.yml) may be symlinked as **.kitchen.local.yml** and used with local caches and examples caching the chef-server.rpm and chefdk.rpms to speed up testing. If you want to use Docker, [.kitchen.dokken.yml](.kitchen.dokken.yml) may be used but it does not persist changes between runs and is thus not significantly faster (it's slower than Vagrant with caching). Each contains the following Suites:
+There is a [.kitchen.yml](.kitchen.yml) that may be used for testing with Vagrant. The [.kitchen.vagrant.yml](.kitchen.vagrant.yml) may be symlinked as **.kitchen.local.yml** and used with local caches to speed up testing. If you want to use Docker, [.kitchen.dokken.yml](.kitchen.dokken.yml) may be used but it does not persist changes between runs and is thus not significantly faster (it's slower than Vagrant with caching). The following Suites map to example [policyfiles](policyfiles) that may be repurposed as necessary:
 
 ## default
 
 Tests simple installation and creation of the managed Chef user and organization.
 
-## backup
-
-Adds automated backups via `cron` to the default recipe.
-
 ## restore
 
 Restores the Chef server from a backup with policyfiles. `kitchen verify restore` ensures the policyfiles were restored properly.
+
+## cron
+
+Checks the chef-client is in the crontab
+
+## backup
+
+Checks the backup script is in the crontab and backup directories are available.
 
 ## policyfile
 
@@ -46,8 +58,7 @@ Adds loading policyfiles from the included [test](test) directory.
 
 ## everything
 
-Installs the Chef server, restores from a backup, attempts to load policyfiles (which are included in the restored backup) and adds backups via cron.
-
+Installs the Chef server, restores from a backup, attempts to load policyfiles (which are included in the restored backup) and adds backup via cron.
 
 ## License and Authors
 

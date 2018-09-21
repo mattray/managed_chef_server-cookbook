@@ -16,6 +16,6 @@ describe directory('/etc/opscode/managed') do
 end
 
 # config.rb
-describe file ('/etc/opscode/managed/config.rb') do
+describe file '/etc/opscode/managed/config.rb' do
   it { should exist }
 end

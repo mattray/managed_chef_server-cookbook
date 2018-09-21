@@ -1,29 +1,9 @@
 {
-  "revision_id": "22afcb74f6f56079c60ec659c10b4780abc9d35f62f332f9651bc04412d5ff53",
-  "name": "chef-server",
+  "revision_id": "53e07f37074575abfe75bbb74032f6cd63fc566ff2b8e655f9a2ddf91a3615a8",
+  "name": "base",
   "run_list": [
     "recipe[managed-chef-server::default]"
   ],
-  "named_run_lists": {
-    "backup": [
-      "recipe[managed-chef-server::default]",
-      "recipe[managed-chef-server::backup]"
-    ],
-    "restore": [
-      "recipe[managed-chef-server::default]",
-      "recipe[chefdk::default]"
-    ],
-    "policyfiles": [
-      "recipe[managed-chef-server::default]",
-      "recipe[managed-chef-server::policyfile_loader]"
-    ],
-    "everything": [
-      "recipe[managed-chef-server::default]",
-      "recipe[managed-chef-server::policyfile_loader]",
-      "recipe[managed-chef-server::maintenance]",
-      "recipe[managed-chef-server::backup]"
-    ]
-  },
   "included_policy_locks": [
 
   ],
@@ -62,19 +42,19 @@
       }
     },
     "managed-chef-server": {
-      "version": "0.3.0",
-      "identifier": "8253b53cfd3f5f48208477a3b55aa90d5a0085ae",
-      "dotted_decimal_identifier": "36683784849801055.20301951638156634.185874809652654",
+      "version": "0.4.0",
+      "identifier": "1d828698682731da34d856c87cc9557478e3c7a3",
+      "dotted_decimal_identifier": "8306288918800177.61419648696483017.93958732760995",
       "source": "..",
       "cache_key": null,
       "scm_info": {
         "scm": "git",
         "remote": null,
-        "revision": "efe8ec0d4ca85ff83edc3b113a5da4bff0a7765e",
+        "revision": "8f1cb4b828da5feece320f10a762de1ae056cc7f",
         "working_tree_clean": false,
-        "published": true,
+        "published": false,
         "synchronized_remote_branches": [
-          "origin/master"
+
         ]
       },
       "source_options": {
@@ -123,7 +103,7 @@
           ">= 0.0.0"
         ]
       ],
-      "managed-chef-server (0.3.0)": [
+      "managed-chef-server (0.4.0)": [
         [
           "chef-server",
           "~> 5.5.2"

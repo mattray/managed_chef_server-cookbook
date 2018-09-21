@@ -1,0 +1,9 @@
+name 'backup'
+
+include_policy 'base', path: './base.lock.json'
+
+run_list 'managed-chef-server::backup'
+
+# every 5 minutes for testing
+override['mcs']['backup']['cron']['minute'] = '*/5'
+override['mcs']['backup']['cron']['hour'] = '*'
