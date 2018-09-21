@@ -1,11 +1,18 @@
 {
-  "revision_id": "9f1bd14665c7b4e3e69b963a7ca4d91b217f844202aa36cfeecf60632dab761b",
+  "revision_id": "d6e5a595da2b623c5d26302461856edd05049c5cc9af3cd99c6c5ff52e7e0b39",
   "name": "cron",
   "run_list": [
+    "recipe[managed-chef-server::default]",
     "recipe[managed-chef-server::cron]"
   ],
   "included_policy_locks": [
-
+    {
+      "name": "base",
+      "revision_id": "53e07f37074575abfe75bbb74032f6cd63fc566ff2b8e655f9a2ddf91a3615a8",
+      "source_options": {
+        "path": "./base.lock.json"
+      }
+    }
   ],
   "cookbook_locks": {
     "chef-ingredient": {
@@ -42,19 +49,19 @@
       }
     },
     "managed-chef-server": {
-      "version": "0.3.1",
-      "identifier": "ecba0151ce2f4a1f80248c6104c2e327bd6f3dc1",
-      "dotted_decimal_identifier": "66632609333915466.8866618740376770.249759821413825",
+      "version": "0.4.0",
+      "identifier": "95a82571d7f9372411e13e7987e1d5c52f6fbbdb",
+      "dotted_decimal_identifier": "42124650307123511.10152758275049441.235042881125339",
       "source": "..",
       "cache_key": null,
       "scm_info": {
         "scm": "git",
         "remote": null,
-        "revision": "1ce2eb77ad2348ce76a1a6cc11bcd2512f2e8247",
+        "revision": "8f1cb4b828da5feece320f10a762de1ae056cc7f",
         "working_tree_clean": false,
-        "published": true,
+        "published": false,
         "synchronized_remote_branches": [
-          "origin/0_4_0"
+
         ]
       },
       "source_options": {
@@ -70,7 +77,8 @@
       "cron": {
         "minute": "*/5",
         "options": [
-          "-z"
+          "-z",
+          "-F min"
         ]
       }
     }
@@ -91,7 +99,7 @@
       ],
       [
         "managed-chef-server",
-        ">= 0.0.0"
+        "= 0.4.0"
       ]
     ],
     "dependencies": {
@@ -110,7 +118,7 @@
           ">= 0.0.0"
         ]
       ],
-      "managed-chef-server (0.3.1)": [
+      "managed-chef-server (0.4.0)": [
         [
           "chef-server",
           "~> 5.5.2"

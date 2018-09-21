@@ -18,7 +18,7 @@ Runs `knife-ec-backup` via cron. The default is 2:30am daily, but you may change
 
 ## cron ##
 
-Installs the Chef server with the chef-client configured to run via cron. This may be set to use chef-zero, for when the Chef server has no other Chef server to reference.
+Installs the Chef server with the chef-client configured to run via cron. This may be set to use chef-zero, for when the Chef server has no other Chef server to reference. See the example [policyfiles/cron.rb](policyfile/cron.rb) and [.kitchen.yml](.kitchen.yml) for reference.
 
 ## maintenance ##
 

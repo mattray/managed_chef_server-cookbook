@@ -1,5 +1,5 @@
 {
-  "revision_id": "cc9c24ecde384b7abb0d38bf2467c6d72f56945512a432207237952190f69ef1",
+  "revision_id": "ab54acd6318718bb97a40d8fdae3ee3b90cb5ad84b0c3eacea67d29d3885fabd",
   "name": "everything",
   "run_list": [
     "recipe[managed-chef-server::default]",
@@ -10,7 +10,7 @@
   "included_policy_locks": [
     {
       "name": "base",
-      "revision_id": "d8bbd6a46ddefe4b3546e972325709380cabb0de1bcf955175bd31e41045427c",
+      "revision_id": "8f697c02c01ca890e0b933357c63f2f90ae99202caff6ac9565b1a9f2c12fc39",
       "source_options": {
         "path": "./base.lock.json"
       }
@@ -51,19 +51,19 @@
       }
     },
     "managed-chef-server": {
-      "version": "0.3.1",
-      "identifier": "d531bc46700b4917d8af181d6514c233bb3e7203",
-      "dotted_decimal_identifier": "60008854744730441.6712170999801108.213527440552451",
+      "version": "0.4.0",
+      "identifier": "48eecfc4de20cc8215ec68fac0c999ea0a5c506f",
+      "dotted_decimal_identifier": "20528774451699916.36615852090114249.169230475219055",
       "source": "..",
       "cache_key": null,
       "scm_info": {
         "scm": "git",
         "remote": null,
-        "revision": "1ce2eb77ad2348ce76a1a6cc11bcd2512f2e8247",
+        "revision": "8f1cb4b828da5feece320f10a762de1ae056cc7f",
         "working_tree_clean": false,
-        "published": true,
+        "published": false,
         "synchronized_remote_branches": [
-          "origin/0_4_0"
+
         ]
       },
       "source_options": {
@@ -93,7 +93,7 @@
       ],
       [
         "managed-chef-server",
-        "= 0.3.1"
+        "= 0.4.0"
       ]
     ],
     "dependencies": {
@@ -112,7 +112,7 @@
           ">= 0.0.0"
         ]
       ],
-      "managed-chef-server (0.3.1)": [
+      "managed-chef-server (0.4.0)": [
         [
           "chef-server",
           "~> 5.5.2"
