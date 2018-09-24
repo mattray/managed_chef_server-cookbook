@@ -31,9 +31,9 @@ Dir.foreach(policydir) do |pfile|
   configrb = node['mcs']['managed_user']['dir'] + '/config.rb'
 
   # push the archive to the policygroup, currently the name of the policyfile
-  execute "chef push-archive #{policyname} #{filename}-#{revision}.tgz" do
+  execute "chef push-archive #{policyname} #{filename}.tgz" do
     command "chef push-archive #{policyname} #{filename} -c #{configrb}"
     # add a guard to check if chef show-policy
-    not_if "chef show-policy #{policy} -c #{kniferb} | grep '* #{policy}' | grep #{short_rev}"
+    not_if "chef show-policy #{policy} -c #{configrb} | grep '* #{policy}' | grep #{short_rev}"
   end
 end
