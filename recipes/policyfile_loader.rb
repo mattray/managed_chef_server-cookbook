@@ -18,22 +18,19 @@ policydir = node['mcs']['policyfile']['dir']
 Dir.foreach(policydir) do |pfile|
   next unless pfile.end_with?('.lock.json')
 
-  # parse the filename, drop the .lock.json
-  policy = pfile.sub(/\.lock\.json$/, '')
-
   # parse the JSON file, get the revision ID
   plock = JSON.parse(File.read(policydir + '/' + pfile))
   revision = plock['revision_id']
   policyname = plock['name']
   short_rev = revision[0, 9]
-  # match the right policyfile archive
-  filename = policydir + '/' + policy + '-' + revision + '.tgz'
+  # match the right policyfile archive based on name in lock file
+  filename = policydir + '/' + policyname + '-' + revision + '.tgz'
   configrb = node['mcs']['managed_user']['dir'] + '/config.rb'
 
-  # push the archive to the policygroup, currently the name of the policyfile
-  execute "chef push-archive #{policyname} #{filename}-#{revision}.tgz" do
+  # push the archive to the policygroup under the policy name
+  execute "chef push-archive #{policyname} #{filename}" do
     command "chef push-archive #{policyname} #{filename} -c #{configrb}"
-    # add a guard to check if chef show-policy
-    not_if "chef show-policy #{policy} -c #{kniferb} | grep '* #{policy}' | grep #{short_rev}"
+    # add a guard to check if chef show-policy indicates the policy is already installed
+    not_if "chef show-policy #{policyname} -c #{configrb} | grep '* #{policyname}' | grep #{short_rev}"
   end
 end
