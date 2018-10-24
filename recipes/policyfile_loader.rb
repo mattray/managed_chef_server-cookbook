@@ -13,6 +13,7 @@ node.override['chefdk']['channel'] = :stable
 # chef push-archive POLICY_GROUP base-VERSION.tgz -c config_file --debug
 
 policydir = node['mcs']['policyfile']['dir']
+configrb = node['mcs']['managed_user']['dir'] + '/config.rb'
 
 # find the local policyfiles
 Dir.foreach(policydir) do |pfile|
@@ -25,7 +26,6 @@ Dir.foreach(policydir) do |pfile|
   short_rev = revision[0, 9]
   # match the right policyfile archive based on name in lock file
   filename = policydir + '/' + policyname + '-' + revision + '.tgz'
-  configrb = node['mcs']['managed_user']['dir'] + '/config.rb'
 
   # push the archive to the policygroup under the policy name
   execute "chef push-archive #{policyname} #{filename}" do
