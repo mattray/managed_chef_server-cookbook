@@ -47,5 +47,10 @@ default['mcs']['cron']['options'] = []
 default['mcs']['cron']['policyfile_archive'] = nil
 default['mcs']['cron']['zero_dir'] = Chef::Config[:file_cache_path] + '/mcs-cron'
 
+# legacy_loader recipe
+default['mcs']['cookbooks']['dir'] = nil
+default['mcs']['environments']['dir'] = nil
+default['mcs']['roles']['dir'] = nil
+
 # policyfile_loader recipe
 default['mcs']['policyfile']['dir'] = nil

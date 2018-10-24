@@ -1,0 +1,25 @@
+{
+  "name": "lab-admin",
+  "description": "Default run_list for the Admin node",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+
+  },
+  "override_attributes": {
+
+  },
+  "chef_type": "role",
+  "run_list": [
+    "recipe[apt::cacher-ng]",
+    "recipe[apt::cacher-client]",
+    "recipe[ntp]",
+    "recipe[openssh]",
+    "recipe[users::sysadmins]",
+    "recipe[sudo]",
+    "recipe[chef-client::config]",
+    "recipe[chef-client::service]"
+  ],
+  "env_run_lists": {
+
+  }
+}

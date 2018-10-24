@@ -52,18 +52,33 @@ suites:
     attributes:
       mcs:
         cron:
-          policyfile_archive: '/backups/base-53e07f37074575abfe75bbb74032f6cd63fc566ff2b8e655f9a2ddf91a3615a8.tgz'
+          policyfile_archive: '/backups/policyfiles/base-53e07f37074575abfe75bbb74032f6cd63fc566ff2b8e655f9a2ddf91a3615a8.tgz'
     verifier:
       inspec_tests:
         - test/integration/default
         - test/integration/cron
+  - name: legacy
+    provisioner:
+      policyfile: policyfiles/legacy.rb
+    attributes:
+      mcs:
+        cookbooks:
+          dir: '/backups/cookbooks'
+        environments:
+          dir: '/backups/environments'
+        roles:
+          dir: '/backups/roles'
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/legacy
   - name: policyfile
     provisioner:
       policyfile: policyfiles/policyfile.rb
     attributes:
       mcs:
         policyfile:
-          dir: '/backups'
+          dir: '/backups/policyfiles'
     verifier:
       inspec_tests:
         - test/integration/default
