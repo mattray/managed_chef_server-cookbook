@@ -1,4 +1,4 @@
-name 'backup'
+name 'policyfile'
 
 include_policy 'base', path: './base.lock.json'
 
