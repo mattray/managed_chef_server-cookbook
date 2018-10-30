@@ -86,3 +86,9 @@ template "#{mudir}/config.rb" do
             u_key: user_key,
             u_name: user_name)
 end
+
+execute 'verify the chef-server is working as expected' do
+  command 'chef-server-ctl test'
+  action :nothing
+  subscribes :run, 'chef_ingredient[chef-server]'
+end
