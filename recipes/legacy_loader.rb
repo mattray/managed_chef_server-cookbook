@@ -1,4 +1,3 @@
-
 #
 # Cookbook:: managed-chef-server
 # Recipe:: legacy_loader
@@ -10,12 +9,11 @@ configrb = node['mcs']['managed_user']['dir'] + '/config.rb'
 # cookbooks
 cbdir = node['mcs']['cookbooks']['dir']
 # cscookbooks =  "knife cookbook list -c #{configrb}"
-# shell_out(command_args)
 Dir.foreach(cbdir) do |cookbook|
-  # make sure these are directories
-  # knife cookbook upload mingw -c /etc/opscode/managed/config.rb -o /backups/cookbooks/
-  # or do we upload everything in the directory?
-  # knife cookbook upload *
+  # if the cookbook directories have versions in the name, knife cookbook upload * -c /etc/opscode/managed/config.rb -o . doesn't work
+  # if you specify each individually, they need their dependencies resolved :(
+  # knife cookbook upload build-essential mingw seven_zip windows -c /etc/opscode/managed/config.rb -o . works
+  # we'll have to untar/zip archives and read their metadata.rb
   # execute "knife cookbook upload #{cookbook}" do
   #   command "knife cookbook upload #{cookbook} -c #{configrb} -o #{cbdir}"
   #   # do we need guards?
