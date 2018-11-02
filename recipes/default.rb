@@ -6,6 +6,9 @@
 # chef-server install
 include_recipe 'chef-server::default'
 
+# run nginx as a non-root user
+include_recipe 'managed-chef-server::_nginx'
+
 rfile = node['mcs']['restore']['file']
 rdir = "#{Chef::Config[:file_cache_path]}/restoredir"
 

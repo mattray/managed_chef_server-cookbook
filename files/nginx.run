@@ -1,0 +1,5 @@
+#!/bin/sh
+exec 2>&1
+exec /opt/opscode/embedded/bin/veil-env-helper -o DATA_COLLECTOR_TOKEN=data_collector.token -s REDIS_PASSWORD=redis_lb.password -- \
+  chpst -P -U opscode:opscode -u opscode:opscode \
+  /opt/opscode/embedded/sbin/nginx -c /var/opt/opscode/nginx/etc/nginx.conf
