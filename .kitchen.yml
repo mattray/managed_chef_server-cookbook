@@ -59,14 +59,6 @@ suites:
   - name: legacy
     provisioner:
       policyfile: policyfiles/legacy.rb
-    attributes:
-      mcs:
-        cookbooks:
-          dir: '/backups/cookbooks'
-        environments:
-          dir: '/backups/environments'
-        roles:
-          dir: '/backups/roles'
     verifier:
       inspec_tests:
         - test/integration/default

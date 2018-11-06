@@ -26,7 +26,7 @@ Maintaining the Chef server may involve periodically cleaning up stale nodes and
 
 ## legacy_loader ##
 
-Takes the `node['mcs']['cookbooks']['dir']`, `node['mcs']['environments']['dir']` and `node['mcs']['roles']['dir']` directories and loads whatever content is found into the local Chef server. If you want to use the same directory for the roles and environments the recipe can distinguish between JSON files.
+Takes the `node['mcs']['cookbooks']['dir']`, `node['mcs']['environments']['dir']` and `node['mcs']['roles']['dir']` directories and loads whatever content is found into the local Chef server. If you want to use the same directory for the roles and environments the recipe can distinguish between JSON files. The cookbooks are expected to be tarballs in a directory, they will all be loaded.
 
 ## policyfile_loader ##
 
@@ -59,6 +59,10 @@ Checks the backup script is in the crontab and backup directories are available.
 ## policyfile
 
 Adds loading policyfiles from the included [test](test) directory.
+
+## legacy
+
+Adds loading cookbooks, environments and roles from the included [test](test) directory.
 
 ## everything
 

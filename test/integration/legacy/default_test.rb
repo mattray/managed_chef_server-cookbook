@@ -21,3 +21,14 @@ describe command('knife role list -c /etc/opscode/managed/config.rb') do
   its ('stdout') { should match /^lab-base$/ }
   its ('stdout') { should_not match /^lab-environment$/ }
 end
+
+describe command('knife cookbook list -c /etc/opscode/managed/config.rb') do
+  its ('stdout') { should match /^chef-client   11.0.0$/ }
+  its ('stdout') { should match /^cron          6.2.0$/ }
+  its ('stdout') { should match /^iptables      4.3.4$/ }
+  its ('stdout') { should match /^logrotate     2.2.0$/ }
+  its ('stdout') { should match /^mattray       0.8.0$/ }
+  its ('stdout') { should match /^ntp           3.6.0$/ }
+  its ('stdout') { should match /^openssh       2.7.0$/ }
+  its ('stdout') { should match /^sudo          5.4.0$/ }
+end
