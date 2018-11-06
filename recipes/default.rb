@@ -6,6 +6,9 @@
 # chef-server install
 include_recipe 'chef-server::default'
 
+# run nginx as a non-root user
+include_recipe 'managed-chef-server::_nginx'
+
 rfile = node['mcs']['restore']['file']
 rdir = "#{Chef::Config[:file_cache_path]}/restoredir"
 
@@ -85,4 +88,10 @@ template "#{mudir}/config.rb" do
             o_name: org_name,
             u_key: user_key,
             u_name: user_name)
+end
+
+execute 'verify the chef-server is working as expected' do
+  command 'chef-server-ctl test'
+  action :nothing
+  subscribes :run, 'chef_ingredient[chef-server]'
 end

@@ -1,0 +1,30 @@
+{
+  "name": "lab-base",
+  "description": "Default run_list for Matts machines",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+
+  },
+  "override_attributes": {
+    "ntp": {
+      "servers": [
+        "10.0.0.2"
+      ]
+    }
+  },
+  "chef_type": "role",
+  "run_list": [
+    "recipe[apt::cacher-client]",
+    "recipe[chef-client::config]",
+    "recipe[chef-client::service]",
+    "recipe[chef-client::delete_validation]",
+    "recipe[chef-pry]",
+    "recipe[ntp]",
+    "recipe[openssh]",
+    "recipe[users::sysadmins]",
+    "recipe[sudo]"
+  ],
+  "env_run_lists": {
+
+  }
+}
