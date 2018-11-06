@@ -29,3 +29,8 @@ This file is used to list changes made in each version of the managed-chef-serve
 - refactor policyfiles for more straightforward testing
 - backup scheduled via cron and attributes
 - cron recipe for managing the chef-server with the chef-client under cron, with or without a policyfile archive
+
+# 0.5.0
+
+- legacy loader for cookbooks, environments, roles
+- nginx as non-root (@chrisg-fastlane)
