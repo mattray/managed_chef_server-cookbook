@@ -70,19 +70,32 @@ execute 'chef-server-ctl org-user-add' do
   subscribes :run, 'execute[chef-server-ctl user-create]', :immediately
 end
 
-# on restore, reset the private key if it's not there
+# on restore, reset the private key
 execute 'delete managed user key on restore' do
   command "chef-server-ctl delete-user-key #{user_name} default"
   not_if { ::File.exist?(user_key) }
+  # subscribe to restore
 end
+
 execute 'reset managed user key on restore' do
   command "chef-server-ctl add-user-key #{user_name} --key-name default > #{user_key}"
   not_if { ::File.exist?(user_key) }
+  # subscribe to delete
 end
 
 # write a config.rb
 template "#{mudir}/config.rb" do
-  source 'config.erb'
+  source 'config.rb.erb'
+  mode '0700'
+  variables(o_key: org_key,
+            o_name: org_name,
+            u_key: user_key,
+            u_name: user_name)
+end
+
+# berks config for legacy_loader
+template "#{mudir}/config.json" do
+  source 'config.json.erb'
   mode '0700'
   variables(o_key: org_key,
             o_name: org_name,

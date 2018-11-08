@@ -1,0 +1,12 @@
+{
+  "chef":{
+    "chef_server_url":"https://localhost/organizations/<%= @o_name %>",
+    "validation_client_name":"<%= @o_name %>",
+    "validation_key_path":"<%= @o_key %>",
+    "client_key":"<%= @u_key %>",
+    "node_name":"<%= @u_name %>"
+  },
+  "ssl": {
+    "verify":false
+  }
+}
