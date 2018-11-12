@@ -50,8 +50,10 @@ ruby_block 'knife cookbook upload legacy' do
         cookbooks += json['name'] + ' '
       end
     end
-    puts "knife cookbook upload #{cookbooks} -c #{configrb} -o #{cbtempdir}"
-    shell_out!("knife cookbook upload #{cookbooks} -c #{configrb} -o #{cbtempdir}")
+    unless cookbooks.empty?
+      puts "knife cookbook upload #{cookbooks} -c #{configrb} -o #{cbtempdir}"
+      shell_out!("knife cookbook upload #{cookbooks} -c #{configrb} -o #{cbtempdir}")
+    end
   end
 end
 

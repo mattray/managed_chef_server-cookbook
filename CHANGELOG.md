@@ -40,6 +40,9 @@ This file is used to list changes made in each version of the managed-chef-serve
 - legacy loader recipe supports Berkshelf
 - fix some issues with the restore for the managed user
 
+# 0.6.1
+
+- legacy loader skip an empty cookbook list
 
 # BACKLOG
 
