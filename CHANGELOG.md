@@ -37,7 +37,9 @@ This file is used to list changes made in each version of the managed-chef-serve
 
 # 0.6.0
 
+- legacy loader recipe supports Berkshelf
 - fix some issues with the restore for the managed user
+
 
 # BACKLOG
 
