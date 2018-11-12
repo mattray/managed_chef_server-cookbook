@@ -18,9 +18,9 @@ directory cbtempdir
 
 # untar into temp directory
 Dir.foreach(cbdir) do |tarfile|
-  next unless tarfile.end_with?('.tgz') || tarfile.end_with?('.tar.gz')
+  next unless tarfile.end_with?('.tgz', '.tar.gz')
   # untar each cookbook
-  execute "tar -xzf #{tarfile}"  do
+  execute "tar -xzf #{tarfile}" do
     cwd cbdir
     command "tar -C #{cbtempdir} -xzf #{tarfile}"
   end
@@ -40,7 +40,7 @@ ruby_block 'knife cookbook upload legacy' do
       # is there a Berksfile? let's load that instead
       berksfile = dir + '/Berksfile'
       if File.exist?(berksfile)
-        configjson = node['mcs']['managed_user']['dir']+'/config.json'
+        configjson = node['mcs']['managed_user']['dir'] + '/config.json'
         puts "berks install -b #{berksfile} -c #{configjson}"
         shell_out!("berks install -b #{berksfile} -c #{configjson}")
         puts "berks upload -b #{berksfile} -c #{configjson}"
@@ -57,40 +57,39 @@ end
 
 # clean up working directory
 directory "delete #{cbtempdir}" do
-action :delete
+  action :delete
 end
 
 # environments
 envdir = node['mcs']['environments']['dir']
 Dir.foreach(envdir) do |env|
-next unless env.end_with?('.rb') || env.end_with?('.json')
-if env.end_with?('.json')   # if it's .json, check the type
-json = JSON.parse(File.read(envdir + '/' + env))
-type = json['chef_type']
-next unless type.eql?('environment')
-end
-# we could make this idempotent by comparing the value on the server
-execute "knife environment from file #{env}" do
-command "knife environment from file #{env} -c #{configrb}"
-cwd "#{envdir}"
-end
+  next unless env.end_with?('.rb', '.json')
+  if env.end_with?('.json') # if it's .json, check the type
+    json = JSON.parse(File.read(envdir + '/' + env))
+    type = json['chef_type']
+    next unless type.eql?('environment')
+  end
+  # we could make this idempotent by comparing the value on the server
+  execute "knife environment from file #{env}" do
+    command "knife environment from file #{env} -c #{configrb}"
+    cwd envdir
+  end
 end
 
 # roles
 roledir = node['mcs']['roles']['dir']
 Dir.foreach(roledir) do |role|
-next unless role.end_with?('.rb') || role.end_with?('.json')
-if role.end_with?('.json') # if it's .json, check the type
-json = JSON.parse(File.read(roledir + '/' + role))
-type = json['chef_type']
-next unless type.eql?('role')
+  next unless role.end_with?('.rb', '.json')
+  if role.end_with?('.json') # if it's .json, check the type
+    json = JSON.parse(File.read(roledir + '/' + role))
+    type = json['chef_type']
+    next unless type.eql?('role')
+  end
+  # we could make this idempotent by comparing the value on the server
+  execute "knife role from file #{role}" do
+    command "knife role from file #{role} -c #{configrb}"
+    cwd roledir
+  end
 end
-# we could make this idempotent by comparing the value on the server
-execute "knife role from file #{role}" do
-command "knife role from file #{role} -c #{configrb}"
-cwd "#{roledir}"
-end
-end
-
 
 # data bags to be added eventually
