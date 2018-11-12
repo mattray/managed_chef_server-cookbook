@@ -9,6 +9,46 @@ include_recipe 'chef-server::default'
 # run nginx as a non-root user
 include_recipe 'managed-chef-server::_nginx'
 
+# create a managed user instead of using the pivotal user
+mudir = node['mcs']['managed_user']['dir']
+user_key = mudir + '/managed_user.key'
+user_name = node['mcs']['managed_user']['user_name']
+user_fn = node['mcs']['managed_user']['first_name']
+user_ln = node['mcs']['managed_user']['last_name']
+user_email = node['mcs']['managed_user']['email']
+user_pass = node['mcs']['managed_user']['password']
+user_pass = Random.new_seed unless user_pass
+# create organization and validator.pem
+org_name = node['mcs']['org']['name']
+org_full_name = node['mcs']['org']['full_name']
+org_key = mudir + '/managed_org.key'
+
+# create files for managing the Chef server
+directory mudir do
+  mode '0700'
+end
+
+# write a config.rb
+template "#{mudir}/config.rb" do
+  source 'config.rb.erb'
+  mode '0700'
+  variables(o_key: org_key,
+            o_name: org_name,
+            u_key: user_key,
+            u_name: user_name)
+end
+
+# berks config for legacy_loader
+template "#{mudir}/config.json" do
+  source 'config.json.erb'
+  mode '0700'
+  variables(o_key: org_key,
+            o_name: org_name,
+            u_key: user_key,
+            u_name: user_name)
+end
+
+# file and directory for restoring from backup
 rfile = node['mcs']['restore']['file']
 rdir = "#{Chef::Config[:file_cache_path]}/restoredir"
 
@@ -30,31 +70,24 @@ execute 'knife ec restore' do
   subscribes :run, "execute[tar -C #{rdir} -xzf #{rfile}]", :immediately
 end
 
-# create files for managing the Chef server
-mudir = node['mcs']['managed_user']['dir']
-directory mudir do
-  mode '0700'
+# on restore, reset the private key
+execute 'delete managed user key on restore' do
+  command "chef-server-ctl delete-user-key #{user_name} default"
+  action :nothing
+  subscribes :run, 'execute[knife ec restore]', :immediately
 end
 
-# create organization and validator.pem
-org_name = node['mcs']['org']['name']
-org_full_name = node['mcs']['org']['full_name']
-org_key = mudir + '/managed_org.key'
+execute 'reset managed user key on restore' do
+  command "chef-server-ctl add-user-key #{user_name} --key-name default > #{user_key}"
+  action :nothing
+  subscribes :run, 'execute[delete managed user key on restore]', :immediately
+end
 
 # chef-server-ctl org-create ORG_NAME ORG_FULL_NAME -f FILE_NAME
 execute 'chef-server-ctl org-create' do
   command "chef-server-ctl org-create #{org_name} #{org_full_name} -f #{org_key}"
   not_if "chef-server-ctl org-list | grep #{org_name}"
 end
-
-# create a managed user instead of using the pivotal user
-user_name = node['mcs']['managed_user']['user_name']
-user_fn = node['mcs']['managed_user']['first_name']
-user_ln = node['mcs']['managed_user']['last_name']
-user_email = node['mcs']['managed_user']['email']
-user_pass = node['mcs']['managed_user']['password']
-user_key = mudir + '/managed_user.key'
-user_pass = Random.new_seed unless user_pass
 
 # chef-server-ctl user-create USER_NAME FIRST_NAME LAST_NAME EMAIL PASSWORD -f FILE_NAME
 execute 'chef-server-ctl user-create' do
@@ -68,39 +101,6 @@ execute 'chef-server-ctl org-user-add' do
   command "chef-server-ctl org-user-add #{org_name} #{user_name} --admin"
   action :nothing
   subscribes :run, 'execute[chef-server-ctl user-create]', :immediately
-end
-
-# on restore, reset the private key
-execute 'delete managed user key on restore' do
-  command "chef-server-ctl delete-user-key #{user_name} default"
-  not_if { ::File.exist?(user_key) }
-  # subscribe to restore
-end
-
-execute 'reset managed user key on restore' do
-  command "chef-server-ctl add-user-key #{user_name} --key-name default > #{user_key}"
-  not_if { ::File.exist?(user_key) }
-  # subscribe to delete
-end
-
-# write a config.rb
-template "#{mudir}/config.rb" do
-  source 'config.rb.erb'
-  mode '0700'
-  variables(o_key: org_key,
-            o_name: org_name,
-            u_key: user_key,
-            u_name: user_name)
-end
-
-# berks config for legacy_loader
-template "#{mudir}/config.json" do
-  source 'config.json.erb'
-  mode '0700'
-  variables(o_key: org_key,
-            o_name: org_name,
-            u_key: user_key,
-            u_name: user_name)
 end
 
 execute 'verify the chef-server is working as expected' do

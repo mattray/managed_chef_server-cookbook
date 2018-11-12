@@ -34,3 +34,11 @@ This file is used to list changes made in each version of the managed-chef-serve
 
 - legacy loader for cookbooks, environments, roles
 - nginx as non-root (@chrisg-fastlane)
+
+# 0.6.0
+
+- fix some issues with the restore for the managed user
+
+# BACKLOG
+
+- maintenance tasks
