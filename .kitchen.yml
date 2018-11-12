@@ -29,10 +29,6 @@ suites:
   - name: restore
     provisioner:
       policyfile: policyfiles/restore.rb
-    attributes:
-      mcs:
-        restore:
-          file: '/backups/chef-server-backup-201810300340.tgz'
     verifier:
       inspec_tests:
         - test/integration/default
@@ -66,10 +62,6 @@ suites:
   - name: policyfile
     provisioner:
       policyfile: policyfiles/policyfile.rb
-    attributes:
-      mcs:
-        policyfile:
-          dir: '/backups/policyfiles'
     verifier:
       inspec_tests:
         - test/integration/default
@@ -77,18 +69,6 @@ suites:
   - name: everything
     provisioner:
       policyfile: policyfiles/everything.rb
-    attributes:
-      mcs:
-        cookbooks:
-          dir: '/backups/cookbooks'
-        environments:
-          dir: '/backups/environments'
-        roles:
-          dir: '/backups/roles'
-        policyfile:
-          dir: '/backups/policyfiles'
-        restore:
-          file: '/backups/chef-server-backup-201810300340.tgz'
     verifier:
       inspec_tests:
         - test/integration/default
