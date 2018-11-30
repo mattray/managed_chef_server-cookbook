@@ -32,7 +32,7 @@ unless policydir.nil?
     execute "chef push-archive #{policyname} #{filename}" do
       command "chef push-archive #{policyname} #{filename} -c #{configrb}"
       # add a guard to check if chef show-policy indicates the policy is already installed
-      not_if "chef show-policy #{policyname} -c #{configrb} | grep '* #{policyname}' | grep #{short_rev}"
+      not_if "chef show-policy #{policyname} -c #{configrb} | grep '* #{policyname}:' | grep #{short_rev}"
     end
   end
 end
