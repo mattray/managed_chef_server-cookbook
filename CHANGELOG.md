@@ -44,6 +44,10 @@ This file is used to list changes made in each version of the managed-chef-serve
 
 - legacy loader skip an empty cookbook list
 
+# 0.6.2
+
+- policyfile_loader now puts policyfiles in a _default policygroup as defined by an attribute.
+
 # BACKLOG
 
 - maintenance tasks

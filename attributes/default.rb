@@ -54,3 +54,4 @@ default['mcs']['roles']['dir'] = nil
 
 # policyfile_loader recipe
 default['mcs']['policyfile']['dir'] = nil
+default['mcs']['policyfile']['group'] = '_default'
