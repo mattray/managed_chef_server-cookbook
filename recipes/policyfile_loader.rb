@@ -13,6 +13,7 @@ node.override['chefdk']['channel'] = :stable
 # chef push-archive POLICY_GROUP base-VERSION.tgz -c config_file --debug
 
 policydir = node['mcs']['policyfile']['dir']
+policygroup = node['mcs']['policyfile']['group']
 configrb = node['mcs']['managed_user']['dir'] + '/config.rb'
 
 # find the local policyfiles
@@ -29,10 +30,10 @@ unless policydir.nil?
     filename = policydir + '/' + policyname + '-' + revision + '.tgz'
 
     # push the archive to the policygroup under the policy name
-    execute "chef push-archive #{policyname} #{filename}" do
-      command "chef push-archive #{policyname} #{filename} -c #{configrb}"
+    execute "chef push-archive #{policygroup} #{filename}" do
+      command "chef push-archive #{policygroup} #{filename} -c #{configrb}"
       # add a guard to check if chef show-policy indicates the policy is already installed
-      not_if "chef show-policy #{policyname} -c #{configrb} | grep '* #{policyname}:' | grep #{short_rev}"
+      not_if "chef show-policy #{policyname} -c #{configrb} | grep '* #{policygroup}:' | grep #{short_rev}"
     end
   end
 end

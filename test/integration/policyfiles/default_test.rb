@@ -10,7 +10,19 @@ describe command('chef') do
 end
 
 describe command('chef show-policy -c /etc/opscode/managed/config.rb') do
-  its ('stdout') { should match /\* base:        bea04861be$/ }
-  its ('stdout') { should match /\* beaglebone:  d99228eafe$/ }
-  its ('stdout') { should match /\* macbookpro:  3e28786370$/ }
+  its ('stdout') { should match /\* _default:  bea04861be$/ }
+  its ('stdout') { should match /\* _default:  d99228eafe$/ }
+  its ('stdout') { should match /\* _default:  3e28786370$/ }
+end
+
+describe command('chef show-policy base -c /etc/opscode/managed/config.rb') do
+  its ('stdout') { should match /\* _default:  bea04861be$/ }
+end
+
+describe command('chef show-policy beaglebone -c /etc/opscode/managed/config.rb') do
+  its ('stdout') { should match /\* _default:  d99228eafe$/ }
+end
+
+describe command('chef show-policy macbookpro -c /etc/opscode/managed/config.rb') do
+  its ('stdout') { should match /\* _default:  3e28786370$/ }
 end

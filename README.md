@@ -30,7 +30,7 @@ Takes the `node['mcs']['cookbooks']['dir']`, `node['mcs']['environments']['dir']
 
 ## policyfile_loader ##
 
-Takes the `node['mcs']['policyfile']['dir']` and parses any `.lock.json` files to determine which policyfile archives to load into the local Chef server.
+Takes the `node['mcs']['policyfile']['dir']` and parses any `.lock.json` files to determine which policyfile archives to load into the local Chef server. For now, these are assigned to `node['mcs']['policyfile']['group']`.
 
 # Attributes
 
