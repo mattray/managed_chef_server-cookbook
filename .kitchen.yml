@@ -6,6 +6,8 @@ driver:
   customize:
     memory: 2048
     cpus: 2
+  network:
+    - ["private_network", {ip: "192.168.33.22"}]
 
 provisioner:
   name: chef_zero
@@ -52,6 +54,13 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/cron
+  - name: data_bags
+    provisioner:
+      policyfile: policyfiles/data_bags.rb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_bags
   - name: legacy
     provisioner:
       policyfile: policyfiles/legacy.rb
@@ -73,5 +82,6 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/backup
+        - test/integration/data_bags
         - test/integration/legacy
         - test/integration/policyfiles
