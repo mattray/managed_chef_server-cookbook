@@ -26,7 +26,7 @@ Maintaining the Chef server may involve periodically cleaning up stale nodes and
 
 ## data_bag_loader ##
 
-The `node['mcs']['data_bags']['dir']` is compared against the existing data bags and updates or updates and prunes based on the `node['mcs']['data_bags']['prune']` attribute.
+The `node['mcs']['data_bags']['dir']` is compared against the existing data bags and creates and/or updates them as necessary. If the `node['mcs']['data_bags']['prune']` attribute is `true` then the data bags and their items are deleted as necessary.
 
 ## legacy_loader ##
 

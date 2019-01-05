@@ -14,6 +14,7 @@ describe command('knife data bag show users -c /etc/opscode/managed/config.rb') 
   its ('stdout') { should match /^user 2$/ }
   its ('stdout') { should match /^user 3$/ }
   its ('stdout') { should match /^user 4$/ }
+  its ('stdout') { should_not match /^user FIVE$/ }
 end
 
 # this one is updated by the data_bag_loader
@@ -29,4 +30,5 @@ describe command('knife data bag show tests -c /etc/opscode/managed/config.rb') 
   its ('stdout') { should match /^Test One$/ }
   its ('stdout') { should match /^Test Two$/ }
   its ('stdout') { should match /^Test Three$/ }
+  its ('stdout') { should_not match /^Test FOUR$/ }
 end
