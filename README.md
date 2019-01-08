@@ -24,6 +24,10 @@ Installs the Chef server with the chef-client configured to run via cron. This m
 
 Maintaining the Chef server may involve periodically cleaning up stale nodes and unused policyfiles. This is likely to use `knife-tidy` and various `chef` commands. Scheduling and implementation TBD.
 
+## data_bag_loader ##
+
+The `node['mcs']['data_bags']['dir']` is compared against the existing data bags and creates and/or updates them as necessary. If the `node['mcs']['data_bags']['prune']` attribute is `true` then the data bags and their items are deleted as necessary.
+
 ## legacy_loader ##
 
 Takes the `node['mcs']['cookbooks']['dir']`, `node['mcs']['environments']['dir']` and `node['mcs']['roles']['dir']` directories and loads whatever content is found into the local Chef server. If you want to use the same directory for the roles and environments the recipe can distinguish between JSON files. The cookbooks are expected to be tarballs in a directory, they will all be loaded.
@@ -55,6 +59,10 @@ Checks the chef-client is in the crontab
 ## backup
 
 Checks the backup script is in the crontab and backup directories are available.
+
+## data_bags
+
+Adds loading data bags from the included [test](test) directory. It restores from a previous data bag backup to ensure pruning and updating work.
 
 ## policyfile
 
