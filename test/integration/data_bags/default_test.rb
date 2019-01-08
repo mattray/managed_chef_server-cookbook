@@ -11,24 +11,23 @@ end
 
 describe command('knife data bag show users -c /etc/opscode/managed/config.rb') do
   its ('stdout') { should_not match /^user 1$/ } # this one should be pruned
-  its ('stdout') { should match /^user 2$/ }
-  its ('stdout') { should match /^user 3$/ }
-  its ('stdout') { should match /^user 4$/ }
-  its ('stdout') { should_not match /^user FIVE$/ }
+  its ('stdout') { should match /^user2$/ }
+  its ('stdout') { should match /^user3$/ }
+  its ('stdout') { should match /^user4$/ }
 end
 
 # this one is updated by the data_bag_loader
 describe command('knife data bag show users user2 -c /etc/opscode/managed/config.rb') do
-  its ('stdout') { should match /^User Two$/ }
+  its ('stdout') { should match /^name: User 2$/ }
 end
 
 describe command('knife data bag show users user3 -c /etc/opscode/managed/config.rb') do
-  its ('stdout') { should match /^User Three$/ }
+  its ('stdout') { should match /^name: User Three$/ }
 end
 
 describe command('knife data bag show tests -c /etc/opscode/managed/config.rb') do
-  its ('stdout') { should match /^Test One$/ }
-  its ('stdout') { should match /^Test Two$/ }
-  its ('stdout') { should match /^Test Three$/ }
-  its ('stdout') { should_not match /^Test FOUR$/ }
+  its ('stdout') { should match /^test1$/ }
+  its ('stdout') { should match /^test2$/ }
+  its ('stdout') { should match /^test3$/ }
+  its ('stdout') { should match /^aye$/ }
 end
