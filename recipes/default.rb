@@ -73,12 +73,14 @@ end
 # on restore, reset the private key
 execute 'delete managed user key on restore' do
   command "chef-server-ctl delete-user-key #{user_name} default"
+  retries 2
   action :nothing
   subscribes :run, 'execute[knife ec restore]', :immediately
 end
 
 execute 'reset managed user key on restore' do
   command "chef-server-ctl add-user-key #{user_name} --key-name default > #{user_key}"
+  retries 2
   action :nothing
   subscribes :run, 'execute[delete managed user key on restore]', :immediately
 end
@@ -86,12 +88,14 @@ end
 # chef-server-ctl org-create ORG_NAME ORG_FULL_NAME -f FILE_NAME
 execute 'chef-server-ctl org-create' do
   command "chef-server-ctl org-create #{org_name} #{org_full_name} -f #{org_key}"
+  retries 2
   not_if "chef-server-ctl org-list | grep #{org_name}"
 end
 
 # chef-server-ctl user-create USER_NAME FIRST_NAME LAST_NAME EMAIL PASSWORD -f FILE_NAME
 execute 'chef-server-ctl user-create' do
   command "chef-server-ctl user-create #{user_name} #{user_fn} #{user_ln} #{user_email} #{user_pass} -f #{user_key}"
+  retries 2
   sensitive true
   not_if "chef-server-ctl user-list | grep #{user_name}"
 end
@@ -99,6 +103,7 @@ end
 # add the managed user to the managed org as an admin
 execute 'chef-server-ctl org-user-add' do
   command "chef-server-ctl org-user-add #{org_name} #{user_name} --admin"
+  retries 2
   action :nothing
   subscribes :run, 'execute[chef-server-ctl user-create]', :immediately
 end

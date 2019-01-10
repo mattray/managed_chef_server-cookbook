@@ -52,6 +52,10 @@ This file is used to list changes made in each version of the managed-chef-serve
 
 - data_bag_loader recipe and tests
 
+# 0.7.1
+
+- [https://github.com/mattray/managed-chef-server-cookbook/issues/11](more retries built in with chef-server-ctl commands)
+
 # BACKLOG
 
 - maintenance tasks
