@@ -14,8 +14,8 @@ list.each do |dbag|
   existing_dbags[dbag] = {}
   items = `knife data bag show #{dbag} -c #{configrb}`.split
   items.each do |item|
-    content = `knife data bag show #{dbag} #{item} -c #{configrb} --format json`
-    existing_dbags[dbag][item] = eval(content)
+    content = JSON.load(`knife data bag show #{dbag} #{item} -c #{configrb} --format json`)
+    existing_dbags[dbag][item] = content
   end
 end
 
@@ -73,7 +73,7 @@ shared_dbags.each do |dbag|
     # compare existing data bag items with those in the file
     next if existing_dbags.key?(dbag) &&
             existing_dbags[dbag].key?(item) &&
-            file_dbags[dbag][item].to_json.eql?(existing_dbags[dbag][item].to_json)
+            file_dbags[dbag][item].eql?(existing_dbags[dbag][item])
     execute "knife data bag from file #{dbag} #{dbag}/#{file_dbags_files[dbag][item]}" do
       command "knife data bag from file #{dbag} #{dbag}/#{file_dbags_files[dbag][item]} -c #{configrb}"
       cwd dbdir
