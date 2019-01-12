@@ -56,6 +56,11 @@ This file is used to list changes made in each version of the managed-chef-serve
 
 - [https://github.com/mattray/managed-chef-server-cookbook/issues/11](more retries built in with chef-server-ctl commands)
 
+# 0.7.2
+
+- [https://github.com/mattray/managed-chef-server-cookbook/issues/7](legacy_loader is now idempotent and validates .rb environments and roles)
+
+
 # BACKLOG
 
 - maintenance tasks
