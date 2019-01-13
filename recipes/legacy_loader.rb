@@ -63,15 +63,28 @@ directory "delete #{cbtempdir}" do
 end
 
 # environments
+existing_environments = {}
+list = `knife environment list -c #{configrb}`.split
+list.each do |env|
+  content = JSON.load(`knife environment show #{env} -c #{configrb} --format json`)
+  existing_environments[env] = content
+end
+
 envdir = node['mcs']['environments']['dir']
 Dir.foreach(envdir) do |env|
   next unless env.end_with?('.rb', '.json')
-  if env.end_with?('.json') # if it's .json, check the type
+  if env.end_with?('.json')
     json = JSON.parse(File.read(envdir + '/' + env))
-    type = json['chef_type']
-    next unless type.eql?('environment')
+  else # it's .rb
+    environment = Chef::Environment.new
+    environment.from_file(envdir + '/' + env)
+    json = JSON.load(environment.to_json)
   end
-  # we could make this idempotent by comparing the value on the server
+  type = json['chef_type']
+  next unless type.eql?('environment')
+  name = json['name']
+  next if existing_environments.key?(name) &&
+    json.eql?(existing_environments[name])
   execute "knife environment from file #{env}" do
     command "knife environment from file #{env} -c #{configrb}"
     cwd envdir
@@ -79,19 +92,30 @@ Dir.foreach(envdir) do |env|
 end
 
 # roles
+existing_roles = {}
+list = `knife role list -c #{configrb}`.split
+list.each do |role|
+  content = JSON.load(`knife role show #{role} -c #{configrb} --format json`)
+  existing_roles[role] = content
+end
+
 roledir = node['mcs']['roles']['dir']
 Dir.foreach(roledir) do |role|
   next unless role.end_with?('.rb', '.json')
-  if role.end_with?('.json') # if it's .json, check the type
+  if role.end_with?('.json')
     json = JSON.parse(File.read(roledir + '/' + role))
-    type = json['chef_type']
-    next unless type.eql?('role')
+  else # it's .rb
+    roll = Chef::Role.new
+    roll.from_file(roledir + '/' + role)
+    json = JSON.load(roll.to_json)
   end
-  # we could make this idempotent by comparing the value on the server
+  type = json['chef_type']
+  next unless type.eql?('role')
+  name = json['name']
+  next if existing_roles.key?(name) &&
+    json.eql?(existing_roles[name])
   execute "knife role from file #{role}" do
     command "knife role from file #{role} -c #{configrb}"
     cwd roledir
   end
 end
-
-# data bags to be added eventually
