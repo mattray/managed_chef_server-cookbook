@@ -23,6 +23,7 @@ describe command('knife role list -c /etc/opscode/managed/config.rb') do
 end
 
 describe command('knife cookbook list -c /etc/opscode/managed/config.rb') do
+  its ('stdout') { should match /^apt           7.1.1$/ }
   its ('stdout') { should match /^chef-client   11.0.3$/ }
   its ('stdout') { should match /^cron          6.2.1$/ }
   its ('stdout') { should match /^iptables      4.3.4$/ }
@@ -31,4 +32,8 @@ describe command('knife cookbook list -c /etc/opscode/managed/config.rb') do
   its ('stdout') { should match /^ntp           3.6.0$/ }
   its ('stdout') { should match /^openssh       2.7.0$/ }
   its ('stdout') { should match /^sudo          5.4.0$/ }
+end
+
+describe command('knife cookbook show ntp -c /etc/opscode/managed/config.rb') do
+  its ('stdout') { should match /^ntp   3.6.0  3.5.0  3.4.0$/ }
 end
