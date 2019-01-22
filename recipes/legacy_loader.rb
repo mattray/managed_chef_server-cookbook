@@ -12,19 +12,21 @@ configrb = node['mcs']['managed_user']['dir'] + '/config.rb'
 
 # cookbooks
 cbdir = node['mcs']['cookbooks']['dir']
-# temp directory
 cbtempdir = Chef::Config[:file_cache_path] + '/legacycookbooks'
 directory cbtempdir
 
-# untar into temp directory
+# untar into temp directory named after the tarball
 Dir.foreach(cbdir) do |tarfile|
   next unless tarfile.end_with?('.tgz', '.tar.gz')
   # untar each cookbook
   execute "tar -xzf #{tarfile}" do
     cwd cbdir
     command "tar -C #{cbtempdir} -xzf #{tarfile}"
+    # not if the tarball directory already exists
   end
 end
+
+# get rid of the ruby_block, do them individually
 
 # upload all the legacy cookbooks
 ruby_block 'knife cookbook upload legacy' do
@@ -64,9 +66,9 @@ end
 
 # environments
 existing_environments = {}
-list = `knife environment list -c #{configrb}`.split
+list = shell_out("knife environment list -c #{configrb}").stdout.split
 list.each do |env|
-  content = JSON.load(`knife environment show #{env} -c #{configrb} --format json`)
+  content = JSON.load(shell_out!("knife environment show #{env} -c #{configrb} --format json").stdout)
   existing_environments[env] = content
 end
 
@@ -93,9 +95,9 @@ end
 
 # roles
 existing_roles = {}
-list = `knife role list -c #{configrb}`.split
+list = shell_out("knife role list -c #{configrb}").stdout.split
 list.each do |role|
-  content = JSON.load(`knife role show #{role} -c #{configrb} --format json`)
+  content = JSON.load(shell_out!("knife role show #{role} -c #{configrb} --format json").stdout)
   existing_roles[role] = content
 end
 
