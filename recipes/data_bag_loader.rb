@@ -9,12 +9,12 @@ prune = node['mcs']['data_bags']['prune']
 
 # get existing data bags
 existing_dbags = {}
-list = `knife data bag list -c #{configrb}`.split
+list = shell_out("knife data bag list -c #{configrb}").stdout.split
 list.each do |dbag|
   existing_dbags[dbag] = {}
-  items = `knife data bag show #{dbag} -c #{configrb}`.split
+  items = shell_out!("knife data bag show #{dbag} -c #{configrb}").stdout.split
   items.each do |item|
-    content = JSON.load(`knife data bag show #{dbag} #{item} -c #{configrb} --format json`)
+    content = JSON.load(shell_out!("knife data bag show #{dbag} #{item} -c #{configrb} --format json").stdout)
     existing_dbags[dbag][item] = content
   end
 end
