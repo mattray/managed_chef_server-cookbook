@@ -9,6 +9,7 @@ node.override['chefdk']['channel'] = :stable
 
 # load directories for cookbooks, environments, and roles into the Chef server
 configrb = node['mcs']['managed_user']['dir'] + '/config.rb'
+configjson = node['mcs']['managed_user']['dir'] + '/config.json'
 
 # cookbooks
 cbdir = node['mcs']['cookbooks']['dir']
@@ -18,50 +19,48 @@ directory cbtempdir
 # untar into temp directory named after the tarball
 Dir.foreach(cbdir) do |tarfile|
   next unless tarfile.end_with?('.tgz', '.tar.gz')
+  tfcbdir = cbtempdir + '/' + tarfile.gsub(/.tgz$|.tar.gz$/,'')
+  tfmarker = tfcbdir + '-TAR'
+  directory tfcbdir
   # untar each cookbook
   execute "tar -xzf #{tarfile}" do
     cwd cbdir
-    command "tar -C #{cbtempdir} -xzf #{tarfile}"
-    # not if the tarball directory already exists
+    command "tar -C #{tfcbdir} -xzf #{tarfile}"
+    not_if { File.exist?(tfmarker) }
   end
-end
-
-# get rid of the ruby_block, do them individually
-
-# upload all the legacy cookbooks
-ruby_block 'knife cookbook upload legacy' do
-  ignore_failure true
-  block do
-    # from temp directory, either load the Berksfile or read the cookbook/metadata.json
-    cookbooks = ''
-    puts
-    Dir.foreach(cbtempdir) do |cookbook|
-      next if ['.', '..'].member?(cookbook)
-      dir = "#{cbtempdir}/#{cookbook}"
-      next unless File.directory?(dir)
-      # is there a Berksfile? let's load that instead
-      berksfile = dir + '/Berksfile'
-      if File.exist?(berksfile)
-        configjson = node['mcs']['managed_user']['dir'] + '/config.json'
-        puts "berks install -b #{berksfile} -c #{configjson}"
-        shell_out!("berks install -b #{berksfile} -c #{configjson}")
-        puts "berks upload -b #{berksfile} -c #{configjson}"
-        shell_out!("berks upload -b #{berksfile} -c #{configjson}")
-      else
-        json = JSON.parse(File.read(dir + '/metadata.json'))
-        cookbooks += json['name'] + ' '
-      end
-    end
-    unless cookbooks.empty?
-      puts "knife cookbook upload #{cookbooks} -c #{configrb} -o #{cbtempdir}"
-      shell_out!("knife cookbook upload #{cookbooks} -c #{configrb} -o #{cbtempdir}")
-    end
+  # marker file indicating not to untar again
+  file tfmarker do
+    action :nothing
+    subscribes :create, "execute[tar -xzf #{tarfile}]", :immediately
   end
-end
-
-# clean up working directory
-directory "delete #{cbtempdir}" do
-  action :delete
+  # if there's a Berksfile, go to town
+  berksmarker = tfcbdir + '-BERKS'
+  knifemarker = tfcbdir + '-KNIFE'
+  ruby_block "berks install/upload #{tarfile}" do
+    block do
+      berksfile = tfcbdir + '/' + shell_out("ls #{tfcbdir}").stdout.chomp + '/Berksfile'
+      shell_out!("berks install -b #{berksfile} -c #{configjson}")
+      shell_out!("berks upload -b #{berksfile} -c #{configjson}")
+    end
+    only_if { File.exist?(tfcbdir + '/' + shell_out("ls #{tfcbdir}").stdout.chomp + '/Berksfile') }
+    not_if { File.exist?(berksmarker) }
+    not_if { File.exist?(knifemarker) }
+    notifies :create, "file[#{berksmarker}]", :immediately
+  end
+  file berksmarker do
+    action :nothing
+  end
+  # we'll try knife cookbook upload otherwise. This could take multiple passes given dependencies
+  execute "knife cookbook upload #{tarfile}" do
+    command "knife cookbook upload -a -c #{configrb} -o #{tfcbdir}"
+    ignore_failure true
+    not_if { File.exist?(berksmarker) }
+    not_if { File.exist?(knifemarker) }
+    notifies :create, "file[#{knifemarker}]", :immediately
+  end
+  file knifemarker do
+    action :nothing
+  end
 end
 
 # environments
@@ -121,3 +120,12 @@ Dir.foreach(roledir) do |role|
     cwd roledir
   end
 end
+
+# knife cookbook delete ntp 3.4.0 -y -c /etc/opscode/managed/config.rb; knife cookbook delete ntp 3.5.0 -y -c /etc/opscode/managed/config.rb; knife cookbook delete ntp 3.6.0 -y -c /etc/opscode/managed/config.rb; knife cookbook delete apt -y -c /etc/opscode/managed/config.rb; knife cookbook delete chef-client -y -c /etc/opscode/managed/config.rb; knife cookbook delete cron -y -c /etc/opscode/managed/config.rb; knife cookbook delete logrotate -y -c /etc/opscode/managed/config.rb; knife cookbook delete test -y -c /etc/opscode/managed/config.rb; knife cookbook delete sudo 5.4.0 -y -c /etc/opscode/managed/config.rb; knife cookbook delete sudo 5.5.0 -y -c /etc/opscode/managed/config.rb; knife cookbook delete mattray -y -c /etc/opscode/managed/config.rb; knife cookbook delete openssh -y -c /etc/opscode/managed/config.rb; knife cookbook delete iptables -y -c /etc/opscode/managed/config.rb;
+
+
+#        mattray-e05a337121886cef84c257b2b34afa0ccaa7ec8b
+#        openssh-364454bb9bf013a49f919a66b1234aba8c555380
+#        sudo
+#        sudo-5.5
+#        iptables-f22c85827ea7aeb84405a95fb970e90adda48bf0
