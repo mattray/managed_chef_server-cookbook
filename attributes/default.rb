@@ -59,3 +59,10 @@ default['mcs']['roles']['dir'] = nil
 # policyfile_loader recipe
 default['mcs']['policyfile']['dir'] = nil
 default['mcs']['policyfile']['group'] = '_default'
+
+# added to ensure the chef-server-ctl test won't fail becasue of ldap integration
+default['mcs']['skip_test'] = false
+
+# added to pass custom config to chef server
+# for details refer to https://github.com/chef-cookbooks/chef-server#configuring-chef-server
+default['chef-server']['configuration'] = ''
