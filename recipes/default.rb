@@ -112,4 +112,5 @@ execute 'verify the chef-server is working as expected' do
   command 'chef-server-ctl test'
   action :nothing
   subscribes :run, 'chef_ingredient[chef-server]'
+  not_if { node['mcs']['skip_test'] }
 end
