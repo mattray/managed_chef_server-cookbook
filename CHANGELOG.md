@@ -60,9 +60,12 @@ This file is used to list changes made in each version of the managed-chef-serve
 
 - [https://github.com/mattray/managed-chef-server-cookbook/issues/7](legacy_loader is now idempotent and validates .rb environments and roles)
 
+# 0.8.0
+
+- [https://github.com/mattray/managed-chef-server-cookbook/pull/17](added skipping the Chef Server pedant tests)
+
 
 # BACKLOG
-
 - maintenance tasks
 sudo /opt/chef/embedded/bin/inspec exec inspec-chef-server --attrs=config.yml
 sudo /opt/chef/embedded/bin/inspec exec https://github.com/chef/inspec-chef-server.git --attrs=config.yml

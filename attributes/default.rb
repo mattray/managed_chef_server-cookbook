@@ -60,7 +60,7 @@ default['mcs']['roles']['dir'] = nil
 default['mcs']['policyfile']['dir'] = nil
 default['mcs']['policyfile']['group'] = '_default'
 
-# added to ensure the chef-server-ctl test won't fail becasue of ldap integration
+# added to allow skipping chef-server-ctl test for already deployed systems
 default['mcs']['skip_test'] = false
 
 # added to pass custom config to chef server
