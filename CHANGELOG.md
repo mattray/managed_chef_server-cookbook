@@ -65,9 +65,12 @@ This file is used to list changes made in each version of the managed-chef-serve
 - [https://github.com/mattray/managed-chef-server-cookbook/pull/17](added skipping the Chef Server pedant tests)
 
 
+# 0.9.0
+
+- Added support for policyfiles to set their policy group by setting the `['mcs']['policyfile']['group']` attribute
+
 # BACKLOG
 - maintenance tasks
-sudo /opt/chef/embedded/bin/inspec exec inspec-chef-server --attrs=config.yml
 sudo /opt/chef/embedded/bin/inspec exec https://github.com/chef/inspec-chef-server.git --attrs=config.yml
 inspec exec https://github.com/mattray/inspec-chef-server/tree/rhel --attrs=config.yml
 inspec exec https://github.com/mattray/inspec-chef-server/tree/rhel --target=ssh://192.168.33.22:2222 --user=vagrant --key-files=~/.vagrant.d/insecure_private_key --attrs=test/config.yml --sudo
