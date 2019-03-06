@@ -91,6 +91,7 @@ vendor/*
 ##############
 Policyfile.rb
 Policyfile.lock.json
+policyfiles/*
 
 # Cookbooks #
 #############
