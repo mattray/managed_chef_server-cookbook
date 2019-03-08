@@ -15,6 +15,21 @@ node.override['chefdk']['channel'] = :stable
 policydir = node['mcs']['policyfile']['dir']
 configrb = node['mcs']['managed_user']['dir'] + '/config.rb'
 
+# construct hash of existing policies
+poldump = Mixlib::ShellOut.new("chef show-policy -c #{configrb} | egrep -v -e '^$|^=====|NOT APPLIED'")
+poldump.run_command
+policies = {}
+pol = ''
+poldump.stdout.each_line do |line|
+  if line.include? '*'
+    pgroup = line.split[1]
+    prevision = line.split[2]
+    policies[pgroup + prevision] = pol
+  else
+    pol = line.to_str.chomp
+  end
+end
+
 # find the local policyfiles
 unless policydir.nil?
   Dir.foreach(policydir) do |pfile|
@@ -24,7 +39,7 @@ unless policydir.nil?
     plock = JSON.parse(File.read(policydir + '/' + pfile))
     revision = plock['revision_id']
     policyname = plock['name']
-    short_rev = revision[0, 9]
+    short_rev = revision[0, 10]
     # match the right policyfile archive based on name in lock file
     filename = policydir + '/' + policyname + '-' + revision + '.tgz'
 
@@ -37,7 +52,8 @@ unless policydir.nil?
     execute "chef push-archive #{policygroup} #{filename}" do
       command "chef push-archive #{policygroup} #{filename} -c #{configrb}"
       # add a guard to check if chef show-policy indicates the policy is already installed
-      not_if "chef show-policy #{policyname} -c #{configrb} | grep '* #{policygroup}:' | grep #{short_rev}"
+      polindex = policygroup + ':' + short_rev
+      only_if { policies[polindex].nil? }
     end
   end
 end
