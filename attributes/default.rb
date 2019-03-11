@@ -59,6 +59,7 @@ default['mcs']['roles']['dir'] = nil
 # policyfile_loader recipe
 default['mcs']['policyfile']['dir'] = nil
 default['mcs']['policyfile']['group'] = '_default'
+default['mcs']['policyfile']['lockfiletype'] = '.lock.json'
 
 # added to allow skipping chef-server-ctl test for already deployed systems
 default['mcs']['skip_test'] = false
