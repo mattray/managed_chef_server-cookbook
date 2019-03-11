@@ -14,6 +14,7 @@ node.override['chefdk']['channel'] = :stable
 
 policydir = node['mcs']['policyfile']['dir']
 configrb = node['mcs']['managed_user']['dir'] + '/config.rb'
+lockfiletype = node['mcs']['policyfile']['lockfiletype'].nil? ? '.lock.json' : node['mcs']['policyfile']['lockfiletype']
 
 # construct hash of existing policies
 poldump = Mixlib::ShellOut.new("chef show-policy -c #{configrb} | egrep -v -e '^$|^=====|NOT APPLIED'")
@@ -33,7 +34,7 @@ end
 # find the local policyfiles
 unless policydir.nil?
   Dir.foreach(policydir) do |pfile|
-    next unless pfile.end_with?('.lock.json')
+    next unless pfile.end_with?(lockfiletype)
 
     # parse the JSON file, get the revision ID
     plock = JSON.parse(File.read(policydir + '/' + pfile))
