@@ -18,7 +18,7 @@ policyname = ''
 show_policy.stdout.each_line do |line|
   next if line.empty?
   next if line.start_with?('=')
-  next if line.match('NOT APPLIED')
+  next if line =~ /NOT APPLIED/
   line.chomp!
   if line.start_with?('*')
     policygroup = line.split[1]
