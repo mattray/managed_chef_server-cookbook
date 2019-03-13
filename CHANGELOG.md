@@ -72,6 +72,7 @@ This file is used to list changes made in each version of the managed-chef-serve
 # 0.10.0
 
 - Skip existing policies to speed up loading
+- remove chefdk cookbook dependency in favor of directly using chef_ingredient
 
 # BACKLOG
 
