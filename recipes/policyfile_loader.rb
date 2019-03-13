@@ -8,25 +8,24 @@ include_recipe 'chefdk::default'
 node.override['chefdk']['channel'] = :stable
 
 # loads all of the policyfile lock files in a directory into the Chef server
-# chef install base.rb     # generates base.lock.json
-# chef export base.rb . -a # generates base-VERSION.tgz
-# chef push-archive POLICY_GROUP base-VERSION.tgz -c config_file --debug
-
 policydir = node['mcs']['policyfile']['dir']
 configrb = node['mcs']['managed_user']['dir'] + '/config.rb'
 
-# construct hash of existing policies
-poldump = Mixlib::ShellOut.new("chef show-policy -c #{configrb} | egrep -v -e '^$|^=====|NOT APPLIED'")
-poldump.run_command
-policies = {}
-pol = ''
-poldump.stdout.each_line do |line|
-  if line.include? '*'
-    pgroup = line.split[1]
-    prevision = line.split[2]
-    policies[pgroup + prevision] = pol
+# construct hash of existing policies to skip
+show_policy = shell_out("chef show-policy -c #{configrb}")
+existing_policies = {}
+policyname = ''
+show_policy.stdout.each_line do |line|
+  next if line.empty?
+  next if line.start_with?('=')
+  next if line.match('NOT APPLIED')
+  line.chomp!
+  if line.start_with?('*')
+    policygroup = line.split[1]
+    short_rev = line.split[2]
+    existing_policies[policygroup + short_rev] = policyname
   else
-    pol = line.to_str.chomp
+    policyname = line
   end
 end
 
@@ -47,13 +46,12 @@ unless policydir.nil?
     # if the policyfile sets the group, use that value
     policygroup = plock['default_attributes']['mcs']['policyfile']['group'] unless plock.dig('default_attributes', 'mcs', 'policyfile', 'group').nil?
     policygroup = plock['override_attributes']['mcs']['policyfile']['group'] unless plock.dig('override_attributes', 'mcs', 'policyfile', 'group').nil?
+    polindex = policygroup + ':' + short_rev
 
     # push the archive to the policygroup under the policy name
     execute "chef push-archive #{policygroup} #{filename}" do
       command "chef push-archive #{policygroup} #{filename} -c #{configrb}"
-      # add a guard to check if chef show-policy indicates the policy is already installed
-      polindex = policygroup + ':' + short_rev
-      only_if { policies[polindex].nil? }
+      not_if { existing_policies[polindex] }
     end
   end
 end
