@@ -69,8 +69,17 @@ This file is used to list changes made in each version of the managed-chef-serve
 
 - Added support for policyfiles to set their policy group by setting the `['mcs']['policyfile']['group']` attribute
 
+# 0.10.0
+
+- Skip existing policies to speed up loading
+
 # BACKLOG
-- maintenance tasks
-sudo /opt/chef/embedded/bin/inspec exec https://github.com/chef/inspec-chef-server.git --attrs=config.yml
-inspec exec https://github.com/mattray/inspec-chef-server/tree/rhel --attrs=config.yml
-inspec exec https://github.com/mattray/inspec-chef-server/tree/rhel --target=ssh://192.168.33.22:2222 --user=vagrant --key-files=~/.vagrant.d/insecure_private_key --attrs=test/config.yml --sudo
+
+## maintenance recipe ##
+
+Maintaining the Chef server may involve periodically cleaning up stale nodes and unused policies. This is likely to use `knife-tidy` and various `chef` commands. Scheduling and implementation TBD.
+
+- refactor into libraries to reduce Ruby in recipes
+- refactor default recipe to split install and restores
+- inspec for configuration checks
+  inspec exec https://github.com/mattray/inspec-chef-server/tree/rhel --attrs=config.yml

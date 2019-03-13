@@ -1,16 +1,16 @@
 # managed-chef-server
 
-Deploys and configures the Chef server in a stateless model.
+Deploys and configures the Chef server in a relatively stateless model.
 
 # Recipes
 
 ## default ##
 
-Install or restore the Chef Server in a new deployment, wrapping the [https://github.com/chef-cookbooks/chef-server](Chef-Server) cookbook. It looks for the existence of a knife-ec-backup tarball to restore from, configured with the `node['mcs']['restore']['file']` attribute. It then creates a managed Chef organization and an org-managing admin user.
+Install or restore the Chef Server in a new deployment, wrapping the [https://github.com/chef-cookbooks/chef-server](Chef-Server) cookbook. It looks for the existence of a [knife-ec-backup](https://github.com/chef/knife-ec-backup) tarball to restore from, configured with the `node['mcs']['restore']['file']` attribute. It then creates a managed Chef organization and an org-managing admin user through the appropriate [attributes](attributes/default.rb#23).
 
 ## backup ##
 
-Runs `knife-ec-backup` via cron. The default is 2:30am daily, but you may change the cron schedule via the following attributes.
+Runs `knife ec backup` via cron. The default is 2:30am daily, but you may change the cron schedule via the following attributes.
 
     node['mcs']['backup']['cron']['minute'] = '30'
     node['mcs']['backup']['cron']['hour'] = '2'
@@ -18,11 +18,7 @@ Runs `knife-ec-backup` via cron. The default is 2:30am daily, but you may change
 
 ## cron ##
 
-Installs the Chef server with the chef-client configured to run via cron. This may be set to use chef-zero, for when the Chef server has no other Chef server to reference. See the example [policyfiles/cron.rb](policyfile/cron.rb) and [.kitchen.yml](.kitchen.yml) for reference.
-
-## maintenance ##
-
-Maintaining the Chef server may involve periodically cleaning up stale nodes and unused policyfiles. This is likely to use `knife-tidy` and various `chef` commands. Scheduling and implementation TBD.
+Installs the Chef server with the Chef client configured to run via cron. This may be set to use `--local-mode`, for when the Chef client has no other Chef server to contact. See the example [policyfiles/cron.rb](policyfile/cron.rb) and [kitchen.yml](kitchen.yml) for reference.
 
 ## data_bag_loader ##
 
@@ -36,13 +32,9 @@ Takes the `node['mcs']['cookbooks']['dir']`, `node['mcs']['environments']['dir']
 
 Takes the `node['mcs']['policyfile']['dir']` and parses any `.lock.json` files to determine which policyfile archives to load into the local Chef server. Policies will be assigned to the group designated by the `node['mcs']['policyfile']['group']` attribute for the Chef server (`_default` is the default). If the policy itself sets the `node['mcs']['policyfile']['group']` attribute, the policy will be assigned to that group.
 
-# Attributes
-
-Additional attributes are documented in the [attributes/default.rb](attributes/default.rb).
-
 # Testing
 
-There is a [.kitchen.yml](.kitchen.yml) that may be used for testing with Vagrant. The [.kitchen.vagrant.yml](.kitchen.vagrant.yml) may be symlinked as **.kitchen.local.yml** and used with local caches to speed up testing. If you want to use Docker, [.kitchen.dokken.yml](.kitchen.dokken.yml) may be used but it does not persist changes between runs and is thus not significantly faster (it's slower than Vagrant with caching). The following Suites map to example [policyfiles](policyfiles) that may be repurposed as necessary:
+There is a [kitchen.yml](kitchen.yml) that may be used for testing with Vagrant. The [kitchen.vagrant.yml](kitchen.vagrant.yml) may be symlinked as **kitchen.local.yml** and used with local caches to speed up testing. If you want to use Docker, [kitchen.dokken.yml](kitchen.dokken.yml) may be used but it does not persist changes between runs and is thus not significantly faster (it's slower than Vagrant with caching). The following Suites map to example [policyfiles](policyfiles) that may be repurposed as necessary:
 
 ## default
 
@@ -79,7 +71,7 @@ Installs the Chef server, restores from a backup, attempts to load policyfiles (
 ## License and Authors
 
 - Author: Matt Ray [matt@chef.io](mailto:matt@chef.io)
-- Copyright 2018, Chef Software, Inc
+- Copyright 2018-2019, Chef Software, Inc
 
 ```text
 Licensed under the Apache License, Version 2.0 (the "License");
