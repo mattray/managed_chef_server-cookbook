@@ -4,8 +4,12 @@
 #
 
 # need the ChefDK for the 'berks' command
-include_recipe 'chefdk::default'
-node.override['chefdk']['channel'] = :stable
+chef_ingredient 'chefdk' do
+  action :install
+  version node['chefdk']['version']
+  channel node['chefdk']['channel']
+  package_source node['chefdk']['package_source']
+end.run_action(:install)
 
 # load directories for cookbooks, environments, and roles into the Chef server
 configrb = node['mcs']['managed_user']['dir'] + '/config.rb'
@@ -19,7 +23,7 @@ directory cbtempdir
 # untar into temp directory named after the tarball
 Dir.foreach(cbdir) do |tarfile|
   next unless tarfile.end_with?('.tgz', '.tar.gz')
-  tfcbdir = cbtempdir + '/' + tarfile.gsub(/.tgz$|.tar.gz$/,'')
+  tfcbdir = cbtempdir + '/' + tarfile.gsub(/.tgz$|.tar.gz$/, '')
   tfmarker = tfcbdir + '-TAR'
   directory tfcbdir
   # untar each cookbook
@@ -85,7 +89,7 @@ Dir.foreach(envdir) do |env|
   next unless type.eql?('environment')
   name = json['name']
   next if existing_environments.key?(name) &&
-    json.eql?(existing_environments[name])
+          json.eql?(existing_environments[name])
   execute "knife environment from file #{env}" do
     command "knife environment from file #{env} -c #{configrb}"
     cwd envdir
@@ -114,18 +118,9 @@ Dir.foreach(roledir) do |role|
   next unless type.eql?('role')
   name = json['name']
   next if existing_roles.key?(name) &&
-    json.eql?(existing_roles[name])
+          json.eql?(existing_roles[name])
   execute "knife role from file #{role}" do
     command "knife role from file #{role} -c #{configrb}"
     cwd roledir
   end
 end
-
-# knife cookbook delete ntp 3.4.0 -y -c /etc/opscode/managed/config.rb; knife cookbook delete ntp 3.5.0 -y -c /etc/opscode/managed/config.rb; knife cookbook delete ntp 3.6.0 -y -c /etc/opscode/managed/config.rb; knife cookbook delete apt -y -c /etc/opscode/managed/config.rb; knife cookbook delete chef-client -y -c /etc/opscode/managed/config.rb; knife cookbook delete cron -y -c /etc/opscode/managed/config.rb; knife cookbook delete logrotate -y -c /etc/opscode/managed/config.rb; knife cookbook delete test -y -c /etc/opscode/managed/config.rb; knife cookbook delete sudo 5.4.0 -y -c /etc/opscode/managed/config.rb; knife cookbook delete sudo 5.5.0 -y -c /etc/opscode/managed/config.rb; knife cookbook delete mattray -y -c /etc/opscode/managed/config.rb; knife cookbook delete openssh -y -c /etc/opscode/managed/config.rb; knife cookbook delete iptables -y -c /etc/opscode/managed/config.rb;
-
-
-#        mattray-e05a337121886cef84c257b2b34afa0ccaa7ec8b
-#        openssh-364454bb9bf013a49f919a66b1234aba8c555380
-#        sudo
-#        sudo-5.5
-#        iptables-f22c85827ea7aeb84405a95fb970e90adda48bf0
