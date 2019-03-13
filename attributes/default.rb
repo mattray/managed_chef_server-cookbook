@@ -51,6 +51,11 @@ default['mcs']['cron']['zero_dir'] = Chef::Config[:file_cache_path] + '/mcs-cron
 default['mcs']['data_bags']['dir'] = nil
 default['mcs']['data_bags']['prune'] = false
 
+# ChefDK attributes cargo-culted for compatibility
+default['chefdk']['channel'] = :stable
+default['chefdk']['version'] = 'latest'
+default['chefdk']['package_source'] = nil
+
 # legacy_loader recipe
 default['mcs']['cookbooks']['dir'] = nil
 default['mcs']['environments']['dir'] = nil

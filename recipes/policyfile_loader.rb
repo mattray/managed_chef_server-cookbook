@@ -4,8 +4,12 @@
 #
 
 # need the ChefDK for the 'chef' command
-include_recipe 'chefdk::default'
-node.override['chefdk']['channel'] = :stable
+chef_ingredient 'chefdk' do
+  action :install
+  version node['chefdk']['version']
+  channel node['chefdk']['channel']
+  package_source node['chefdk']['package_source']
+end.run_action(:install)
 
 # loads all of the policyfile lock files in a directory into the Chef server
 policydir = node['mcs']['policyfile']['dir']
