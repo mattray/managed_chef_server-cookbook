@@ -69,6 +69,7 @@ default['mcs']['policyfile']['lockfiletype'] = '.lock.json'
 # added to allow skipping chef-server-ctl test for already deployed systems
 default['mcs']['skip_test'] = false
 
-# added to pass custom config to chef server
-# for details refer to https://github.com/chef-cookbooks/chef-server#configuring-chef-server
-default['chef-server']['configuration'] = ''
+# _tuning recipe
+# if you want to configure the settings in the _tuning recipe you may set these
+# please refer to the recipe source for explanations and documentation links
+default['mcs']['opscode_solr4']['heap_size'] = nil

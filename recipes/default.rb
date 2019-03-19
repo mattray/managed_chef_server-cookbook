@@ -3,6 +3,9 @@
 # Recipe:: default
 #
 
+# performance tuning based off of recommendations in https://docs.chef.io/server_tuning.html#large-node-sizes
+include_recipe 'managed-chef-server::_tuning'
+
 # chef-server install
 include_recipe 'chef-server::default'
 

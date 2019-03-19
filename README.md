@@ -6,7 +6,7 @@ Deploys and configures the Chef server in a relatively stateless model.
 
 ## default ##
 
-Install or restore the Chef Server in a new deployment, wrapping the [https://github.com/chef-cookbooks/chef-server](Chef-Server) cookbook. It looks for the existence of a [knife-ec-backup](https://github.com/chef/knife-ec-backup) tarball to restore from, configured with the `node['mcs']['restore']['file']` attribute. It then creates a managed Chef organization and an org-managing admin user through the appropriate [attributes](attributes/default.rb#23).
+Install or restore the Chef Server in a new deployment, wrapping the [Chef-Server](https://github.com/chef-cookbooks/chef-server) cookbook. It looks for the existence of a [knife-ec-backup](https://github.com/chef/knife-ec-backup) tarball to restore from, configured with the `node['mcs']['restore']['file']` attribute. It then creates a managed Chef organization and an org-managing admin user through the appropriate [attributes](attributes/default.rb#23).
 
 ## backup ##
 
@@ -68,7 +68,10 @@ Adds loading cookbooks, environments and roles from the included [test](test) di
 
 Installs the Chef server, restores from a backup, attempts to load policyfiles (which are included in the restored backup) and adds backup via cron.
 
-## License and Authors
+# Attributes
+The [default.rb](attributes/default.rb) attributes file documents available settings and tunings.
+
+# License and Authors
 
 - Author: Matt Ray [matt@chef.io](mailto:matt@chef.io)
 - Copyright 2018-2019, Chef Software, Inc
