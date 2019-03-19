@@ -74,6 +74,10 @@ This file is used to list changes made in each version of the managed-chef-serve
 - Skip existing policies to speed up loading
 - remove chefdk cookbook dependency in favor of directly using chef_ingredient
 
+# 0.11.0
+
+- Added private performance tuning recipe [_tuning.rb](recipes/_tuning.rb)
+
 # BACKLOG
 
 ## maintenance recipe ##
