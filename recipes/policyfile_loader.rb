@@ -33,7 +33,6 @@ ruby_block 'inspect existing policies' do
       end
     end
     node.run_state['existing_policies'] = existing_policies
-    # puts existing_policies
   end
 end
 
@@ -50,6 +49,21 @@ ruby_block 'load new policies' do
       polindex = policygroup + ':' + plock['revision_id'][0, 10]
       print "\nPushing policy #{plock['name']} #{plock['revision_id'][0, 10]} to policy group #{policygroup}" unless node.run_state['existing_policies'][polindex]
       shell_out("chef push-archive #{policygroup} #{filename} -c #{configrb}") unless node.run_state['existing_policies'][polindex]
+      node.run_state['existing_policies'].delete(polindex)
     end
   end
+end
+
+# after the above block completes, the existing_policies hash only contains policies that don't exist in the policydir
+# so we delete them if that's an option
+
+ruby_block 'remove unused policies' do
+  block do
+    node.run_state['existing_policies'].each do |_key, pol|
+      print "\nDeleting unused policy #{pol}"
+      shell_out("chef delete-policy #{pol} -c #{configrb}")
+    end
+  end
+  only_if { node['mcs']['policyfile']['purge'] }
+  not_if { node.run_state['existing_policies'].empty? }
 end
