@@ -38,7 +38,7 @@ end
 # postgresql['log_min_duration_statement'] = 1000
 
 # chef-server configuration settings
-node.override['chef-server']['configuration'] = <<-EOS
+node.default['chef-server']['configuration'] = <<-EOS
 opscode_solr4['heap_size'] = #{solr_heap_size}
 postgresql['checkpoint_completion_target'] = 0.9
 postgresql['checkpoint_segments'] = 64
