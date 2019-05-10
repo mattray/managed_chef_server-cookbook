@@ -107,8 +107,7 @@ end
 execute 'chef-server-ctl org-user-add' do
   command "chef-server-ctl org-user-add #{org_name} #{user_name} --admin"
   retries 2
-  action :nothing
-  subscribes :run, 'execute[chef-server-ctl user-create]', :immediately
+  not_if "chef-server-ctl user-show #{user_name} -l | grep '^organizations:' | grep ' #{org_name}$'"
 end
 
 execute 'verify the chef-server is working as expected' do
