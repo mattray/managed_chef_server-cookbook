@@ -22,7 +22,7 @@ end
 # get list of data bags to manage
 file_dbags = {}
 file_dbags_files = {} # file associated with the data bag items
-unless dbdir.nil?
+unless dbdir.nil? || Dir.exist?(dbdir)
   Dir.foreach(dbdir) do |dbag|
     next if ['.', '..'].member?(dbag)
     file_dbags[dbag] = {}
