@@ -22,11 +22,11 @@ ruby_block 'list existing data bags' do
       end
     end
     node.run_state['existing_dbags'] = existing_dbags
-    # puts "LLLL #{existing_dbags.to_json}"
-    # puts "MMMM #{node.run_state['existing_dbags'].to_json}"
   end
 end
 
+file_dbags = {}
+file_dbags_files = {}
 node.run_state['file_dbags'] = {}
 node.run_state['file_dbags_files'] = {}
 
@@ -48,7 +48,7 @@ ruby_block 'get list of data bags to manage' do
     node.run_state['file_dbags'] = file_dbags
     node.run_state['file_dbags_files'] = file_dbags_files
   end
-  not_if { dbdir.nil? || Dir.exist?(dbdir) }
+  not_if { dbdir.nil? || !Dir.exist?(dbdir) }
 end
 
 # if we are pruning we are deleting unmanaged data bags and items
