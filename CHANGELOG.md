@@ -78,6 +78,13 @@ This file is used to list changes made in each version of the managed-chef-serve
 
 - Added private performance tuning recipe [_tuning.rb](recipes/_tuning.rb)
 
+# 0.12.0
+
+- lowered precedence of tuning attributes to default from overkill
+- add the admin user to the org if it's missing, not just on a first create
+- ensure the data bag directory exists when loading data bags
+- [https://github.com/mattray/managed-chef-server-cookbook/pull/22](refactor to use rubyblocks instead of raw ruby in recipes, fixes race conditions)
+
 # BACKLOG
 
 ## maintenance recipe ##
