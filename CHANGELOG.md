@@ -85,6 +85,12 @@ This file is used to list changes made in each version of the managed-chef-serve
 - ensure the data bag directory exists when loading data bags
 - [https://github.com/mattray/managed-chef-server-cookbook/pull/22](refactor to use rubyblocks instead of raw ruby in recipes, fixes race conditions)
 
+# 0.13.0
+
+- minimum Chef version is now 14
+- added Chef 15 support for all CLIs
+- new kitchen test suites for testing Chef 14 and 15 versions
+
 # BACKLOG
 
 ## maintenance recipe ##

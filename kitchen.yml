@@ -12,8 +12,9 @@ driver:
 provisioner:
   name: chef_zero
   always_update_cookbooks: true
+  chef_license: accept
   product_name: chef
-  product_version: 13.8.5
+  product_version: 14.13.11
 
 verifier:
   name: inspec
@@ -22,9 +23,17 @@ platforms:
   - name: centos-7
 
 suites:
-  - name: default
+  - name: 14default
     provisioner:
       policyfile: policyfiles/default.rb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+  - name: 15default
+    provisioner:
+      policyfile: policyfiles/default.rb
+      product_name: chef
+      product_version: 15.0.300
     verifier:
       inspec_tests:
         - test/integration/default
@@ -54,30 +63,69 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/cron
-  - name: data_bags
+  - name: 14data_bags
     provisioner:
       policyfile: policyfiles/data_bags.rb
     verifier:
       inspec_tests:
         - test/integration/default
         - test/integration/data_bags
-  - name: legacy
+  - name: 15data_bags
+    provisioner:
+      policyfile: policyfiles/data_bags.rb
+      product_name: chef
+      product_version: 15.0.300
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_bags
+  - name: 14legacy
     provisioner:
       policyfile: policyfiles/legacy.rb
     verifier:
       inspec_tests:
         - test/integration/default
         - test/integration/legacy
-  - name: policyfile
+  - name: 15legacy
+    provisioner:
+      policyfile: policyfiles/legacy.rb
+      product_name: chef
+      product_version: 15.0.300
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/legacy
+  - name: 14policyfile
     provisioner:
       policyfile: policyfiles/policyfile.rb
     verifier:
       inspec_tests:
         - test/integration/default
         - test/integration/policyfiles
-  - name: everything
+  - name: 15policyfile
+    provisioner:
+      policyfile: policyfiles/policyfile.rb
+      product_name: chef
+      product_version: 15.0.300
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/policyfiles
+  - name: 14everything
     provisioner:
       policyfile: policyfiles/everything.rb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/backup
+        - test/integration/data_bags
+        - test/integration/legacy
+        - test/integration/policyfiles
+  - name: 15everything
+    provisioner:
+      policyfile: policyfiles/everything.rb
+      product_name: chef
+      product_version: 15.0.300
     verifier:
       inspec_tests:
         - test/integration/default

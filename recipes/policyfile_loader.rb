@@ -27,7 +27,7 @@ policyname = ''
 # construct hash of existing policies
 ruby_block 'inspect existing policies' do
   block do
-    shell_out("chef show-policy -c #{configrb}").stdout.each_line do |line|
+    shell_out("CHEF_LICENSE='accept-no-persist' chef show-policy -c #{configrb}").stdout.each_line do |line|
       line.chomp!
       next if line.empty? || line.start_with?('=') || line =~ /NOT APPLIED/
       if line.start_with?('*')
@@ -55,7 +55,7 @@ ruby_block 'load new policies' do
       policygroup = plock['override_attributes']['mcs']['policyfile']['group'] unless plock.dig('override_attributes', 'mcs', 'policyfile', 'group').nil?
       polindex = policygroup + ':' + plock['revision_id'][0, 10]
       print "\nPushing policy #{plock['name']} #{plock['revision_id'][0, 10]} to policy group #{policygroup}" unless node.run_state['existing_policies'][polindex]
-      shell_out("chef push-archive #{policygroup} #{filename} -c #{configrb}") unless node.run_state['existing_policies'][polindex]
+      shell_out("CHEF_LICENSE='accept-no-persist' chef push-archive #{policygroup} #{filename} -c #{configrb}") unless node.run_state['existing_policies'][polindex]
       node.run_state['existing_names'].delete(plock['name']) # any policyname encountered in the policydir is to be kept regardless of revision
     end
   end
@@ -68,7 +68,7 @@ ruby_block 'remove unused policies' do
   block do
     node.run_state['existing_names'].each do |policy|
       print "\nDeleting unused policy #{policy}"
-      shell_out("chef delete-policy #{policy} -c #{configrb}")
+      shell_out("CHEF_LICENSE='accept-no-persist' chef delete-policy #{policy} -c #{configrb}")
     end
     # we could do this here or in the maintenance recipe
     # shell_out("chef clean-policy-revisions -c #{configrb}")
