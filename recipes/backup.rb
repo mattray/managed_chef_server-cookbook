@@ -22,7 +22,7 @@ end
 
 # schedule backup on a recurring cron job. Override attributes as necessary
 cron 'knife ec backup' do
-  environment ({ 'PWD' => backupdir })
+  environment('PWD' => backupdir)
   command command
   minute node['mcs']['backup']['cron']['minute']
   hour node['mcs']['backup']['cron']['hour']
