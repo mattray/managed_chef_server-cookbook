@@ -6,7 +6,7 @@ Deploys and configures the Chef server in a relatively stateless model.
 
 ## default ##
 
-Install or restore the Chef Server in a new deployment, wrapping the [Chef-Server](https://github.com/chef-cookbooks/chef-server) cookbook. It looks for the existence of a [knife-ec-backup](https://github.com/chef/knife-ec-backup) tarball to restore from, configured with the `node['mcs']['restore']['file']` attribute. It then creates a managed Chef organization and an org-managing admin user through the appropriate [attributes](attributes/default.rb#23).
+Install or restore the Chef Server in a new deployment, wrapping the [Chef-Server](https://github.com/chef-cookbooks/chef-server) cookbook. It looks for the existence of a [knife-ec-backup](https://github.com/chef/knife-ec-backup) tarball to restore from, configured with the `node['mcs']['restore']['file']` attribute. It then creates a managed Chef organization and an org-managing admin user through the appropriate [attributes](attributes/default.rb#24).
 
 ## backup ##
 
@@ -70,6 +70,18 @@ Installs the Chef server, restores from a backup, attempts to load policyfiles (
 
 # Attributes
 The [default.rb](attributes/default.rb) attributes file documents available settings and tunings.
+
+# Custom Resources
+
+Custom resources are used to reduce the complexity of the included recipes.
+
+## chef_server
+
+This resource has a `:restore` action and requires a `tarball` property specifying the `knife ec backup` tarball to restore from.
+
+## managed_organization
+
+The `:create` action will instantiate a Chef server organization with an internal administrator user. The name properties is the `organization`. The organization's `full_name`, `email`, and `password` are all optional properties.
 
 # License and Authors
 

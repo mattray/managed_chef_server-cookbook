@@ -96,7 +96,13 @@ This file is used to list changes made in each version of the managed-chef-serve
 - refactor new Custom Resources
   - chef_server :restore
   - managed_organization :create
+- the following attributes were removed to simplify managing multiple organizations
+  -default['mcs']['managed_user']['dir']
+  -default['mcs']['managed_user']['user_name']
+  -default['mcs']['managed_user']['first_name']
+  -default['mcs']['managed_user']['last_name']
 
+- all the loaders will use the organization
 - data bag loader is slow
 - policyfile loader is slow
 
