@@ -96,11 +96,19 @@ This file is used to list changes made in each version of the managed-chef-serve
 - refactor new Custom Resources
   - chef_server :restore
   - managed_organization :create
+  - chef_server_backup :create
 - the following attributes were removed to simplify managing multiple organizations
   -default['mcs']['managed_user']['dir']
   -default['mcs']['managed_user']['user_name']
   -default['mcs']['managed_user']['first_name']
   -default['mcs']['managed_user']['last_name']
+- the following attributes were added to expand cron coverage
+  -default['mcs']['backup']['cron']['month'] = '*'
+  -default['mcs']['backup']['cron']['weekday'] = '*'
+  -default['mcs']['cron']['month'] = '*'
+  -default['mcs']['cron']['weekday'] = '*'
+
+
 
 - all the loaders will use the organization
 - data bag loader is slow

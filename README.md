@@ -10,11 +10,13 @@ Install or restore the Chef Server in a new deployment, wrapping the [Chef-Serve
 
 ## backup ##
 
-Runs `knife ec backup` via cron. The default is 2:30am daily, but you may change the cron schedule via the following attributes.
+Runs `knife ec backup` via cron and puts the backups in the `node['mcs']['backup']['dir']`. The default is 2:30am daily, but you may change the cron schedule via the following attributes.
 
     node['mcs']['backup']['cron']['minute'] = '30'
     node['mcs']['backup']['cron']['hour'] = '2'
     node['mcs']['backup']['cron']['day'] = '*'
+    node['mcs']['backup']['cron']['month'] = '*'
+    node['mcs']['backup']['cron']['weekday'] = '*'
 
 ## cron ##
 
@@ -82,6 +84,10 @@ This resource has a `:restore` action and requires a `tarball` property specifyi
 ## managed_organization
 
 The `:create` action will instantiate a Chef server organization with an internal administrator user. The name properties is the `organization`. The organization's `full_name`, `email`, and `password` are all optional properties.
+
+## chef_server_backup
+
+This resource schedules backups of the Chef server via cron-style properties (`minute`, `hour`, `day`, `month`, `weekday`). The backups are written to the `directory` and their filenames start with the `prefix`.
 
 # License and Authors
 

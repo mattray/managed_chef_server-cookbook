@@ -3,28 +3,12 @@
 # Recipe:: backup
 #
 
-backupdir = node['mcs']['backup']['dir']
-command = "#{backupdir}/backup.sh"
-
-directory backupdir
-
-# shell script for backup
-file command do
-  mode '0700'
-  content "#/bin/sh
-cd #{backupdir}
-/opt/opscode/embedded/bin/knife ec backup --with-key-sql --with-user-sql -c /etc/opscode/pivotal.rb backup > backup.log 2>&1
-cd backup
-tar -czf ../#{node['mcs']['backup']['prefix']}`date +%Y%m%d%H%M`.tgz *
-cd ..
-rm -rf backup"
-end
-
-# schedule backup on a recurring cron job. Override attributes as necessary
-cron 'knife ec backup' do
-  environment('PWD' => backupdir)
-  command command
+chef_server_backup "schedule Chef server backups" do
+  directory node['mcs']['backup']['dir']
+  prefix node['mcs']['backup']['prefix']
   minute node['mcs']['backup']['cron']['minute']
   hour node['mcs']['backup']['cron']['hour']
   day node['mcs']['backup']['cron']['day']
+  month node['mcs']['backup']['cron']['month']
+  weekday node['mcs']['backup']['cron']['weekday']
 end

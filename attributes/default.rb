@@ -34,6 +34,8 @@ default['mcs']['managed_user']['password'] = nil
 default['mcs']['backup']['cron']['minute'] = '30'
 default['mcs']['backup']['cron']['hour'] = '2'
 default['mcs']['backup']['cron']['day'] = '*'
+default['mcs']['backup']['cron']['month'] = '*'
+default['mcs']['backup']['cron']['weekday'] = '*'
 default['mcs']['backup']['dir'] = Chef::Config[:file_cache_path] + '/mcs-backups'
 # this will have the timestamp added
 default['mcs']['backup']['prefix'] = 'chef-server-backup-'
@@ -42,6 +44,8 @@ default['mcs']['backup']['prefix'] = 'chef-server-backup-'
 default['mcs']['cron']['minute'] = '*/30'
 default['mcs']['cron']['hour'] = '*'
 default['mcs']['cron']['day'] = '*'
+default['mcs']['cron']['month'] = '*'
+default['mcs']['cron']['weekday'] = '*'
 default['mcs']['cron']['options'] = []
 default['mcs']['cron']['policyfile_archive'] = nil
 default['mcs']['cron']['zero_dir'] = Chef::Config[:file_cache_path] + '/mcs-cron'
