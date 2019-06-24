@@ -91,6 +91,15 @@ This file is used to list changes made in each version of the managed-chef-serve
 - added Chef 15 support for all CLIs
 - new kitchen test suites for testing Chef 14 and 15 versions
 
+# 0.14.0
+
+- refactor new Custom Resources
+  - chef_server :restore
+  - managed_organization :create
+
+- data bag loader is slow
+- policyfile loader is slow
+
 # BACKLOG
 
 ## maintenance recipe ##

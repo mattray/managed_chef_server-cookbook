@@ -12,6 +12,13 @@ include_recipe 'chef-server::default'
 # run nginx as a non-root user
 include_recipe 'managed-chef-server::_nginx'
 
+# restore from a backup if present
+chef_server "restore Chef server from backup" do
+  tarball node['mcs']['restore']['file']
+  action :restore
+  only_if { node['mcs']['restore']['file'] }
+end
+
 # create a managed user instead of using the pivotal user
 mudir = node['mcs']['managed_user']['dir']
 user_key = mudir + '/managed_user.key'
@@ -49,43 +56,6 @@ template "#{mudir}/config.json" do
             o_name: org_name,
             u_key: user_key,
             u_name: user_name)
-end
-
-# file and directory for restoring from backup
-rfile = node['mcs']['restore']['file']
-rdir = "#{Chef::Config[:file_cache_path]}/restoredir"
-
-# create restore directory if backup present
-directory rdir do
-  only_if { !rfile.nil? && ::File.exist?(rfile) }
-end
-
-# untar backup if present
-execute "tar -C #{rdir} -xzf #{rfile}" do
-  action :nothing
-  subscribes :run, "directory[#{rdir}]", :immediately
-end
-
-# restore from backup if present
-execute 'knife ec restore' do
-  command "/opt/opscode/embedded/bin/knife ec restore --with-key-sql --with-user-sql -c /etc/opscode/pivotal.rb #{rdir}"
-  action :nothing
-  subscribes :run, "execute[tar -C #{rdir} -xzf #{rfile}]", :immediately
-end
-
-# on restore, reset the private key
-execute 'delete managed user key on restore' do
-  command "chef-server-ctl delete-user-key #{user_name} default"
-  retries 2
-  action :nothing
-  subscribes :run, 'execute[knife ec restore]', :immediately
-end
-
-execute 'reset managed user key on restore' do
-  command "chef-server-ctl add-user-key #{user_name} --key-name default > #{user_key}"
-  retries 2
-  action :nothing
-  subscribes :run, 'execute[delete managed user key on restore]', :immediately
 end
 
 # chef-server-ctl org-create ORG_NAME ORG_FULL_NAME -f FILE_NAME
