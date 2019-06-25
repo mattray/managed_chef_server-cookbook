@@ -18,7 +18,7 @@ action :create do
   user_email = new_resource.email
   user_first_name = 'Chef'
   user_last_name = 'Managed'
-  user_pass = new_resource_password
+  user_pass = new_resource.password
   user_pass = Random.new_seed unless user_pass
 
   # create files for managing the Chef server
@@ -30,7 +30,7 @@ action :create do
   # write a config.rb
   template "#{org_dir}/config.rb" do
     source 'config.rb.erb'
-    mode '0700'
+    mode '0400'
     variables(
       o_name: org_name,
       o_key: org_key,
@@ -42,13 +42,28 @@ action :create do
   # berks config for legacy_loader
   template "#{org_dir}/config.json" do
     source 'config.json.erb'
-    mode '0700'
+    mode '0400'
     variables(
       o_name: org_name,
       o_key: org_key,
       u_name: user_name,
       u_key: user_key,
       )
+  end
+
+  # on restore, reset the private key
+  execute 'delete managed user key on restore' do
+    command "chef-server-ctl delete-user-key #{user_name} default"
+    retries 2
+    not_if { ::File.exist?(user_key) }
+    only_if { node['mcs']['restore']['file'] }
+  end
+
+  execute 'reset managed user key on restore' do
+    command "chef-server-ctl add-user-key #{user_name} --key-name default > #{user_key}"
+    retries 2
+    action :nothing
+    subscribes :run, 'execute[delete managed user key on restore]', :immediately
   end
 
   # chef-server-ctl org-create ORG_NAME ORG_FULL_NAME -f FILE_NAME

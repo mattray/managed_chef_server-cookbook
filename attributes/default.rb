@@ -19,7 +19,7 @@
 
 # default recipe
 # set location of backup file to restore from
-default['mcs']['restore']['file'] = ''
+default['mcs']['restore']['file'] = nil
 
 # managed organization for Chef-managed server
 default['mcs']['org']['name'] = 'chef_managed_org'

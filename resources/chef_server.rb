@@ -24,19 +24,4 @@ action :restore do
     action :nothing
     subscribes :run, "execute[tar -C #{restore_dir} -xzf #{restore_file}]", :immediately
   end
-
-  # on restore, reset the private key
-  execute 'delete managed user key on restore' do
-    command "chef-server-ctl delete-user-key #{user_name} default"
-    retries 2
-    action :nothing
-    subscribes :run, 'execute[knife ec restore]', :immediately
-  end
-
-  execute 'reset managed user key on restore' do
-    command "chef-server-ctl add-user-key #{user_name} --key-name default > #{user_key}"
-    retries 2
-    action :nothing
-    subscribes :run, 'execute[delete managed user key on restore]', :immediately
-  end
 end

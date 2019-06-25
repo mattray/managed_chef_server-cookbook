@@ -108,11 +108,12 @@ This file is used to list changes made in each version of the managed-chef-serve
   -default['mcs']['cron']['month'] = '*'
   -default['mcs']['cron']['weekday'] = '*'
 
-
-
-- all the loaders will use the organization
+- all the loaders will need to use the organization
 - data bag loader is slow
 - policyfile loader is slow
+- what if we take md5s of the files we've uploaded and don't re-upload those?
+- do we need to compare with the server, or just the previous upload?
+- if the assumption is nobody is messing with the server, the previous should be OK
 
 # BACKLOG
 
