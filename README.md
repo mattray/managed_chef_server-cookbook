@@ -77,10 +77,6 @@ The [default.rb](attributes/default.rb) attributes file documents available sett
 
 Custom resources are used to reduce the complexity of the included recipes.
 
-## chef_server
-
-This resource has a `:restore` action and requires a `tarball` property specifying the `knife ec backup` tarball to restore from.
-
 ## managed_organization
 
 The `:create` action will instantiate a Chef server organization with an internal administrator user. The name properties is the `organization`. The organization's `full_name`, `email`, and `password` are all optional properties.
@@ -88,6 +84,10 @@ The `:create` action will instantiate a Chef server organization with an interna
 ## chef_server_backup
 
 This resource schedules backups of the Chef server via cron-style properties (`minute`, `hour`, `day`, `month`, `weekday`). The backups are written to the `directory` and their filenames start with the `prefix`.
+
+## chef_server_restore
+
+This resource requires a `tarball` property specifying the `knife ec backup` tarball to restore from.
 
 # License and Authors
 

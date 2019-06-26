@@ -1,8 +1,8 @@
-resource_name :chef_server
+resource_name :chef_server_restore
 
 property :tarball, String, name_property: true, required: true
 
-action :restore do
+action :run do
   # file and directory for restoring from backup
   restore_file = new_resource.tarball
   restore_dir = "#{Chef::Config[:file_cache_path]}/restoredir"
