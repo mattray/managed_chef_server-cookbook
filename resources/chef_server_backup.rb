@@ -1,6 +1,6 @@
 resource_name :chef_server_backup
 
-property :directory, String
+property :directory, String, name_property: true, required: true
 property :prefix, String, default: 'chef-server-backup-'
 property :minute, String, default: '*'
 property :hour, String, default: '*'
@@ -26,7 +26,7 @@ cd ..
 rm -rf backup"
   end
 
-  cron 'knife ec backup' do
+  cron "knife ec backup #{backup_dir}" do
     environment('PWD' => backup_dir)
     command command
     minute new_resource.minute

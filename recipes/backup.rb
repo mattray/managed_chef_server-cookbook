@@ -3,8 +3,7 @@
 # Recipe:: backup
 #
 
-chef_server_backup "schedule Chef server backups" do
-  directory node['mcs']['backup']['dir']
+chef_server_backup node['mcs']['backup']['dir'] do
   prefix node['mcs']['backup']['prefix']
   minute node['mcs']['backup']['cron']['minute']
   hour node['mcs']['backup']['cron']['hour']
