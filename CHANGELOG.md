@@ -95,9 +95,10 @@ This file is used to list changes made in each version of the managed-chef-serve
 
 - new _chefdk.rb private recipe for installing the ChefDK
 - refactor new Custom Resources
-  - chef_server :restore
   - managed_organization :create
   - chef_server_backup :create
+  - chef_server_cron :create
+  - chef_server_restore :run
 - the following attributes were removed to simplify managing multiple organizations
   -default['mcs']['managed_user']['dir']
   -default['mcs']['managed_user']['user_name']

@@ -55,10 +55,6 @@ suites:
   - name: cron
     provisioner:
       policyfile: policyfiles/cron.rb
-    attributes:
-      mcs:
-        cron:
-          policyfile_archive: '/backups/policyfiles/base-53e07f37074575abfe75bbb74032f6cd63fc566ff2b8e655f9a2ddf91a3615a8.tgz'
     verifier:
       inspec_tests:
         - test/integration/default

@@ -20,7 +20,7 @@ Runs `knife ec backup` via cron and puts the backups in the `node['mcs']['backup
 
 ## cron ##
 
-Installs the Chef server with the Chef client configured to run via cron. This may be set to use `--local-mode`, for when the Chef client has no other Chef server to contact. See the example [policyfiles/cron.rb](policyfiles/cron.rb) and [kitchen.yml](kitchen.yml) for reference.
+Schedules the Chef client to run on the Chef server via cron against a provided policyfile archive. This may be set to use `--local-mode`, for when the Chef client has no other Chef server to contact. See the example [policyfiles/cron.rb](policyfiles/cron.rb) and [kitchen.yml](kitchen.yml) for reference.
 
 ## data_bag_loader ##
 
@@ -84,6 +84,10 @@ The `:create` action will instantiate a Chef server organization with an interna
 ## chef_server_backup
 
 This resource schedules backups of the Chef server via cron-style properties (`minute`, `hour`, `day`, `month`, `weekday`). The backups are written to the `directory` and their filenames start with the `prefix`.
+
+## chef_server_cron
+
+This resource requires an `archive` property specifying the policyfile archive to deploy and use for running via `cron`.
 
 ## chef_server_restore
 
