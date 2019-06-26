@@ -16,7 +16,7 @@ include_recipe 'managed-chef-server::_nginx'
 chef_server "restore Chef server from backup" do
   tarball node['mcs']['restore']['file']
   action :restore
-  only_if { node['mcs']['restore']['file'] }
+  only_if { defined?(node['mcs']['restore']['file']) }
 end
 
 # create the managed Chef organization and user

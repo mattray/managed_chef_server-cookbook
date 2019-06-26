@@ -25,7 +25,7 @@ default['mcs']['restore']['file'] = nil
 default['mcs']['org']['name'] = 'chef_managed_org'
 default['mcs']['org']['full_name'] = 'Chef Managed Organization'
 # if you want an email address for the managed organization users
-default['mcs']['managed_user']['email'] = 'you@example.com'
+default['mcs']['managed_user']['email'] = nil
 # if you want a non-random password for the user
 default['mcs']['managed_user']['password'] = nil
 

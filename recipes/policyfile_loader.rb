@@ -3,13 +3,8 @@
 # Recipe:: policyfile_loader
 #
 
-# need the ChefDK for the 'chef' command
-chef_ingredient 'chefdk' do
-  action :install
-  version node['chefdk']['version']
-  channel node['chefdk']['channel']
-  package_source node['chefdk']['package_source']
-end.run_action(:install)
+# needed for 'chef' commands
+include_recipe 'managed-chef-server::_chefdk'
 
 # loads all of the policyfile lock files in a directory into the Chef server
 policydir = node['mcs']['policyfile']['dir']

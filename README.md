@@ -1,6 +1,6 @@
 # managed-chef-server
 
-Deploys and configures the Chef server in a relatively stateless model.
+Deploys and configures the Chef server in a relatively stateless model. The included [policyfiles](policyfiles) provide examples of deployment options and the required attributes.
 
 # Recipes
 
@@ -20,7 +20,7 @@ Runs `knife ec backup` via cron and puts the backups in the `node['mcs']['backup
 
 ## cron ##
 
-Installs the Chef server with the Chef client configured to run via cron. This may be set to use `--local-mode`, for when the Chef client has no other Chef server to contact. See the example [policyfiles/cron.rb](policyfile/cron.rb) and [kitchen.yml](kitchen.yml) for reference.
+Installs the Chef server with the Chef client configured to run via cron. This may be set to use `--local-mode`, for when the Chef client has no other Chef server to contact. See the example [policyfiles/cron.rb](policyfiles/cron.rb) and [kitchen.yml](kitchen.yml) for reference.
 
 ## data_bag_loader ##
 

@@ -32,10 +32,6 @@ end
   end
 end
 
-describe file '/etc/opscode/managed/chef_managed_org/org.key' do
-  it { should exist }
-end
-
 describe file '/etc/opscode/managed/chef_managed_org/user.key' do
   it { should exist }
 end

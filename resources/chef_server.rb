@@ -9,7 +9,7 @@ action :restore do
 
   # create restore directory if backup present
   directory restore_dir do
-    only_if { !restore_file.nil? && ::File.exist?(restore_file) }
+    only_if { defined?(restore_file) && ::File.exist?(restore_file) }
   end
 
   # untar backup if present
@@ -20,6 +20,7 @@ action :restore do
 
   # restore from backup if present
   execute 'knife ec restore' do
+    environment ({'PATH' => '/opt/opscode/embedded/bin:$PATH'})
     command "/opt/opscode/embedded/bin/knife ec restore --with-key-sql --with-user-sql -c /etc/opscode/pivotal.rb #{restore_dir}"
     action :nothing
     subscribes :run, "execute[tar -C #{restore_dir} -xzf #{restore_file}]", :immediately

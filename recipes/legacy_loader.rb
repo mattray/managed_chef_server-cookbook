@@ -4,12 +4,7 @@
 #
 
 # need the ChefDK for the 'berks' command
-chef_ingredient 'chefdk' do
-  action :install
-  version node['chefdk']['version']
-  channel node['chefdk']['channel']
-  package_source node['chefdk']['package_source']
-end.run_action(:install)
+include_recipe 'managed-chef-server::_chefdk'
 
 # load directories for cookbooks, environments, and roles into the Chef server
 configrb = node['mcs']['managed_user']['dir'] + '/config.rb'

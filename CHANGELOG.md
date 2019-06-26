@@ -93,6 +93,7 @@ This file is used to list changes made in each version of the managed-chef-serve
 
 # 0.14.0
 
+- new _chefdk.rb private recipe for installing the ChefDK
 - refactor new Custom Resources
   - chef_server :restore
   - managed_organization :create

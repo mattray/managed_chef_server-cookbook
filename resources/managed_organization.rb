@@ -1,8 +1,8 @@
 resource_name :managed_organization
 
-property :organization, String, name_property: true
+property :organization, String, name_property: true, required: true
 property :full_name, String, default: 'Chef Managed Organization'
-property :email, String, default: 'test@example.com'
+property :email, String, required: true
 property :password, String
 
 action :create do
@@ -56,7 +56,8 @@ action :create do
     command "chef-server-ctl delete-user-key #{user_name} default"
     retries 2
     not_if { ::File.exist?(user_key) }
-    only_if { node['mcs']['restore']['file'] }
+    only_if { defined?(node['mcs']['restore']['file']) }
+    only_if "chef-server-ctl list-user-keys #{user_name} | grep default"
   end
 
   execute 'reset managed user key on restore' do
@@ -67,22 +68,22 @@ action :create do
   end
 
   # chef-server-ctl org-create ORG_NAME ORG_FULL_NAME -f FILE_NAME
-  execute 'chef-server-ctl org-create #{org_name}' do
-    command "chef-server-ctl org-create #{org_name} #{org_full_name} -f #{org_key}"
+  execute "chef-server-ctl org-create #{org_name}" do
+    command "chef-server-ctl org-create #{org_name} '#{org_full_name}' -f #{org_key}"
     retries 2
     not_if "chef-server-ctl org-list | grep #{org_name}"
   end
 
   # chef-server-ctl user-create USER_NAME FIRST_NAME LAST_NAME EMAIL PASSWORD -f FILE_NAME
-  execute 'chef-server-ctl user-create #{user_name}' do
+  execute "chef-server-ctl user-create #{user_name}" do
     command "chef-server-ctl user-create #{user_name} #{user_first_name} #{user_last_name} #{user_email} #{user_pass} -f #{user_key}"
     retries 2
-    sensitive true
+    # sensitive true
     not_if "chef-server-ctl user-list | grep #{user_name}"
   end
 
   # add the managed user to the managed org as an admin
-  execute 'chef-server-ctl org-user-add #{org_name} #{user_name}' do
+  execute "chef-server-ctl org-user-add #{org_name} #{user_name}" do
     command "chef-server-ctl org-user-add #{org_name} #{user_name} --admin"
     retries 2
     not_if "chef-server-ctl user-show #{user_name} -l | grep '^organizations:' | grep ' #{org_name}$'"
