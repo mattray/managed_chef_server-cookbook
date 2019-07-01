@@ -4,7 +4,8 @@
 #
 
 dbdir = node['mcs']['data_bags']['dir']
-configrb = node['mcs']['managed_user']['dir'] + '/config.rb'
+org_dir = '/etc/opscode/managed/' + node['mcs']['org']['name']
+configrb = org_dir + '/config.rb'
 prune = node['mcs']['data_bags']['prune']
 
 existing_dbags = {}
