@@ -6,19 +6,28 @@ property :organization, String, required: true
 
 action :create do
   data_bag = new_resource.data_bag
+  organization = new_resource.organization
+
+  configrb = "/etc/opscode/managed/#{organization}/config.rb"
+  data_bag_md5s = "#{Chef::Config[:file_cache_path]}/mcs-databags"
+
+  execute "knife data bag create #{data_bag} #{organization}" do
+    command "knife data bag create #{data_bag} -c #{configrb}"
+    only_if { shell_out("grep #{data_bag} #{data_bag_md5s}").error? }
+  end
+
+end
+
+action :item_create do
+  data_bag = new_resource.data_bag
   item_json = new_resource.item_json
   organization = new_resource.organization
+
   configrb = "/etc/opscode/managed/#{organization}/config.rb"
   data_bag_md5s = "#{Chef::Config[:file_cache_path]}/mcs-databags"
 
   # calculate MD5 of the data_bag item file
   md5sum = shell_out('md5sum', item_json)
-
-  # if data bag is not there, create it
-  execute "knife data bag create #{data_bag} #{organization}" do
-    command "knife data bag create #{data_bag} -c #{configrb}"
-    only_if { shell_out("grep #{data_bag} #{data_bag_md5s}").error? }
-  end
 
   # if the data bag item has not been uploaded, upload it
   execute "knife data bag from file #{data_bag} #{item_json} to #{organization}" do

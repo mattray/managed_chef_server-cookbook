@@ -5,26 +5,28 @@ property :organization, String, required: true
 # property :prune, Boolean, default: false
 
 action :load do
-  db_dir = new_resource.directory
+  data_bag_dir = new_resource.directory
   organization = new_resource.organization
-  #  prune = new_resource.prune
-
-  configrb = "/etc/opscode/managed/#{organization}/config.rb"
+  # prune = new_resource.prune
 
   # get list of data bags to manage
-  file_dbags = {}
-  file_dbags_files = {}
-
-  # get list of data bags to manage
-  Dir.foreach(db_dir) do |data_bag|
+  Dir.foreach(data_bag_dir) do |data_bag|
     next if ['.', '..'].member?(data_bag)
-    Dir.foreach(db_dir + '/' + data_bag) do |item_json| # get items for each
+
+    data_bag "#{organization}:#{data_bag}" do
+      organization organization
+      data_bag data_bag
+      action :create
+    end
+
+    Dir.foreach(data_bag_dir + '/' + data_bag) do |item_json| # get items for each
       next if ['.', '..'].member?(item_json)
 
-      data_bag "#{organization}:#{data_bag}:#{db_dir}/#{data_bag}/#{item_json}" do
+      data_bag "#{organization}:#{data_bag}:#{data_bag_dir}/#{data_bag}/#{item_json}" do
         organization organization
         data_bag data_bag
-        item_json "#{db_dir}/#{data_bag}/#{item_json}"
+        item_json "#{data_bag_dir}/#{data_bag}/#{item_json}"
+        action :item_create
       end
 
     end
