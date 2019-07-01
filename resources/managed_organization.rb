@@ -56,7 +56,7 @@ action :create do
     command "chef-server-ctl delete-user-key #{user_name} default"
     retries 2
     not_if { ::File.exist?(user_key) }
-    only_if { defined?(node['mcs']['restore']['file']) }
+    not_if { !defined?(node['mcs']['restore']['file']) }
     only_if "chef-server-ctl list-user-keys #{user_name} | grep default"
   end
 
