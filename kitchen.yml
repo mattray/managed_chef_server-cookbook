@@ -33,7 +33,7 @@ suites:
     provisioner:
       policyfile: policyfiles/default.rb
       product_name: chef
-      product_version: 15.0.300
+      product_version: 15
     verifier:
       inspec_tests:
         - test/integration/default
@@ -70,7 +70,7 @@ suites:
     provisioner:
       policyfile: policyfiles/data_bags.rb
       product_name: chef
-      product_version: 15.0.300
+      product_version: 15
     verifier:
       inspec_tests:
         - test/integration/default
@@ -86,7 +86,7 @@ suites:
     provisioner:
       policyfile: policyfiles/legacy.rb
       product_name: chef
-      product_version: 15.0.300
+      product_version: 15
     verifier:
       inspec_tests:
         - test/integration/default
@@ -102,7 +102,7 @@ suites:
     provisioner:
       policyfile: policyfiles/policyfile.rb
       product_name: chef
-      product_version: 15.0.300
+      product_version: 15
     verifier:
       inspec_tests:
         - test/integration/default
@@ -121,7 +121,7 @@ suites:
     provisioner:
       policyfile: policyfiles/everything.rb
       product_name: chef
-      product_version: 15.0.300
+      product_version: 15
     verifier:
       inspec_tests:
         - test/integration/default
