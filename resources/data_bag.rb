@@ -31,14 +31,8 @@ action :item_create do
 
   # if the data bag item has not been uploaded, upload it
   execute "knife data bag from file #{data_bag} #{item_json} to #{organization}" do
-    command "knife data bag from file #{data_bag} #{item_json} -c #{configrb}"
+    command "knife data bag from file #{data_bag} #{item_json} -c #{configrb}; echo #{md5sum.stdout.strip} >> #{data_bag_md5s}"
     only_if { shell_out("grep #{md5sum.stdout.split[0]} #{data_bag_md5s}").error? }
-  end
-
-  execute "record #{data_bag} #{item_json} MD5" do
-    command "echo #{md5sum.stdout.strip} >> #{data_bag_md5s}"
-    action :nothing
-    subscribes :run, "execute[knife data bag from file #{data_bag} #{item_json} to #{organization}]", :immediately
   end
 end
 
