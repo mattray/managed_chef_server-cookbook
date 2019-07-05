@@ -74,23 +74,16 @@ echo #{data_bag}:#{item_id}:#{md5sum} >> #{data_bag_md5s}
   end
 end
 
-# action :item_delete do
-#   data_bag = new_resource.data_bag
-#   item = new_resource.item
-#   configrb = "/etc/opscode/managed/#{new_resource.organization}/config.rb"
-#   data_bag_md5s = "#{Chef::Config[:file_cache_path]}/mcs-databags"
+# delete the data bag item if it is not in the file tracking items pushed to
+# the Chef Server. data_bag_loader checks items for verifying to prune them
+action :item_prune do
+  organization = new_resource.organization
+  data_bag = new_resource.data_bag
+  item = new_resource.item
 
-#   # check MD5 in the md5 file
-#   md5sum = shell_out('md5sum', item)
+  configrb = "/etc/opscode/managed/#{organization}/config.rb"
 
-#   # if the data bag item has not been uploaded, upload it
-#   execute "knife data bag delete #{data_bag} #{item}" do
-#     only_if 'grep #{md5sum.stdout} #{data_bag_md5s}'
-#   end
-
-#   execute "record #{data_bag} #{item_json} MD5" do
-#     command "echo #{md5sum.stdout} >> #{data_bag_md5s}"
-#     action :nothing
-#     subcribes :run, "knife data bag from file #{data_bag} #{item_json}", :immediately
-#   end
-# end
+  execute "knife data bag delete #{data_bag} #{item} from #{organization}" do
+    command "knife data bag delete #{data_bag} #{item} -y -c #{configrb}"
+  end
+end

@@ -24,7 +24,7 @@ Schedules the Chef client to run on the Chef server via cron against a provided 
 
 ## data_bag_loader ##
 
-The `node['mcs']['data_bags']['dir']` is compared against the existing data bags and creates and/or updates them as necessary. If the `node['mcs']['data_bags']['prune']` attribute is `true` then the data bags and their items are deleted as necessary.
+The `node['mcs']['data_bags']['dir']` is compared against the existing data bags on the server and creates and/or updates them as necessary. If the `node['mcs']['data_bags']['prune']` attribute is `true` then the data bags and their items are deleted if they exist on the server but do not have the requisite JSON files.
 
 ## legacy_loader ##
 
