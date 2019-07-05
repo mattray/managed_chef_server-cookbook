@@ -93,6 +93,14 @@ This resource requires an `archive` property specifying the policyfile archive t
 
 This resource requires a `tarball` property specifying the `knife ec backup` tarball to restore from.
 
+## data_bag_loader
+
+This resource works off of the `directory` property specifying the source for the data bags to keep in sync with the server.
+
+## data_bag
+
+This has `:create`, `:prune`, `:item_create`, and `:item_prune` for managing the data bags available on the server. This custom resource is called from the `data_bag_loader` resource.
+
 # License and Authors
 
 - Author: Matt Ray [matt@chef.io](mailto:matt@chef.io)
