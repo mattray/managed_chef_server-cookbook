@@ -7,8 +7,8 @@
 include_recipe 'managed-chef-server::_chefdk'
 
 # load directories for cookbooks, environments, and roles into the Chef server
-configrb = node['mcs']['managed_user']['dir'] + '/config.rb'
-configjson = node['mcs']['managed_user']['dir'] + '/config.json'
+configrb = "/etc/opscode/managed/#{node['mcs']['org']['name']}/config.rb"
+configjson = "/etc/opscode/managed/#{node['mcs']['org']['name']}/config.json"
 
 # cookbooks
 cbdir = node['mcs']['cookbooks']['dir']
@@ -92,30 +92,6 @@ Dir.foreach(envdir) do |env|
 end
 
 # roles
-existing_roles = {}
-list = shell_out("knife role list -c #{configrb}").stdout.split
-list.each do |role|
-  content = JSON.load(shell_out!("knife role show #{role} -c #{configrb} --format json").stdout)
-  existing_roles[role] = content
-end
-
-roledir = node['mcs']['roles']['dir']
-Dir.foreach(roledir) do |role|
-  next unless role.end_with?('.rb', '.json')
-  if role.end_with?('.json')
-    json = JSON.parse(File.read(roledir + '/' + role))
-  else # it's .rb
-    roll = Chef::Role.new
-    roll.from_file(roledir + '/' + role)
-    json = JSON.load(roll.to_json)
-  end
-  type = json['chef_type']
-  next unless type.eql?('role')
-  name = json['name']
-  next if existing_roles.key?(name) &&
-          json.eql?(existing_roles[name])
-  execute "knife role from file #{role}" do
-    command "knife role from file #{role} -c #{configrb}"
-    cwd roledir
-  end
+roles_loader node['mcs']['roles']['dir'] do
+  organization node['mcs']['org']['name']
 end

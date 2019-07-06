@@ -8,7 +8,6 @@ action :load do
   organization = new_resource.organization
 
   configrb = "/etc/opscode/managed/#{organization}/config.rb"
-  # policyfile_md5s = "#{Chef::Config[:file_cache_path]}/mcs-policyfiles-#{organization}"
 
   return if policyfile_dir.nil? || policyfile_dir.empty?
 
