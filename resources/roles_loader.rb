@@ -26,9 +26,9 @@ action :load do
     if role.end_with?('.json')
       json = JSON.parse(::File.read(roles_dir + '/' + role))
     else # it's .rb
-      roll = Chef::Role.new
-      roll.from_file(roles_dir + '/' + role)
-      json = JSON.load(roll.to_json)
+      r = Chef::Role.new
+      r.from_file(roles_dir + '/' + role)
+      json = JSON.load(r.to_json)
     end
     type = json['chef_type']
     next unless type.eql?('role')

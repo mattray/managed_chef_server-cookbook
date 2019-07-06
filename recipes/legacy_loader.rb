@@ -63,32 +63,8 @@ Dir.foreach(cbdir) do |tarfile|
 end
 
 # environments
-existing_environments = {}
-list = shell_out("knife environment list -c #{configrb}").stdout.split
-list.each do |env|
-  content = JSON.load(shell_out!("knife environment show #{env} -c #{configrb} --format json").stdout)
-  existing_environments[env] = content
-end
-
-envdir = node['mcs']['environments']['dir']
-Dir.foreach(envdir) do |env|
-  next unless env.end_with?('.rb', '.json')
-  if env.end_with?('.json')
-    json = JSON.parse(File.read(envdir + '/' + env))
-  else # it's .rb
-    environment = Chef::Environment.new
-    environment.from_file(envdir + '/' + env)
-    json = JSON.load(environment.to_json)
-  end
-  type = json['chef_type']
-  next unless type.eql?('environment')
-  name = json['name']
-  next if existing_environments.key?(name) &&
-          json.eql?(existing_environments[name])
-  execute "knife environment from file #{env}" do
-    command "knife environment from file #{env} -c #{configrb}"
-    cwd envdir
-  end
+environments_loader node['mcs']['environments']['dir'] do
+  organization node['mcs']['org']['name']
 end
 
 # roles
