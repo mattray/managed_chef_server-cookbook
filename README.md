@@ -101,6 +101,10 @@ This resource works off of the `directory` property specifying the source for th
 
 This has `:create`, `:prune`, `:item_create`, and `:item_prune` for managing the data bags available on the server. This custom resource is called from the `data_bag_loader` resource.
 
+## policyfile_loader
+
+This resource looks for policyfile locks and archives in the `directory` specifying the source, only uploading them if they have been updated.
+
 # License and Authors
 
 - Author: Matt Ray [matt@chef.io](mailto:matt@chef.io)
