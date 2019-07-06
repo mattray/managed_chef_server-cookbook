@@ -37,9 +37,19 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-  - name: restore
+  - name: 14restore
     provisioner:
       policyfile: policyfiles/restore.rb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/legacy
+        - test/integration/policyfiles
+  - name: 15restore
+    provisioner:
+      policyfile: policyfiles/restore.rb
+      product_name: chef
+      product_version: 15
     verifier:
       inspec_tests:
         - test/integration/default
