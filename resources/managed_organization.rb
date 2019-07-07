@@ -78,7 +78,7 @@ action :create do
   execute "chef-server-ctl user-create #{user_name}" do
     command "chef-server-ctl user-create #{user_name} #{user_first_name} #{user_last_name} #{user_email} #{user_pass} -f #{user_key}"
     retries 2
-    # sensitive true
+    sensitive true
     not_if "chef-server-ctl user-list | grep #{user_name}"
   end
 
