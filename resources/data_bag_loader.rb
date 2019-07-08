@@ -1,6 +1,6 @@
 resource_name :data_bag_loader
 
-property :directory, String, name_property: true, required: true
+property :directory, String, name_property: true
 property :organization, String, required: true
 property :prune, [true, false], default: false
 
@@ -32,7 +32,6 @@ action :load do
 
   # manage contents of each data bag
   dir_data_bags.each do |data_bag|
-
     # create data bags if missing
     data_bag "#{organization}:#{data_bag}" do
       organization organization
@@ -51,13 +50,12 @@ action :load do
       # query the server for the IDs and prune any extras
       server_items = shell_out("knife data bag show #{data_bag} -c #{configrb}").stdout.split
       server_items.sort.each do |item| # sort for clearer logging
-        if shell_out("grep ^#{data_bag}:#{item} #{data_bag_md5s}").error?
-          data_bag "#{organization}:#{data_bag}:#{item}" do
-            organization organization
-            data_bag data_bag
-            item item
-            action :item_prune
-          end
+        next unless shell_out("grep ^#{data_bag}:#{item} #{data_bag_md5s}").error?
+        data_bag "#{organization}:#{data_bag}:#{item}" do
+          organization organization
+          data_bag data_bag
+          item item
+          action :item_prune
         end
       end
     end

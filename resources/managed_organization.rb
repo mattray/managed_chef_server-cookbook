@@ -1,6 +1,6 @@
 resource_name :managed_organization
 
-property :organization, String, name_property: true, required: true
+property :organization, String, name_property: true
 property :full_name, String, default: 'Chef Managed Organization'
 property :email, String, required: true
 property :password, String
@@ -35,8 +35,8 @@ action :create do
       o_name: org_name,
       o_key: org_key,
       u_name: user_name,
-      u_key: user_key,
-      )
+      u_key: user_key
+    )
   end
 
   # berks config for legacy_loader
@@ -47,8 +47,8 @@ action :create do
       o_name: org_name,
       o_key: org_key,
       u_name: user_name,
-      u_key: user_key,
-      )
+      u_key: user_key
+    )
   end
 
   # on restore, reset the private key

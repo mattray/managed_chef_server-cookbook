@@ -1,6 +1,6 @@
 resource_name :policyfile_loader
 
-property :directory, String, name_property: true, required: true
+property :directory, String, name_property: true
 property :organization, String, required: true
 
 action :load do
