@@ -19,15 +19,14 @@
 
 # default recipe
 # set location of backup file to restore from
-default['mcs']['restore']['file'] = ''
-# user and organization for Chef-managed server
+default['mcs']['restore']['file'] = nil
+
+# managed organization for Chef-managed server
 default['mcs']['org']['name'] = 'chef_managed_org'
 default['mcs']['org']['full_name'] = 'Chef Managed Organization'
-default['mcs']['managed_user']['dir'] = '/etc/opscode/managed'
-default['mcs']['managed_user']['user_name'] = 'chef_managed_user'
-default['mcs']['managed_user']['first_name'] = 'Chef'
-default['mcs']['managed_user']['last_name'] = 'Managed'
-default['mcs']['managed_user']['email'] = 'you@example.com'
+# if you want an email address for the managed organization users
+default['mcs']['managed_user']['email'] = nil
+# if you want a non-random password for the user
 default['mcs']['managed_user']['password'] = nil
 
 # backup recipe
@@ -35,6 +34,8 @@ default['mcs']['managed_user']['password'] = nil
 default['mcs']['backup']['cron']['minute'] = '30'
 default['mcs']['backup']['cron']['hour'] = '2'
 default['mcs']['backup']['cron']['day'] = '*'
+default['mcs']['backup']['cron']['month'] = '*'
+default['mcs']['backup']['cron']['weekday'] = '*'
 default['mcs']['backup']['dir'] = Chef::Config[:file_cache_path] + '/mcs-backups'
 # this will have the timestamp added
 default['mcs']['backup']['prefix'] = 'chef-server-backup-'
@@ -43,6 +44,8 @@ default['mcs']['backup']['prefix'] = 'chef-server-backup-'
 default['mcs']['cron']['minute'] = '*/30'
 default['mcs']['cron']['hour'] = '*'
 default['mcs']['cron']['day'] = '*'
+default['mcs']['cron']['month'] = '*'
+default['mcs']['cron']['weekday'] = '*'
 default['mcs']['cron']['options'] = []
 default['mcs']['cron']['policyfile_archive'] = nil
 default['mcs']['cron']['zero_dir'] = Chef::Config[:file_cache_path] + '/mcs-cron'

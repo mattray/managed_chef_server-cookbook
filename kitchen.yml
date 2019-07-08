@@ -14,7 +14,7 @@ provisioner:
   always_update_cookbooks: true
   chef_license: accept
   product_name: chef
-  product_version: 14.13.11
+  product_version: 14
 
 verifier:
   name: inspec
@@ -33,13 +33,23 @@ suites:
     provisioner:
       policyfile: policyfiles/default.rb
       product_name: chef
-      product_version: 15.0.300
+      product_version: 15
     verifier:
       inspec_tests:
         - test/integration/default
-  - name: restore
+  - name: 14restore
     provisioner:
       policyfile: policyfiles/restore.rb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/legacy
+        - test/integration/policyfiles
+  - name: 15restore
+    provisioner:
+      policyfile: policyfiles/restore.rb
+      product_name: chef
+      product_version: 15
     verifier:
       inspec_tests:
         - test/integration/default
@@ -55,10 +65,6 @@ suites:
   - name: cron
     provisioner:
       policyfile: policyfiles/cron.rb
-    attributes:
-      mcs:
-        cron:
-          policyfile_archive: '/backups/policyfiles/base-53e07f37074575abfe75bbb74032f6cd63fc566ff2b8e655f9a2ddf91a3615a8.tgz'
     verifier:
       inspec_tests:
         - test/integration/default
@@ -74,7 +80,7 @@ suites:
     provisioner:
       policyfile: policyfiles/data_bags.rb
       product_name: chef
-      product_version: 15.0.300
+      product_version: 15
     verifier:
       inspec_tests:
         - test/integration/default
@@ -90,7 +96,7 @@ suites:
     provisioner:
       policyfile: policyfiles/legacy.rb
       product_name: chef
-      product_version: 15.0.300
+      product_version: 15
     verifier:
       inspec_tests:
         - test/integration/default
@@ -106,7 +112,7 @@ suites:
     provisioner:
       policyfile: policyfiles/policyfile.rb
       product_name: chef
-      product_version: 15.0.300
+      product_version: 15
     verifier:
       inspec_tests:
         - test/integration/default
@@ -125,7 +131,7 @@ suites:
     provisioner:
       policyfile: policyfiles/everything.rb
       product_name: chef
-      product_version: 15.0.300
+      product_version: 15
     verifier:
       inspec_tests:
         - test/integration/default

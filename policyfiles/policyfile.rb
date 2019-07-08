@@ -6,4 +6,4 @@ run_list 'managed-chef-server::policyfile_loader'
 
 override['mcs']['policyfile']['dir'] = '/backups/policyfiles'
 
-default['mcs']['skip_test'] = true
+override['mcs']['skip_test'] = true

@@ -91,7 +91,35 @@ This file is used to list changes made in each version of the managed-chef-serve
 - added Chef 15 support for all CLIs
 - new kitchen test suites for testing Chef 14 and 15 versions
 
+# 0.14.0
+
+- new _chefdk.rb private recipe for installing the ChefDK
+- refactor new Custom Resources
+  - managed_organization :create
+  - chef_server_backup :create
+  - chef_server_cron :create
+  - chef_server_restore :run
+  - cookbooks_loader :load
+  - data_bag_loader :load
+  - data_bag :create, :prune, :item_create, :item_prune (all called by the data_bag_loader)
+  - environments_loader :load
+  - policyfile_loader :load
+  - roles_loader :load
+- the following attributes were removed to simplify managing multiple organizations
+  -default['mcs']['managed_user']['dir']
+  -default['mcs']['managed_user']['user_name']
+  -default['mcs']['managed_user']['first_name']
+  -default['mcs']['managed_user']['last_name']
+- the following attributes were added to expand cron coverage
+  -default['mcs']['backup']['cron']['month'] = '*'
+  -default['mcs']['backup']['cron']['weekday'] = '*'
+  -default['mcs']['cron']['month'] = '*'
+  -default['mcs']['cron']['weekday'] = '*'
+- all the loaders now support organizations
+
 # BACKLOG
+
+Chef Server 13 needs testing: https://discourse.chef.io/t/chef-server-13-0-17-is-now-available/15486
 
 ## maintenance recipe ##
 
