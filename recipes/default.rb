@@ -13,13 +13,13 @@ include_recipe 'chef-server::default'
 include_recipe 'managed-chef-server::_nginx'
 
 # restore from a backup if present
-chef_server_restore "restore Chef server from backup" do
+chef_server_restore 'restore Chef server from backup' do
   tarball node['mcs']['restore']['file']
   not_if { !defined?(node['mcs']['restore']['file']) }
 end
 
 # create the managed Chef organization and user
-managed_organization "create managed Chef server organization and user" do
+managed_organization 'create managed Chef server organization and user' do
   organization node['mcs']['org']['name']
   full_name node['mcs']['org']['full_name']
   email node['mcs']['managed_user']['email']

@@ -1,6 +1,6 @@
 resource_name :chef_server_backup
 
-property :directory, String, name_property: true, required: true
+property :directory, String, name_property: true
 property :prefix, String, default: 'chef-server-backup-'
 property :minute, String, default: '*'
 property :hour, String, default: '*'

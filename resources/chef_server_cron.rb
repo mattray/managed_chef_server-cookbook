@@ -1,6 +1,6 @@
 resource_name :chef_server_cron
 
-property :archive, String, name_property: true, required: true
+property :archive, String, name_property: true
 property :minute, String, default: '*'
 property :hour, String, default: '*'
 property :day, String, default: '*'
