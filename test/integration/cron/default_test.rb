@@ -13,10 +13,10 @@ end
 
 # add crontab entry for cron[knife ec backup]
 describe crontab do
-  its('commands') { should include 'date >> /var/log/chef/client.log 2>&1; cd /tmp/kitchen/cache/mcs-cron; chef-client -z -F min >> /var/log/chef/client.log 2>&1' }
+  its('commands') { should include 'date >> /var/log/chef/client.log 2>&1; cd /tmp/kitchen/cache/mcs-cron; chef-client --local-mode -F min >> /var/log/chef/client.log 2>&1' }
 end
 
-describe crontab.commands('date >> /var/log/chef/client.log 2>&1; cd /tmp/kitchen/cache/mcs-cron; chef-client -z -F min >> /var/log/chef/client.log 2>&1') do
+describe crontab.commands('date >> /var/log/chef/client.log 2>&1; cd /tmp/kitchen/cache/mcs-cron; chef-client --local-mode -F min >> /var/log/chef/client.log 2>&1') do
   its('minutes') { should cmp '*/5' }
   its('hours') { should cmp '*' }
   its('days') { should cmp '*' }
