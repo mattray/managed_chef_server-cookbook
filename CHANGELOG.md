@@ -99,6 +99,12 @@ This file is used to list changes made in each version of the managed-chef-serve
   - chef_server_backup :create
   - chef_server_cron :create
   - chef_server_restore :run
+  - cookbooks_loader :load
+  - data_bag_loader :load
+  - data_bag :create, :prune, :item_create, :item_prune (all called by the data_bag_loader)
+  - environments_loader :load
+  - policyfile_loader :load
+  - roles_loader :load
 - the following attributes were removed to simplify managing multiple organizations
   -default['mcs']['managed_user']['dir']
   -default['mcs']['managed_user']['user_name']
@@ -109,15 +115,11 @@ This file is used to list changes made in each version of the managed-chef-serve
   -default['mcs']['backup']['cron']['weekday'] = '*'
   -default['mcs']['cron']['month'] = '*'
   -default['mcs']['cron']['weekday'] = '*'
-
-- all the loaders will need to use the organization
-- data bag loader is slow
-- policyfile loader is slow
-- what if we take md5s of the files we've uploaded and don't re-upload those?
-- do we need to compare with the server, or just the previous upload?
-- if the assumption is nobody is messing with the server, the previous should be OK
+- all the loaders now support organizations
 
 # BACKLOG
+
+Chef Server 13 needs testing: https://discourse.chef.io/t/chef-server-13-0-17-is-now-available/15486
 
 ## maintenance recipe ##
 

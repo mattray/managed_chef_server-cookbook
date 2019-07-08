@@ -34,9 +34,56 @@ Takes the `node['mcs']['cookbooks']['dir']`, `node['mcs']['environments']['dir']
 
 Takes the `node['mcs']['policyfile']['dir']` and parses any `.lock.json` files to determine which policyfile archives to load into the local Chef server. Policies will be assigned to the group designated by the `node['mcs']['policyfile']['group']` attribute for the Chef server (`_default` is the default). If the policy itself sets the `node['mcs']['policyfile']['group']` attribute, the policy will be assigned to that group.
 
+# Attributes
+The [default.rb](attributes/default.rb) attributes file documents available settings and tunings.
+
+# Custom Resources
+
+Custom resources are used to reduce the complexity of the included recipes.
+
+## managed_organization
+
+The `:create` action will instantiate a Chef server organization with an internal administrator user. The name properties is the `organization`. The organization's `full_name`, `email`, and `password` are all optional properties.
+
+## chef_server_backup
+
+This resource schedules backups of the Chef server via cron-style properties (`minute`, `hour`, `day`, `month`, `weekday`). The backups are written to the `directory` and their filenames start with the `prefix`.
+
+## chef_server_cron
+
+This resource requires an `archive` property specifying the policyfile archive to deploy and use for running via `cron`.
+
+## chef_server_restore
+
+This resource requires a `tarball` property specifying the `knife ec backup` tarball to restore from.
+
+## cookbook_loader
+
+This resource runs `berks` or `knife` against the `directory` property specifying the source for the cookbook tarballs to keep in sync with the server.
+
+## data_bag_loader
+
+This resource works off of the `directory` property specifying the source for the data bags to keep in sync with the server.
+
+## data_bag
+
+This has `:create`, `:prune`, `:item_create`, and `:item_prune` for managing the data bags available on the server. This custom resource is called from the `data_bag_loader` resource.
+
+## environments_loader
+
+All of the Ruby or JSON environment files in the `directory` will be loaded onto the Chef Server and updated if they change.
+
+## policyfile_loader
+
+This resource looks for policyfile locks and archives in the `directory` specifying the source, only uploading them if they have been updated.
+
+## roles_loader
+
+All of the Ruby or JSON role files in the `directory` will be loaded onto the Chef Server and updated if they change.
+
 # Testing
 
-There is a [kitchen.yml](kitchen.yml) that may be used for testing with Vagrant. The [kitchen.vagrant.yml](kitchen.vagrant.yml) may be symlinked as **kitchen.local.yml** and used with local caches to speed up testing. If you want to use Docker, [kitchen.dokken.yml](kitchen.dokken.yml) may be used but it does not persist changes between runs and is thus not significantly faster (it's slower than Vagrant with caching). The following Suites map to example [policyfiles](policyfiles) that may be repurposed as necessary:
+There is a [kitchen.yml](kitchen.yml) that may be used for testing with Vagrant. The [kitchen.vagrant.yml](kitchen.vagrant.yml) may be symlinked as **kitchen.local.yml** and used with local caches to speed up testing. If you want to use Docker, [kitchen.dokken.yml](kitchen.dokken.yml) may be used but it does not persist changes between runs and is thus not significantly faster (it's slower than Vagrant with caching). The following Suites map to example [policyfiles](policyfiles) that may be repurposed as necessary, with variants for testing Chef 14 and 15 of each:
 
 ## default
 
@@ -69,41 +116,6 @@ Adds loading cookbooks, environments and roles from the included [test](test) di
 ## everything
 
 Installs the Chef server, restores from a backup, attempts to load policyfiles (which are included in the restored backup) and adds backup via cron.
-
-# Attributes
-The [default.rb](attributes/default.rb) attributes file documents available settings and tunings.
-
-# Custom Resources
-
-Custom resources are used to reduce the complexity of the included recipes.
-
-## managed_organization
-
-The `:create` action will instantiate a Chef server organization with an internal administrator user. The name properties is the `organization`. The organization's `full_name`, `email`, and `password` are all optional properties.
-
-## chef_server_backup
-
-This resource schedules backups of the Chef server via cron-style properties (`minute`, `hour`, `day`, `month`, `weekday`). The backups are written to the `directory` and their filenames start with the `prefix`.
-
-## chef_server_cron
-
-This resource requires an `archive` property specifying the policyfile archive to deploy and use for running via `cron`.
-
-## chef_server_restore
-
-This resource requires a `tarball` property specifying the `knife ec backup` tarball to restore from.
-
-## data_bag_loader
-
-This resource works off of the `directory` property specifying the source for the data bags to keep in sync with the server.
-
-## data_bag
-
-This has `:create`, `:prune`, `:item_create`, and `:item_prune` for managing the data bags available on the server. This custom resource is called from the `data_bag_loader` resource.
-
-## policyfile_loader
-
-This resource looks for policyfile locks and archives in the `directory` specifying the source, only uploading them if they have been updated.
 
 # License and Authors
 
