@@ -1,6 +1,6 @@
 resource_name :managed_organization
 
-property :organization, String, name_property: true, required: true
+property :organization, String, name_property: true
 property :full_name, String, default: 'Chef Managed Organization'
 property :email, String, required: true
 property :password, String
@@ -10,10 +10,10 @@ action :create do
   org_name = new_resource.organization
   org_full_name = new_resource.full_name
   org_dir = '/etc/opscode/managed/' + org_name
-  org_key = org_dir + '/org.key'
+  org_key = org_dir + "/#{org_name}.key"
 
   # create a managed user instead of using the pivotal user
-  user_key = org_dir + '/user.key'
+  user_key = org_dir + "/#{org_name}-user.key"
   user_name = "chef_managed_user_#{org_name}"
   user_email = new_resource.email
   user_first_name = 'Chef'
@@ -35,8 +35,8 @@ action :create do
       o_name: org_name,
       o_key: org_key,
       u_name: user_name,
-      u_key: user_key,
-      )
+      u_key: user_key
+    )
   end
 
   # berks config for legacy_loader
@@ -47,8 +47,8 @@ action :create do
       o_name: org_name,
       o_key: org_key,
       u_name: user_name,
-      u_key: user_key,
-      )
+      u_key: user_key
+    )
   end
 
   # on restore, reset the private key

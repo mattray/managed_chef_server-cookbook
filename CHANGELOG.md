@@ -117,15 +117,25 @@ This file is used to list changes made in each version of the managed-chef-serve
   -default['mcs']['cron']['weekday'] = '*'
 - all the loaders now support organizations
 
+# 0.15.0
+
+- refactored custom resources to not conflict with existing Chef resources (ie. `data_bag`) and renamed them for clarity.
+- [include _chefdk.rb in default.rb](https://github.com/mattray/managed-chef-server-cookbook/issues/29) for compatibility with wrapper cookbooks
+- [refactored managed_organization out to a separate recipe](https://github.com/mattray/managed-chef-server-cookbook/issues/28) for supporting multiple organizations
+- [refactored organization keys to unique names](https://github.com/mattray/managed-chef-server-cookbook/issues/27)
+
 # BACKLOG
 
+- [rename cookbook to managed_chef_server](https://github.com/mattray/managed-chef-server-cookbook/issues/30)
 Chef Server 13 needs testing: https://discourse.chef.io/t/chef-server-13-0-17-is-now-available/15486
+- will have to accept the license
+ - default['chef-server']['accept_license'] = true
+- nginx seems to have moved?
 
 ## maintenance recipe ##
 
 Maintaining the Chef server may involve periodically cleaning up stale nodes and unused policies. This is likely to use `knife-tidy` and various `chef` commands. Scheduling and implementation TBD.
 
-- refactor into libraries to reduce Ruby in recipes
 - refactor default recipe to split install and restores
 - inspec for configuration checks
   inspec exec https://github.com/mattray/inspec-chef-server/tree/rhel --attrs=config.yml

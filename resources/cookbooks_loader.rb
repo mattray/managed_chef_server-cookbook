@@ -1,6 +1,6 @@
 resource_name :cookbooks_loader
 
-property :directory, String, name_property: true, required: true
+property :directory, String, name_property: true
 property :organization, String, required: true
 
 action :load do
@@ -38,7 +38,7 @@ action :load do
 berks install -b #{berksfile} -c #{configjson}
 berks upload -b #{berksfile} -c #{configjson}
 touch #{berks_marker}
-    EOH
+        EOH
         not_if { ::File.exist?(berks_marker) }
       end
     end
@@ -59,11 +59,10 @@ touch #{berks_marker}
         code <<-EOH
 knife cookbook upload -a -c #{configrb} -o #{untarred_dir}
 touch #{knife_marker}
-    EOH
+        EOH
         ignore_failure true
         not_if { ::File.exist?(knife_marker) }
       end
     end
   end
-
 end

@@ -1,6 +1,6 @@
 resource_name :data_bag_loader
 
-property :directory, String, name_property: true, required: true
+property :directory, String, name_property: true
 property :organization, String, required: true
 property :prune, [true, false], default: false
 
@@ -22,7 +22,7 @@ action :load do
     server_data_bags = shell_out("knife data bag list -c #{configrb}").stdout.split
     # if on server, but not in the directory, remove them
     (server_data_bags - dir_data_bags).each do |prune_data_bag|
-      data_bag "#{organization}:#{prune_data_bag}" do
+      managed_data_bag "#{organization}:#{prune_data_bag}" do
         organization organization
         data_bag prune_data_bag
         action :prune
@@ -32,9 +32,8 @@ action :load do
 
   # manage contents of each data bag
   dir_data_bags.each do |data_bag|
-
     # create data bags if missing
-    data_bag "#{organization}:#{data_bag}" do
+    managed_data_bag "#{organization}:#{data_bag}" do
       organization organization
       data_bag data_bag
       action :create
@@ -51,20 +50,19 @@ action :load do
       # query the server for the IDs and prune any extras
       server_items = shell_out("knife data bag show #{data_bag} -c #{configrb}").stdout.split
       server_items.sort.each do |item| # sort for clearer logging
-        if shell_out("grep ^#{data_bag}:#{item} #{data_bag_md5s}").error?
-          data_bag "#{organization}:#{data_bag}:#{item}" do
-            organization organization
-            data_bag data_bag
-            item item
-            action :item_prune
-          end
+        next unless shell_out("grep ^#{data_bag}:#{item} #{data_bag_md5s}").error?
+        managed_data_bag "#{organization}:#{data_bag}:#{item}" do
+          organization organization
+          data_bag data_bag
+          item item
+          action :item_prune
         end
       end
     end
 
     # create items for each json entry
     data_bag_files.sort.each do |item_json| # sort for clearer logging
-      data_bag "#{organization}:#{data_bag}:#{data_bag_dir}/#{data_bag}/#{item_json}" do
+      managed_data_bag "#{organization}:#{data_bag}:#{data_bag_dir}/#{data_bag}/#{item_json}" do
         organization organization
         data_bag data_bag
         item "#{data_bag_dir}/#{data_bag}/#{item_json}"

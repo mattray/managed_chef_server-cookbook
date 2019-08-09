@@ -6,7 +6,11 @@ Deploys and configures the Chef server in a relatively stateless model. The incl
 
 ## default ##
 
-Install or restore the Chef Server in a new deployment, wrapping the [Chef-Server](https://github.com/chef-cookbooks/chef-server) cookbook. It looks for the existence of a [knife-ec-backup](https://github.com/chef/knife-ec-backup) tarball to restore from, configured with the `node['mcs']['restore']['file']` attribute. It then creates a managed Chef organization and an org-managing admin user through the appropriate [attributes](attributes/default.rb#24).
+Install or restore the Chef Server in a new deployment, wrapping the [Chef-Server](https://github.com/chef-cookbooks/chef-server) cookbook. It looks for the existence of a [knife-ec-backup](https://github.com/chef/knife-ec-backup) tarball to restore from, configured with the `node['mcs']['restore']['file']` attribute. You will need to use the `managed_organization` recipe or provide your own organizations recipe to use the other recipes.
+
+## managed_organization ##
+
+This creates a managed Chef organization and an org-managing admin user through the appropriate [attributes](attributes/default.rb#24).
 
 ## backup ##
 
@@ -28,7 +32,7 @@ The `node['mcs']['data_bags']['dir']` is compared against the existing data bags
 
 ## legacy_loader ##
 
-Takes the `node['mcs']['cookbooks']['dir']`, `node['mcs']['environments']['dir']` and `node['mcs']['roles']['dir']` directories and loads whatever content is found into the local Chef server. If you want to use the same directory for the roles and environments the recipe can distinguish between JSON files. The cookbooks are expected to be tarballs in a directory, they will all be attempted to load via their `Berksfile` or with `knife`. For legacy cookbooks with multiple dependencies it may take multiple runs to load everything.
+Takes the `node['mcs']['cookbooks']['dir']`, `node['mcs']['environments']['dir']` and `node['mcs']['roles']['dir']` directories and loads whatever content is found into the Chef server organization. If you want to use the same directory for the roles and environments the recipe can distinguish between JSON files. The cookbooks are expected to be tarballs in a directory, they will all be attempted to load via their `Berksfile` or with `knife`. For legacy cookbooks with multiple dependencies it may take multiple runs to load everything.
 
 ## policyfile_loader ##
 
@@ -45,15 +49,15 @@ Custom resources are used to reduce the complexity of the included recipes.
 
 The `:create` action will instantiate a Chef server organization with an internal administrator user. The name properties is the `organization`. The organization's `full_name`, `email`, and `password` are all optional properties.
 
-## chef_server_backup
+## managed_chef_server_backup
 
 This resource schedules backups of the Chef server via cron-style properties (`minute`, `hour`, `day`, `month`, `weekday`). The backups are written to the `directory` and their filenames start with the `prefix`.
 
-## chef_server_cron
+## managed_chef_server_cron
 
 This resource requires an `archive` property specifying the policyfile archive to deploy and use for running via `cron`.
 
-## chef_server_restore
+## managed_chef_server_restore
 
 This resource requires a `tarball` property specifying the `knife ec backup` tarball to restore from.
 
@@ -65,7 +69,7 @@ This resource runs `berks` or `knife` against the `directory` property specifyin
 
 This resource works off of the `directory` property specifying the source for the data bags to keep in sync with the server.
 
-## data_bag
+## managed_data_bag
 
 This has `:create`, `:prune`, `:item_create`, and `:item_prune` for managing the data bags available on the server. This custom resource is called from the `data_bag_loader` resource.
 

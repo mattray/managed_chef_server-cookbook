@@ -3,7 +3,7 @@
 # than making a full scrape of the Chef server every run. If these files are
 # removed, they'll re-upload to the Chef server which shouldn't be an issue
 
-resource_name :data_bag
+resource_name :managed_data_bag
 
 property :data_bag, String, required: true
 property :organization, String, required: true
@@ -69,7 +69,7 @@ action :item_create do
 sed -i '/^#{data_bag}:#{item_id}/d' #{data_bag_md5s}
 knife data bag from file #{data_bag} #{item_json} -c #{configrb}
 echo #{data_bag}:#{item_id}:#{md5sum} >> #{data_bag_md5s}
-    EOH
+      EOH
     end
   end
 end

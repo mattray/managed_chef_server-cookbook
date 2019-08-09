@@ -1,6 +1,6 @@
 resource_name :roles_loader
 
-property :directory, String, name_property: true, required: true
+property :directory, String, name_property: true
 property :organization, String, required: true
 
 action :load do

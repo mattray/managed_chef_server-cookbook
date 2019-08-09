@@ -5,7 +5,7 @@
 
 # assumes the chef-client is already installed and may be managed by another Chef server
 
-chef_server_cron 'Chef server Chef client cron job' do
+managed_chef_server_cron 'Chef server Chef client cron job' do
   archive node['mcs']['cron']['policyfile_archive']
   minute node['mcs']['cron']['minute']
   hour node['mcs']['cron']['hour']
