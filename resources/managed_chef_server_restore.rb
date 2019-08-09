@@ -1,4 +1,4 @@
-resource_name :chef_server_restore
+resource_name :managed_chef_server_restore
 
 property :tarball, String, name_property: true
 
