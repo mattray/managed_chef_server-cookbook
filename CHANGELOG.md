@@ -122,7 +122,6 @@ This file is used to list changes made in each version of the managed-chef-serve
 - refactored custom resources to not conflict with existing Chef resources (ie. `data_bag`) and renamed them for clarity.
 - [include _chefdk.rb in default.rb](https://github.com/mattray/managed-chef-server-cookbook/issues/29) for compatibility with wrapper cookbooks
 - [refactored managed_organization out to a separate recipe](https://github.com/mattray/managed-chef-server-cookbook/issues/28) for supporting multiple organizations
-
 - [refactored organization keys to unique names](https://github.com/mattray/managed-chef-server-cookbook/issues/27)
 
 # BACKLOG
