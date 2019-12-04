@@ -19,7 +19,7 @@ action :create do
   data_bag_md5s = "#{Chef::Config[:file_cache_path]}/mcs-databags-#{organization}"
 
   shell_out("touch #{data_bag_md5s}")
-  bag_exists = !shell_out("grep ^#{data_bag} #{data_bag_md5s}").error?
+  bag_exists = !shell_out("grep ^#{data_bag}: #{data_bag_md5s}").error?
 
   unless bag_exists
     execute "knife data bag create #{data_bag} #{organization}" do
@@ -56,12 +56,13 @@ action :item_create do
   configrb = "/etc/opscode/managed/#{organization}/config.rb"
   data_bag_md5s = "#{Chef::Config[:file_cache_path]}/mcs-databags-#{organization}"
 
+  item = JSON.parse(::File.read(item_json))
+  item_id = item['id']
+
   md5sum = shell_out('md5sum', item_json).stdout.split[0]
-  item_exists = !shell_out("grep #{md5sum} #{data_bag_md5s}").error?
+  item_exists = !shell_out("grep #{data_bag}:#{item_id}:#{md5sum} #{data_bag_md5s}").error?
 
   unless item_exists
-    item = JSON.parse(::File.read(item_json))
-    item_id = item['id']
     # remove any previous items, create data bag item, add item to data_bag_md5s
     bash "knife data bag from file #{data_bag} #{item_json} to #{organization}" do
       cwd Chef::Config[:file_cache_path]
