@@ -124,6 +124,11 @@ This file is used to list changes made in each version of the managed-chef-serve
 - [refactored managed_organization out to a separate recipe](https://github.com/mattray/managed-chef-server-cookbook/issues/28) for supporting multiple organizations
 - [refactored organization keys to unique names](https://github.com/mattray/managed-chef-server-cookbook/issues/27)
 
+# 0.15.1
+- [updated the condition to validate the existence of data bag item](https://github.com/mattray/managed-chef-server-cookbook/issues/33)
+- [updated the condition to validate the existence of data bag](https://github.com/mattray/managed-chef-server-cookbook/issues/33)
+
+
 # BACKLOG
 
 - [rename cookbook to managed_chef_server](https://github.com/mattray/managed-chef-server-cookbook/issues/30)
