@@ -28,6 +28,7 @@ action :create do
     # delete crondir if archive is new/changed
     directory "delete #{crondir}" do
       path crondir
+      recursive true
       action :nothing
       subscribes :delete, "file[#{archive_check}]", :immediately
     end
