@@ -2,9 +2,9 @@ name 'base'
 
 default_source :supermarket
 
-cookbook 'managed-chef-server', path: '..'
+cookbook 'managed_chef_server', path: '..'
 
-run_list 'managed-chef-server::default', 'managed-chef-server::managed_organization'
+run_list 'managed_chef_server::default', 'managed_chef_server::managed_organization'
 
 override['mcs']['managed_user']['email'] = 'test@foo.com'
 

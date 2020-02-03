@@ -1,5 +1,5 @@
 #
-# Cookbook:: managed-chef-server
+# Cookbook:: managed_chef_server
 # Recipe:: cron
 #
 

@@ -1,4 +1,4 @@
-# managed-chef-server
+# managed_chef_server
 
 Deploys and configures the Chef server in a relatively stateless model. The included [policyfiles](policyfiles) provide examples of deployment options and the required attributes.
 

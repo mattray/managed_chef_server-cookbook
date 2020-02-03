@@ -1,6 +1,6 @@
 # # encoding: utf-8
 
-# Inspec test for recipe managed-chef-server::data_bag_loader
+# Inspec test for recipe managed_chef_server::data_bag_loader
 
 # check output of knife commands
 

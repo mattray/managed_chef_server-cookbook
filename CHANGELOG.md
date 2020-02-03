@@ -1,6 +1,6 @@
-# managed-chef-server CHANGELOG
+# managed_chef_server CHANGELOG
 
-This file is used to list changes made in each version of the managed-chef-server cookbook.
+This file is used to list changes made in each version of the managed_chef_server cookbook.
 
 # 0.1.0
 
@@ -54,15 +54,15 @@ This file is used to list changes made in each version of the managed-chef-serve
 
 # 0.7.1
 
-- [https://github.com/mattray/managed-chef-server-cookbook/issues/11](more retries built in with chef-server-ctl commands)
+- [https://github.com/mattray/managed_chef_server-cookbook/issues/11](more retries built in with chef-server-ctl commands)
 
 # 0.7.2
 
-- [https://github.com/mattray/managed-chef-server-cookbook/issues/7](legacy_loader is now idempotent and validates .rb environments and roles)
+- [https://github.com/mattray/managed_chef_server-cookbook/issues/7](legacy_loader is now idempotent and validates .rb environments and roles)
 
 # 0.8.0
 
-- [https://github.com/mattray/managed-chef-server-cookbook/pull/17](added skipping the Chef Server pedant tests)
+- [https://github.com/mattray/managed_chef_server-cookbook/pull/17](added skipping the Chef Server pedant tests)
 
 
 # 0.9.0
@@ -83,7 +83,7 @@ This file is used to list changes made in each version of the managed-chef-serve
 - lowered precedence of tuning attributes to default from overkill
 - add the admin user to the org if it's missing, not just on a first create
 - ensure the data bag directory exists when loading data bags
-- [https://github.com/mattray/managed-chef-server-cookbook/pull/22](refactor to use rubyblocks instead of raw ruby in recipes, fixes race conditions)
+- [https://github.com/mattray/managed_chef_server-cookbook/pull/22](refactor to use rubyblocks instead of raw ruby in recipes, fixes race conditions)
 
 # 0.13.0
 
@@ -120,22 +120,19 @@ This file is used to list changes made in each version of the managed-chef-serve
 # 0.15.0
 
 - refactored custom resources to not conflict with existing Chef resources (ie. `data_bag`) and renamed them for clarity.
-- [include _chefdk.rb in default.rb](https://github.com/mattray/managed-chef-server-cookbook/issues/29) for compatibility with wrapper cookbooks
-- [refactored managed_organization out to a separate recipe](https://github.com/mattray/managed-chef-server-cookbook/issues/28) for supporting multiple organizations
-- [refactored organization keys to unique names](https://github.com/mattray/managed-chef-server-cookbook/issues/27)
+- [include _chefdk.rb in default.rb](https://github.com/mattray/managed_chef_server-cookbook/issues/29) for compatibility with wrapper cookbooks
+- [refactored managed_organization out to a separate recipe](https://github.com/mattray/managed_chef_server-cookbook/issues/28) for supporting multiple organizations
+- [refactored organization keys to unique names](https://github.com/mattray/managed_chef_server-cookbook/issues/27)
 
 # 0.15.1
-- [updated the condition to validate the existence of data bag item](https://github.com/mattray/managed-chef-server-cookbook/issues/33)
-- [updated the condition to validate the existence of data bag](https://github.com/mattray/managed-chef-server-cookbook/issues/33)
+- [updated the condition to validate the existence of data bag item](https://github.com/mattray/managed_chef_server-cookbook/issues/33)
+- [updated the condition to validate the existence of data bag](https://github.com/mattray/managed_chef_server-cookbook/issues/33)
 
 
-# BACKLOG
-
-- [rename cookbook to managed_chef_server](https://github.com/mattray/managed-chef-server-cookbook/issues/30)
-Chef Server 13 needs testing: https://discourse.chef.io/t/chef-server-13-0-17-is-now-available/15486
-- will have to accept the license
- - default['chef-server']['accept_license'] = true
-- nginx seems to have moved?
+# 0.16.0
+- [rename cookbook to managed_chef_server](https://github.com/mattray/managed_chef_server-cookbook/issues/30)
+- Accept the Chef Infra Server 13 license if `node['chef-server']['accept_license']` is set
+- [Clean up old backup directory recursively](https://github.com/mattray/managed_chef_server-cookbook/issues/35)
 
 ## maintenance recipe ##
 

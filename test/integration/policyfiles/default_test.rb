@@ -1,6 +1,6 @@
 # # encoding: utf-8
 
-# Inspec test for recipe managed-chef-server::policyfiles
+# Inspec test for recipe managed_chef_server::policyfiles
 
 # check output of chef show-policy
 

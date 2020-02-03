@@ -2,7 +2,7 @@ name 'cron'
 
 include_policy 'base', path: './base.lock.json'
 
-run_list 'managed-chef-server::cron'
+run_list 'managed_chef_server::cron'
 
 # every 5 minutes for testing
 override['mcs']['cron']['minute'] = '*/5'

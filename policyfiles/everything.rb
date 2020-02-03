@@ -2,7 +2,7 @@ name 'everything'
 
 include_policy 'base', path: './base.lock.json'
 
-run_list 'managed-chef-server::legacy_loader', 'managed-chef-server::policyfile_loader', 'managed-chef-server::maintenance', 'managed-chef-server::backup'
+run_list 'managed_chef_server::legacy_loader', 'managed_chef_server::policyfile_loader', 'managed_chef_server::maintenance', 'managed_chef_server::backup'
 
 # every 5 minutes for testing
 override['mcs']['backup']['cron']['minute'] = '*/5'

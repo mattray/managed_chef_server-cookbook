@@ -1,5 +1,5 @@
 #
-# Cookbook:: managed-chef-server
+# Cookbook:: managed_chef_server
 # Recipe:: default
 #
 
@@ -8,16 +8,16 @@ file '/etc/chef/accepted_licenses/chef_infra_server' do
 end
 
 # need the ChefDK for the 'berks' and 'chef' commands
-include_recipe 'managed-chef-server::_chefdk'
+include_recipe 'managed_chef_server::_chefdk'
 
 # performance tuning based off of recommendations in https://docs.chef.io/server_tuning.html#large-node-sizes
-include_recipe 'managed-chef-server::_tuning'
+include_recipe 'managed_chef_server::_tuning'
 
 # chef-server install
 include_recipe 'chef-server::default'
 
 # run nginx as a non-root user
-include_recipe 'managed-chef-server::_nginx'
+include_recipe 'managed_chef_server::_nginx'
 
 # restore from a backup if present
 managed_chef_server_restore 'restore Chef server from backup' do

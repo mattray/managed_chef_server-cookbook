@@ -1,6 +1,6 @@
 # # encoding: utf-8
 
-# Inspec test for recipe managed-chef-server::default
+# Inspec test for recipe managed_chef_server::default
 
 # This is an example test, replace it with your own test.
 describe port(80) do

@@ -1,6 +1,6 @@
 # # encoding: utf-8
 
-# Inspec test for recipe managed-chef-server::legacy
+# Inspec test for recipe managed_chef_server::legacy
 
 # check output of knife commands
 
