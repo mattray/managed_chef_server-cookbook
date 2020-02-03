@@ -20,7 +20,7 @@ action :run do
 
   # restore from backup if present
   execute 'knife ec restore' do
-    environment ({ 'PATH' => '/opt/opscode/embedded/bin:$PATH' })
+    environment('PATH' => '/opt/opscode/embedded/bin:$PATH')
     command "/opt/opscode/embedded/bin/knife ec restore --with-key-sql --with-user-sql -c /etc/opscode/pivotal.rb #{restore_dir}"
     action :nothing
     subscribes :run, "execute[tar -C #{restore_dir} -xzf #{restore_file}]", :immediately
