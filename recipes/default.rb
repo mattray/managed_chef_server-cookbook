@@ -3,6 +3,10 @@
 # Recipe:: default
 #
 
+file '/etc/chef/accepted_licenses/chef_infra_server' do
+  only_if { node['chef-server']['accept_license'] }
+end
+
 # need the ChefDK for the 'berks' and 'chef' commands
 include_recipe 'managed-chef-server::_chefdk'
 
