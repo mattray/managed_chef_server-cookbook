@@ -1,5 +1,5 @@
 #
-# Cookbook:: managed-chef-server
+# Cookbook:: managed_chef_server
 # Recipe:: _tuning
 #
 # private recipe for performance tuning based off of recommendations in

@@ -1,12 +1,12 @@
-name "base"
-description "Base role applied to all nodes."
+name 'base'
+description 'Base role applied to all nodes.'
 run_list(
-  "recipe[apt]",
-  "recipe[nagios::client]"
+  'recipe[apt]',
+  'recipe[nagios::client]'
 )
 
 default_attributes(
-  "nagios" => {
-    "server_role" => "monitoring"
+  'nagios' => {
+    'server_role' => 'monitoring',
   }
 )

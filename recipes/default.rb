@@ -1,19 +1,32 @@
 #
-# Cookbook:: managed-chef-server
+# Cookbook:: managed_chef_server
 # Recipe:: default
 #
 
+# Chef Server 13 requires license acceptance
+directory '/etc/chef/accepted_licenses/' do
+  recursive true
+end
+
+ template '/etc/chef/accepted_licenses/chef_infra_server' do
+   source 'chef_infra_server.erb'
+   mode '0400'
+   variables(time: Time.now)
+   not_if { ::File.exist?('/etc/chef/accepted_licenses/chef_infra_server') }
+   only_if { node['chef-server']['accept_license'] }
+ end
+
 # need the ChefDK for the 'berks' and 'chef' commands
-include_recipe 'managed-chef-server::_chefdk'
+include_recipe 'managed_chef_server::_chefdk'
 
 # performance tuning based off of recommendations in https://docs.chef.io/server_tuning.html#large-node-sizes
-include_recipe 'managed-chef-server::_tuning'
+include_recipe 'managed_chef_server::_tuning'
 
 # chef-server install
 include_recipe 'chef-server::default'
 
 # run nginx as a non-root user
-include_recipe 'managed-chef-server::_nginx'
+include_recipe 'managed_chef_server::_nginx'
 
 # restore from a backup if present
 managed_chef_server_restore 'restore Chef server from backup' do

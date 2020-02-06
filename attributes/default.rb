@@ -1,5 +1,5 @@
 #
-# Cookbook:: managed-chef-server
+# Cookbook:: managed_chef_server
 # Attributes:: default
 #
 # Copyright:: 2018, Chef Software, Inc.

@@ -1,6 +1,6 @@
 # # encoding: utf-8
 
-# Inspec test for recipe managed-chef-server::backup
+# Inspec test for recipe managed_chef_server::backup
 
 # backup dir
 describe directory('/tmp/kitchen/cache/mcs-backups') do

@@ -1,6 +1,10 @@
-# managed-chef-server
+# managed_chef_server
 
-Deploys and configures the Chef server in a relatively stateless model. The included [policyfiles](policyfiles) provide examples of deployment options and the required attributes.
+Deploys and configures the Chef server in a relatively stateless model. The included [policyfiles](policyfiles) provide examples of deployment options and the required attributes. You will need to pass
+
+    node['chef-server']['accept_license'] = true
+
+for Chef Server 13 (note that Chef Client 14 with Chef Server 13 has issues accepting licenses).
 
 # Recipes
 

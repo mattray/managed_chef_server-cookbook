@@ -2,4 +2,4 @@ name 'default'
 
 include_policy 'base', path: './base.lock.json'
 
-run_list 'managed-chef-server::default'
+run_list 'managed_chef_server::default'

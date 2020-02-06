@@ -2,7 +2,7 @@ name 'policyfile'
 
 include_policy 'base', path: './base.lock.json'
 
-run_list 'managed-chef-server::policyfile_loader'
+run_list 'managed_chef_server::policyfile_loader'
 
 override['mcs']['policyfile']['dir'] = '/backups/policyfiles'
 

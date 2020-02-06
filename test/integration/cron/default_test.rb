@@ -1,6 +1,6 @@
 # # encoding: utf-8
 
-# Inspec test for recipe managed-chef-server::cron
+# Inspec test for recipe managed_chef_server::cron
 
 # backup dir
 describe directory('/tmp/kitchen/cache/mcs-cron') do

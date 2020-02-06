@@ -1,6 +1,6 @@
 # # encoding: utf-8
 
-# Inspec test for recipe managed-chef-server::default
+# Inspec test for recipe managed_chef_server::default
 
 # This is an example test, replace it with your own test.
 describe port(80) do
@@ -24,11 +24,11 @@ end
   describe file conf do
     it { should exist }
     its('mode') { should cmp '0400' }
-    its('content') { should match /chef_server_url.*https:\/\/localhost\/organizations\/chef_managed_org/ }
-    its('content') { should match (/validation_client_name.*chef_managed_org/) }
-    its('content') { should match (/validation_key.*\/etc\/opscode\/managed\/chef_managed_org\/chef_managed_org.key/) }
-    its('content') { should match (/client_key.*\/etc\/opscode\/managed\/chef_managed_org\/chef_managed_org-user.key/) }
-    its('content') { should match (/node_name.*chef_managed_user_chef_managed_org/) }
+    its('content') { should match %r{chef_server_url.*https://localhost/organizations/chef_managed_org} }
+    its('content') { should match /validation_client_name.*chef_managed_org/ }
+    its('content') { should match %r{validation_key.*/etc/opscode/managed/chef_managed_org/chef_managed_org.key} }
+    its('content') { should match %r{client_key.*/etc/opscode/managed/chef_managed_org/chef_managed_org-user.key} }
+    its('content') { should match /node_name.*chef_managed_user_chef_managed_org/ }
   end
 end
 
