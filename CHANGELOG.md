@@ -134,6 +134,11 @@ This file is used to list changes made in each version of the managed_chef_serve
 - Accept the Chef Infra Server 13 license if `node['chef-server']['accept_license']` is set
 - [Clean up old backup directory recursively](https://github.com/mattray/managed_chef_server-cookbook/issues/35)
 
+## NEXT
+
+- Switch to Workstation
+- fix upstream chef-server cookbook to handle license acceptance
+
 ## maintenance recipe ##
 
 Maintaining the Chef server may involve periodically cleaning up stale nodes and unused policies. This is likely to use `knife-tidy` and various `chef` commands. Scheduling and implementation TBD.
@@ -141,3 +146,4 @@ Maintaining the Chef server may involve periodically cleaning up stale nodes and
 - refactor default recipe to split install and restores
 - inspec for configuration checks
   inspec exec https://github.com/mattray/inspec-chef-server/tree/rhel --attrs=config.yml
+- investigate `chef-server-ctl cleanup`
