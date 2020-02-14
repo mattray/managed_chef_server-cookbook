@@ -17,7 +17,7 @@ end
  end
 
 # need the ChefDK for the 'berks' and 'chef' commands
-include_recipe 'managed_chef_server::_chefdk'
+include_recipe 'managed_chef_server::_workstation'
 
 # performance tuning based off of recommendations in https://docs.chef.io/server_tuning.html#large-node-sizes
 include_recipe 'managed_chef_server::_tuning'
