@@ -10,11 +10,15 @@ for Chef Server 13 (note that Chef Client 14 with Chef Server 13 has issues acce
 
 ## default ##
 
-Install or restore the Chef Server in a new deployment, wrapping the [Chef-Server](https://github.com/chef-cookbooks/chef-server) cookbook. It looks for the existence of a [knife-ec-backup](https://github.com/chef/knife-ec-backup) tarball to restore from, configured with the `node['mcs']['restore']['file']` attribute. You will need to use the `managed_organization` recipe or provide your own organizations recipe to use the other recipes.
+Installs the Chef Server in a new deployment, wrapping the [Chef-Server](https://github.com/chef-cookbooks/chef-server) cookbook. You will need to use the `managed_organization` recipe or provide your own organizations recipe to use the other recipes.
 
 ## managed_organization ##
 
 This creates a managed Chef organization and an org-managing admin user through the appropriate [attributes](attributes/default.rb#24).
+
+## restore ##
+
+Restores the Chef Server in a new deployment, including the `default` recipe. It looks for the existence of a [knife-ec-backup](https://github.com/chef/knife-ec-backup) tarball to restore from, configured with the `node['mcs']['restore']['file']` attribute.
 
 ## backup ##
 
