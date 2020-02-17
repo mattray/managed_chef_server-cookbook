@@ -40,6 +40,13 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
+  - name: data_collector
+    provisioner:
+      policyfile: policyfiles/data_collector.rb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_collector
   - name: backup
     provisioner:
       policyfile: policyfiles/backup.rb
@@ -119,6 +126,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
+        - test/integration/data_collector
         - test/integration/backup
         - test/integration/data_bags
         - test/integration/legacy
@@ -132,11 +140,12 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
+        - test/integration/data_collector
         - test/integration/backup
         - test/integration/data_bags
         - test/integration/legacy
         - test/integration/policyfiles
-  - name: 14restore
+        - name: 14restore
     provisioner:
       policyfile: policyfiles/restore.rb
       product_name: chef

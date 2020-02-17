@@ -5,6 +5,7 @@ rm -rf *json
 chef install base.rb
 chef install default.rb
 
+chef install data_collector.rb
 chef install backup.rb
 chef install cron.rb
 chef install policyfile.rb

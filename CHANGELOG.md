@@ -137,22 +137,17 @@ This file is used to list changes made in each version of the managed_chef_serve
 # 0.17.0
 - switched to Chef Workstation from ChefDK
 - refactor default recipe to split install and restores
+- backup and restore the managed organization keys
+- configuring data collection
 
 ## NEXT
 - adding nodes to the Chef Server
-- /etc/opscode/managed/chef_managed_org/chef_managed_org.key is missing on restore? should it be in the backup?
-  File /etc/opscode/managed/chef_managed_org/chef_managed_org.key
-     ×  is expected to exist
-     expected File /etc/opscode/managed/chef_managed_org/chef_managed_org.key to exist
-- configuring data collection
 - drop Chef 14 support, add Chef 16 support
 - fix upstream chef-server cookbook to handle license acceptance
 - org attributes
 
 ## maintenance recipe ##
-
 Maintaining the Chef server may involve periodically cleaning up stale nodes and unused policies. This is likely to use `knife-tidy` and various `chef` commands. Scheduling and implementation TBD.
-
 - inspec for configuration checks
   inspec exec https://github.com/mattray/inspec-chef-server/tree/rhel --attrs=config.yml
 - investigate `chef-server-ctl cleanup`

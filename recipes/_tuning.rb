@@ -38,9 +38,16 @@ end
 # postgresql['log_min_duration_statement'] = 1000
 
 # chef-server configuration settings
-node.default['chef-server']['configuration'] = <<-EOS
+node.default['chef-server']['configuration'] += <<-EOS
 opscode_solr4['heap_size'] = #{solr_heap_size}
 postgresql['checkpoint_completion_target'] = 0.9
 postgresql['checkpoint_segments'] = 64
 postgresql['log_min_duration_statement'] = 1000
 EOS
+
+# Next, configure the Chef Server for data collection forwarding by adding the following setting to /etc/opscode/chef-server.rb:
+node.default['chef-server']['configuration'] += "data_collector['root_url'] = '#{node['mcs']['data_collector']['root_url']}'\n" if node['mcs']['data_collector']['root_url']
+# Add for chef client run forwarding
+node.default['chef-server']['configuration'] += "data_collector['proxy'] = #{node['mcs']['data_collector']['proxy']}\n" if node['mcs']['data_collector']['proxy']
+# Add for compliance scanning
+node.default['chef-server']['configuration'] += "profiles['root_url'] = '#{node['mcs']['profiles']['root_url']}'\n" if node['mcs']['profiles']['root_url']

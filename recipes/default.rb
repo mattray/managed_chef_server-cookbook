@@ -28,6 +28,9 @@ include_recipe 'chef-server::default'
 # run nginx as a non-root user
 include_recipe 'managed_chef_server::_nginx'
 
+# configure data collection with Automate
+include_recipe 'managed_chef_server::_data_collector'
+
 execute 'verify the chef-server is working as expected' do
   command 'chef-server-ctl test'
   action :nothing

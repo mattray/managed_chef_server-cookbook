@@ -17,7 +17,13 @@
 # limitations under the License.
 #
 
-# default recipe
+# _data_collection recipe
+default['mcs']['data_collector']['token'] = nil
+default['mcs']['data_collector']['root_url'] = nil
+default['mcs']['data_collector']['proxy'] = true
+default['mcs']['profiles']['root_url'] = nil
+
+# restore recipe
 # set location of backup file to restore from
 default['mcs']['restore']['file'] = nil
 
