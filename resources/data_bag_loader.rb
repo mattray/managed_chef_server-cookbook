@@ -12,7 +12,7 @@ action :load do
   configrb = "/etc/opscode/managed/#{organization}/config.rb"
   data_bag_md5s = "#{Chef::Config[:file_cache_path]}/mcs-databags-#{organization}"
 
-  return if data_bag_dir.nil? || data_bag_dir.empty?
+  return if data_bag_dir.nil? || !Dir.exists?(data_bag_dir)
 
   # find the data bags to manage by the directory names
   dir_data_bags = Dir.entries(data_bag_dir) - ['.', '..']

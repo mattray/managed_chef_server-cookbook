@@ -9,7 +9,7 @@ action :load do
 
   configrb = "/etc/opscode/managed/#{organization}/config.rb"
 
-  return if environments_dir.nil? || environments_dir.empty?
+  return if environments_dir.nil? || !Dir.exists?(environments_dir)
 
   # find existing policies on the server
   server_environments = {}
