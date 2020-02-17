@@ -8,4 +8,4 @@ run_list 'managed_chef_server::restore', 'managed_chef_server::managed_organizat
 
 override['chef-server']['accept_license'] = true
 override['mcs']['managed_user']['email'] = 'test@foo.com'
-override['mcs']['restore']['file'] = '/backups/chef-server-backup-202002150325.tgz'
+override['mcs']['restore']['file'] = '/backups/chef-server-backup-202002162325.tgz'

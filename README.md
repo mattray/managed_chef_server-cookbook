@@ -18,7 +18,7 @@ This creates a managed Chef organization and an org-managing admin user through 
 
 ## restore ##
 
-Restores the Chef Server in a new deployment, including the `default` recipe. It looks for the existence of a [knife-ec-backup](https://github.com/chef/knife-ec-backup) tarball to restore from, configured with the `node['mcs']['restore']['file']` attribute.
+Restores the Chef Server in a new deployment, including the `default` recipe. It looks for the existence of a [knife-ec-backup](https://github.com/chef/knife-ec-backup) tarball to restore from, configured with the `node['mcs']['restore']['file']` attribute. If you are using the `managed_organization` recipe it will restore your `/etc/chef/managed/ORG_NAME/ORG_NAME.keys` from the backup.
 
 ## backup ##
 

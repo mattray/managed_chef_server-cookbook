@@ -67,6 +67,15 @@ action :create do
     subscribes :run, 'execute[delete managed user key on restore]', :immediately
   end
 
+  # on restore copy back the organization key
+  execute 'copy managed organization key or restore' do
+    command "cp #{Chef::Config[:file_cache_path]}/restoredir/chef_managed_orgs/#{org_name}/#{org_name}.key #{org_dir}/"
+    only_if { ::File.exist?("#{Chef::Config[:file_cache_path]}/restoredir/chef_managed_orgs/#{org_name}/#{org_name}.key") }
+    not_if { ::File.exist?("#{org_dir}/#{org_name}.key") }
+    action :nothing
+    subscribes :run, 'execute[reset managed user key on restore]', :immediately
+  end
+
   # chef-server-ctl org-create ORG_NAME ORG_FULL_NAME -f FILE_NAME
   execute "chef-server-ctl org-create #{org_name}" do
     command "chef-server-ctl org-create #{org_name} '#{org_full_name}' -f #{org_key}"
