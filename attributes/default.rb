@@ -20,7 +20,7 @@
 # _data_collection recipe
 default['mcs']['data_collector']['token'] = nil
 default['mcs']['data_collector']['root_url'] = nil
-default['mcs']['data_collector']['proxy'] = true
+default['mcs']['data_collector']['proxy'] = false
 default['mcs']['profiles']['root_url'] = nil
 
 # restore recipe
