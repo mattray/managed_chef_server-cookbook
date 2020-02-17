@@ -9,7 +9,7 @@ action :load do
 
   configrb = "/etc/opscode/managed/#{organization}/config.rb"
 
-  return if policyfile_dir.nil? || !Dir.exists?(policyfile_dir)
+  return if policyfile_dir.nil? || !Dir.exist?(policyfile_dir)
 
   # find existing policies on the server
   server_policies = {}
@@ -32,6 +32,7 @@ action :load do
     policy_lock = JSON.parse(::File.read(policyfile_dir + '/' + pfile))
     policy_name = policy_lock['name']
     filename = policyfile_dir + '/' + policy_name + '-' + policy_lock['revision_id'] + '.tgz'
+    next unless ::File.exist?(filename)
     policy_revision = policy_lock['revision_id'][0, 10]
 
     policy_group = node['mcs']['policyfile']['group']

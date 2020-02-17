@@ -7,7 +7,7 @@ action :load do
   cookbooks_dir = new_resource.directory
   organization = new_resource.organization
 
-  return if cookbooks_dir.nil? || !Dir.exists?(cookbooks_dir)
+  return if cookbooks_dir.nil? || !Dir.exist?(cookbooks_dir)
 
   configrb = "/etc/opscode/managed/#{organization}/config.rb"
   configjson = "/etc/opscode/managed/#{organization}/config.json"

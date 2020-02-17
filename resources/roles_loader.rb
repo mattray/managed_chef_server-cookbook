@@ -9,7 +9,7 @@ action :load do
 
   configrb = "/etc/opscode/managed/#{organization}/config.rb"
 
-  return if roles_dir.nil? || !Dir.exists?(roles_dir)
+  return if roles_dir.nil? || !Dir.exist?(roles_dir)
 
   # find existing policies on the server
   server_roles = {}
