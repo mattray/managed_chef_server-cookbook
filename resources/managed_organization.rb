@@ -10,7 +10,7 @@ action :create do
   org_name = new_resource.organization
   org_full_name = new_resource.full_name
   org_dir = '/etc/opscode/managed/' + org_name
-  org_key = org_dir + "/#{org_name}.key"
+  org_key = org_dir + "/#{org_name}-validator.pem"
 
   # create a managed user instead of using the pivotal user
   user_key = org_dir + "/#{org_name}-user.key"
@@ -68,10 +68,10 @@ action :create do
   end
 
   # on restore copy back the organization key
-  execute 'copy managed organization key or restore' do
-    command "cp #{Chef::Config[:file_cache_path]}/restoredir/chef_managed_orgs/#{org_name}/#{org_name}.key #{org_dir}/"
-    only_if { ::File.exist?("#{Chef::Config[:file_cache_path]}/restoredir/chef_managed_orgs/#{org_name}/#{org_name}.key") }
-    not_if { ::File.exist?("#{org_dir}/#{org_name}.key") }
+  execute 'copy managed organization pem on restore' do
+    command "cp #{Chef::Config[:file_cache_path]}/restoredir/chef_managed_orgs/#{org_name}/#{org_name}-validator.pem #{org_dir}/"
+    only_if { ::File.exist?("#{Chef::Config[:file_cache_path]}/restoredir/chef_managed_orgs/#{org_name}/#{org_name}-validator.pem") }
+    not_if { ::File.exist?("#{org_dir}/#{org_name}-validator.pem") }
     action :nothing
     subscribes :run, 'execute[reset managed user key on restore]', :immediately
   end
