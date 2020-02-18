@@ -26,13 +26,13 @@ end
     its('mode') { should cmp '0400' }
     its('content') { should match %r{chef_server_url.*https://localhost/organizations/chef_managed_org} }
     its('content') { should match /validation_client_name.*chef_managed_org/ }
-    its('content') { should match %r{validation_key.*/etc/opscode/managed/chef_managed_org/chef_managed_org.key} }
+    its('content') { should match %r{validation_key.*/etc/opscode/managed/chef_managed_org/chef_managed_org-validator.pem} }
     its('content') { should match %r{client_key.*/etc/opscode/managed/chef_managed_org/chef_managed_org-user.key} }
     its('content') { should match /node_name.*chef_managed_user_chef_managed_org/ }
   end
 end
 
-describe file '/etc/opscode/managed/chef_managed_org/chef_managed_org.key' do
+describe file '/etc/opscode/managed/chef_managed_org/chef_managed_org-validator.pem' do
   it { should exist }
 end
 
