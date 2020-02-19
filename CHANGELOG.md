@@ -135,13 +135,15 @@ This file is used to list changes made in each version of the managed_chef_serve
 - [Clean up old backup directory recursively](https://github.com/mattray/managed_chef_server-cookbook/issues/35)
 
 # 0.17.0
-- switched to Chef Workstation from ChefDK
+- [switched to Chef Workstation from ChefDK](https://github.com/mattray/managed_chef_server-cookbook/issues/38)
+- [remove Chef Workstation from chef-client path](https://github.com/mattray/managed_chef_server-cookbook/issues/36)
 - refactor default recipe to split install and restores
-- backup and restore the managed organization keys
-- configuring data collection
+- rename managed org keys to `-validator.pem`
+- backup and restore the managed organization validator pems
+- configure data collection with private `_data_collector` recipe
+- switch tests over to 'test_org' to make it easier to see in Automate
 
 ## NEXT
-- adding nodes to the Chef Server
 - drop Chef 14 support, add Chef 16 support
 - fix upstream chef-server cookbook to handle license acceptance
 - org attributes
