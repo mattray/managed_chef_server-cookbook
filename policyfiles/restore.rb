@@ -1,9 +1,12 @@
 name 'default'
 
-include_policy 'base', path: './base.lock.json'
+default_source :supermarket
 
-run_list 'managed_chef_server::_chefdk' # added for inclusion of the chefdk for testing
+cookbook 'managed_chef_server', path: '..'
 
-override['mcs']['restore']['file'] = '/backups/chef-server-backup-201811110055.tgz'
+run_list 'managed_chef_server::restore', 'managed_chef_server::managed_organization'
 
-override['mcs']['skip_test'] = true
+override['chef-server']['accept_license'] = true
+override['mcs']['managed_user']['email'] = 'test@foo.com'
+override['mcs']['restore']['file'] = '/backups/chef-server-backup-202002192050.tgz'
+override['mcs']['org']['name'] = 'test_org'

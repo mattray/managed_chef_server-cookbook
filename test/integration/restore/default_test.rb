@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-# Inspec test for recipe managed_chef_server::legacy
+# Inspec test for recipe managed_chef_server::restore
 
 # check output of knife commands
 
@@ -19,7 +19,7 @@ describe command('knife role list -c /etc/opscode/managed/test_org/config.rb') d
   its('stdout') { should_not match /^lab-environment$/ }
 end
 
-# these are going to drift because of Berkshelf
+# these are should not drift because we're restoring from the backup
 describe command('knife cookbook list -c /etc/opscode/managed/test_org/config.rb') do
   its('stdout') { should match /^apt\s+7.2.0$/ }
   its('stdout') { should match /^chef-client\s+11.0.3$/ }

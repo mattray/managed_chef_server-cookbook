@@ -19,8 +19,9 @@ action :create do
     mode '0700'
     content "#/bin/sh
 cd #{backup_dir}
-/opt/opscode/embedded/bin/knife ec backup --with-key-sql --with-user-sql -c /etc/opscode/pivotal.rb backup > backup.log 2>&1
+PATH=$PATH:/opt/opscode/embedded/bin /opt/opscode/embedded/bin/knife ec backup --with-key-sql --with-user-sql -c /etc/opscode/pivotal.rb backup > backup.log 2>&1
 cd backup
+cp -r /etc/opscode/managed chef_managed_orgs
 tar -czf ../#{new_resource.prefix}`date +%Y%m%d%H%M`.tgz *
 cd ..
 rm -rf backup"

@@ -1,4 +1,4 @@
-# # encoding: utf-8
+# encoding: utf-8
 
 # Inspec test for recipe managed_chef_server::default
 
@@ -15,28 +15,28 @@ describe directory('/etc/opscode/managed') do
   it { should exist }
 end
 
-describe directory('/etc/opscode/managed/chef_managed_org') do
+describe directory('/etc/opscode/managed/test_org') do
   it { should exist }
 end
 
 # config.rb
-[ '/etc/opscode/managed/chef_managed_org/config.rb', '/etc/opscode/managed/chef_managed_org/config.json' ].each do |conf|
+[ '/etc/opscode/managed/test_org/config.rb', '/etc/opscode/managed/test_org/config.json' ].each do |conf|
   describe file conf do
     it { should exist }
     its('mode') { should cmp '0400' }
-    its('content') { should match %r{chef_server_url.*https://localhost/organizations/chef_managed_org} }
-    its('content') { should match /validation_client_name.*chef_managed_org/ }
-    its('content') { should match %r{validation_key.*/etc/opscode/managed/chef_managed_org/chef_managed_org.key} }
-    its('content') { should match %r{client_key.*/etc/opscode/managed/chef_managed_org/chef_managed_org-user.key} }
-    its('content') { should match /node_name.*chef_managed_user_chef_managed_org/ }
+    its('content') { should match %r{chef_server_url.*https://localhost/organizations/test_org} }
+    its('content') { should match /validation_client_name.*test_org/ }
+    its('content') { should match %r{validation_key.*/etc/opscode/managed/test_org/test_org-validator.pem} }
+    its('content') { should match %r{client_key.*/etc/opscode/managed/test_org/test_org-user.key} }
+    its('content') { should match /node_name.*chef_managed_user_test_org/ }
   end
 end
 
-describe file '/etc/opscode/managed/chef_managed_org/chef_managed_org.key' do
+describe file '/etc/opscode/managed/test_org/test_org-validator.pem' do
   it { should exist }
 end
 
-describe file '/etc/opscode/managed/chef_managed_org/chef_managed_org-user.key' do
+describe file '/etc/opscode/managed/test_org/test_org-user.key' do
   it { should exist }
 end
 

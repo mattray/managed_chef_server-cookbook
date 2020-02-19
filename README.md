@@ -1,6 +1,6 @@
 # managed_chef_server
 
-Deploys and configures the Chef server in a relatively stateless model. The included [policyfiles](policyfiles) provide examples of deployment options and the required attributes. You will need to pass
+Deploys and configures the Chef Infra Server in a relatively stateless model. The included [policyfiles](policyfiles) provide examples of deployment options and the required attributes. You will need to pass
 
     node['chef-server']['accept_license'] = true
 
@@ -10,11 +10,20 @@ for Chef Server 13 (note that Chef Client 14 with Chef Server 13 has issues acce
 
 ## default ##
 
-Install or restore the Chef Server in a new deployment, wrapping the [Chef-Server](https://github.com/chef-cookbooks/chef-server) cookbook. It looks for the existence of a [knife-ec-backup](https://github.com/chef/knife-ec-backup) tarball to restore from, configured with the `node['mcs']['restore']['file']` attribute. You will need to use the `managed_organization` recipe or provide your own organizations recipe to use the other recipes.
+Installs the Chef Server in a new deployment, wrapping the [Chef-Server](https://github.com/chef-cookbooks/chef-server) cookbook. You will need to use the `managed_organization` recipe or provide your own organizations recipe to use the other recipes. If you wish to configure your Chef Infra Server to report to Automate you will need to provide the following attributes like so:
+
+    node['mcs']['data_collector']['token'] = '1234ABCD5678efjkkPmBsihvwXI='
+    node['mcs']['data_collector']['root_url'] = 'https://YOURAUTOMATE/data-collector/v0/'
+    node['mcs']['data_collector']['proxy'] = true
+    node['mcs']['profiles']['root_url'] = 'https://YOURAUTOMATE'
 
 ## managed_organization ##
 
 This creates a managed Chef organization and an org-managing admin user through the appropriate [attributes](attributes/default.rb#24).
+
+## restore ##
+
+Restores the Chef Server in a new deployment, including the `default` recipe. It looks for the existence of a [knife-ec-backup](https://github.com/chef/knife-ec-backup) tarball to restore from, configured with the `node['mcs']['restore']['file']` attribute. If you are using the `managed_organization` recipe it will restore your `/etc/chef/managed/ORG_NAME/ORG_NAME.keys` from the backup.
 
 ## backup ##
 
@@ -28,7 +37,7 @@ Runs `knife ec backup` via cron and puts the backups in the `node['mcs']['backup
 
 ## cron ##
 
-Schedules the Chef client to run on the Chef server via cron against a provided policyfile archive. This may be set to use `--local-mode`, for when the Chef client has no other Chef server to contact. See the example [policyfiles/cron.rb](policyfiles/cron.rb) and [kitchen.yml](kitchen.yml) for reference.
+Schedules the Chef client to run on the Chef Infra Server via cron against a provided policyfile archive. This may be set to use `--local-mode`, for when the Chef client has no other Chef Infra Server to contact. See the example [policyfiles/cron.rb](policyfiles/cron.rb) and [kitchen.yml](kitchen.yml) for reference.
 
 ## data_bag_loader ##
 
@@ -36,11 +45,11 @@ The `node['mcs']['data_bags']['dir']` is compared against the existing data bags
 
 ## legacy_loader ##
 
-Takes the `node['mcs']['cookbooks']['dir']`, `node['mcs']['environments']['dir']` and `node['mcs']['roles']['dir']` directories and loads whatever content is found into the Chef server organization. If you want to use the same directory for the roles and environments the recipe can distinguish between JSON files. The cookbooks are expected to be tarballs in a directory, they will all be attempted to load via their `Berksfile` or with `knife`. For legacy cookbooks with multiple dependencies it may take multiple runs to load everything.
+Takes the `node['mcs']['cookbooks']['dir']`, `node['mcs']['environments']['dir']` and `node['mcs']['roles']['dir']` directories and loads whatever content is found into the Chef Infra Server organization. If you want to use the same directory for the roles and environments the recipe can distinguish between JSON files. The cookbooks are expected to be tarballs in a directory, they will all be attempted to load via their `Berksfile` or with `knife`. For legacy cookbooks with multiple dependencies it may take multiple runs to load everything.
 
 ## policyfile_loader ##
 
-Takes the `node['mcs']['policyfile']['dir']` and parses any `.lock.json` files to determine which policyfile archives to load into the local Chef server. Policies will be assigned to the group designated by the `node['mcs']['policyfile']['group']` attribute for the Chef server (`_default` is the default). If the policy itself sets the `node['mcs']['policyfile']['group']` attribute, the policy will be assigned to that group.
+Takes the `node['mcs']['policyfile']['dir']` and parses any `.lock.json` files to determine which policyfile archives to load into the local Chef Infra Server. Policies will be assigned to the group designated by the `node['mcs']['policyfile']['group']` attribute for the Chef Infra Server (`_default` is the default). If the policy itself sets the `node['mcs']['policyfile']['group']` attribute, the policy will be assigned to that group.
 
 # Attributes
 The [default.rb](attributes/default.rb) attributes file documents available settings and tunings.
@@ -51,11 +60,11 @@ Custom resources are used to reduce the complexity of the included recipes.
 
 ## managed_organization
 
-The `:create` action will instantiate a Chef server organization with an internal administrator user. The name properties is the `organization`. The organization's `full_name`, `email`, and `password` are all optional properties.
+The `:create` action will instantiate a Chef Infra Server organization with an internal administrator user. The name properties is the `organization`. The organization's `full_name`, `email`, and `password` are all optional properties.
 
 ## managed_chef_server_backup
 
-This resource schedules backups of the Chef server via cron-style properties (`minute`, `hour`, `day`, `month`, `weekday`). The backups are written to the `directory` and their filenames start with the `prefix`.
+This resource schedules backups of the Chef Infra Server via cron-style properties (`minute`, `hour`, `day`, `month`, `weekday`). The backups are written to the `directory` and their filenames start with the `prefix`.
 
 ## managed_chef_server_cron
 
@@ -97,9 +106,9 @@ There is a [kitchen.yml](kitchen.yml) that may be used for testing with Vagrant.
 
 Tests simple installation and creation of the managed Chef user and organization.
 
-## restore
+## data_collector
 
-Restores the Chef server from a backup with policyfiles. `kitchen verify restore` ensures the policyfiles were restored properly.
+Tests deploying the Chef Infra Server configured to send data to an external Automate deployment.
 
 ## cron
 
@@ -123,7 +132,11 @@ Adds loading cookbooks, environments and roles from the included [test](test) di
 
 ## everything
 
-Installs the Chef server, restores from a backup, attempts to load policyfiles (which are included in the restored backup) and adds backup via cron.
+Installs the Chef Infra Server, restores from a backup, attempts to load policyfiles (which are included in the restored backup) and adds backup via cron.
+
+## restore
+
+Restores the Chef Infra Server from a backup consisting of the `everything` content. `kitchen verify restore` ensures the policyfiles were restored properly.
 
 # License and Authors
 
