@@ -1,0 +1,38 @@
+{
+    "id": "test_org",
+    "attributes": {
+        "ntp": {
+            "servers": [
+                "0.au.pool.ntp.org",
+                "1.au.pool.ntp.org"
+            ]
+        },
+        "audit": {
+            "profiles": {
+                "uptime": {
+                    "url": "https://github.com/mattray/uptime-profile"
+                }
+            }
+        }
+    },
+    "profiles": {
+        "linux-patch-baseline": {
+            "version": "0.5.0"
+        },
+        "uptime": {
+            "version": "0.2.0"
+        }
+    },
+    "nodes": {
+        "node-centos-7": {
+            "attributes": {
+                "ntp": {
+                    "servers": [
+                        "0.sg.pool.ntp.org",
+                        "1.sg.pool.ntp.org"
+                    ]
+                }
+            }
+        }
+    }
+}

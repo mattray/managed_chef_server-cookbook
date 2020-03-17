@@ -10,6 +10,7 @@ chef install backup.rb
 chef install cron.rb
 chef install policyfile.rb
 chef install data_bags.rb
+chef install organization_attributes.rb
 chef install legacy.rb
 chef install restore.rb
 

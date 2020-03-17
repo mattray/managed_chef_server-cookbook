@@ -21,7 +21,8 @@ action :load do
   if prune
     server_data_bags = shell_out("knife data bag list -c #{configrb}").stdout.split
     # if on server, but not in the directory, remove them
-    (server_data_bags - dir_data_bags).each do |prune_data_bag|
+    # but don't prune the organization data bag
+    (server_data_bags - dir_data_bags - ['organization']).each do |prune_data_bag|
       managed_data_bag "#{organization}:#{prune_data_bag}" do
         organization organization
         data_bag prune_data_bag

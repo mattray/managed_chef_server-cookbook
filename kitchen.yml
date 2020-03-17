@@ -80,6 +80,13 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/data_bags
+  - name: organization_attributes
+    provisioner:
+      policyfile: policyfiles/organization_attributes.rb
+    data_bags_path: test/org_data_bags
+    verifier:
+      inspec_tests:
+        - test/integration/organization_attributes
   - name: 14legacy
     provisioner:
       policyfile: policyfiles/legacy.rb

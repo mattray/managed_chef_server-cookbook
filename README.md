@@ -21,6 +21,10 @@ Installs the Chef Server in a new deployment, wrapping the [Chef-Server](https:/
 
 This creates a managed Chef organization and an org-managing admin user through the appropriate [attributes](attributes/default.rb#24).
 
+## organization_attributes_ ##
+
+This creates a managed `organization` data bag that provides attributes and other settings if using the [organization-attributes](https://github.com/mattray/organization-attributes-cookbook) cookbook. The chef-client will request a `organizations` data bag from whatever Chef Server it runs against and populate the local `organization` data bag with the data bag item matching this Chef Server's `node['mcs']['org']['name']`.
+
 ## restore ##
 
 Restores the Chef Server in a new deployment, including the `default` recipe. It looks for the existence of a [knife-ec-backup](https://github.com/chef/knife-ec-backup) tarball to restore from, configured with the `node['mcs']['restore']['file']` attribute. If you are using the `managed_organization` recipe it will restore your `/etc/chef/managed/ORG_NAME/ORG_NAME.keys` from the backup.
