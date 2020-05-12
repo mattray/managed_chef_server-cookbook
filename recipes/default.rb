@@ -12,7 +12,7 @@ template '/etc/chef/accepted_licenses/chef_infra_server' do
   source 'chef_infra_server.erb'
   mode '0400'
   variables(time: Time.now)
-  not_if { ::File.exist?('/etc/chef/accepted_licenses/chef_infra_server') }
+  action :create_if_missing
   only_if { node['chef-server']['accept_license'] }
 end
 
