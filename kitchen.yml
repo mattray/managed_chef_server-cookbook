@@ -14,7 +14,7 @@ provisioner:
   always_update_cookbooks: true
   chef_license: accept
   product_name: chef
-  product_version: 15
+  product_version: 16
 
 verifier:
   name: inspec
@@ -23,18 +23,18 @@ platforms:
   - name: centos-7
 
 suites:
-  - name: 14default
+  - name: 15default
     provisioner:
       policyfile: policyfiles/default.rb
       product_name: chef
-      product_version: 14
+      product_version: 15
     verifier:
       inspec_tests:
         - test/integration/default
     attributes:
       chef-server:
         version: 12.19.31
-  - name: 15default
+  - name: 16default
     provisioner:
       policyfile: policyfiles/default.rb
     verifier:
@@ -61,49 +61,49 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/cron
-  - name: 14data_bags
-    provisioner:
-      policyfile: policyfiles/data_bags.rb
-      product_name: chef
-      product_version: 14
-    verifier:
-      inspec_tests:
-        - test/integration/default
-        - test/integration/data_bags
-    attributes:
-      chef-server:
-        version: 12.19.31
   - name: 15data_bags
     provisioner:
       policyfile: policyfiles/data_bags.rb
+      product_name: chef
+      product_version: 15
     verifier:
       inspec_tests:
         - test/integration/default
         - test/integration/data_bags
-  - name: 14legacy
-    provisioner:
-      policyfile: policyfiles/legacy.rb
-      product_name: chef
-      product_version: 14
-    verifier:
-      inspec_tests:
-        - test/integration/default
-        - test/integration/legacy
     attributes:
       chef-server:
         version: 12.19.31
+  - name: 16data_bags
+    provisioner:
+      policyfile: policyfiles/data_bags.rb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_bags
   - name: 15legacy
     provisioner:
       policyfile: policyfiles/legacy.rb
+      product_name: chef
+      product_version: 15
     verifier:
       inspec_tests:
         - test/integration/default
         - test/integration/legacy
-  - name: 14policyfile
+    attributes:
+      chef-server:
+        version: 12.19.31
+  - name: 16legacy
+    provisioner:
+      policyfile: policyfiles/legacy.rb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/legacy
+  - name: 15policyfile
     provisioner:
       policyfile: policyfiles/policyfile.rb
       product_name: chef
-      product_version: 14
+      product_version: 15
     verifier:
       inspec_tests:
         - test/integration/default
@@ -111,14 +111,14 @@ suites:
     attributes:
       chef-server:
         version: 12.19.31
-  - name: 15policyfile
+  - name: 16policyfile
     provisioner:
       policyfile: policyfiles/policyfile.rb
     verifier:
       inspec_tests:
         - test/integration/default
         - test/integration/policyfiles
-  - name: 15everything
+  - name: 16everything
     provisioner:
       policyfile: policyfiles/everything.rb
     verifier:
@@ -129,11 +129,11 @@ suites:
         - test/integration/data_bags
         - test/integration/legacy
         - test/integration/policyfiles
-  - name: 14restore
+  - name: 15restore
     provisioner:
       policyfile: policyfiles/restore.rb
       product_name: chef
-      product_version: 14
+      product_version: 15
     verifier:
       inspec_tests:
         - test/integration/default
@@ -143,7 +143,7 @@ suites:
     attributes:
       chef-server:
         version: 12.19.31
-  - name: 15restore
+  - name: 16restore
     provisioner:
       policyfile: policyfiles/restore.rb
     verifier:

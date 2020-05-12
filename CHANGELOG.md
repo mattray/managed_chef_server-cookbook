@@ -143,10 +143,13 @@ This file is used to list changes made in each version of the managed_chef_serve
 - configure data collection with private `_data_collector` recipe
 - switch tests over to 'test_org' to make it easier to see in Automate
 
+# 0.18.0
+- dropped Chef 14 support, add Chef 16 support
+- [workstation installation is overwriting chef-client symlink with non-existent destination](https://github.com/mattray/managed_chef_server-cookbook/issues/40)
+- upgrade recipe
+
 ## NEXT
-- drop Chef 14 support, add Chef 16 support
-- fix upstream chef-server cookbook to handle license acceptance
-- org attributes
+- organization attributes
 
 ## maintenance recipe ##
 Maintaining the Chef server may involve periodically cleaning up stale nodes and unused policies. This is likely to use `knife-tidy` and various `chef` commands. Scheduling and implementation TBD.
