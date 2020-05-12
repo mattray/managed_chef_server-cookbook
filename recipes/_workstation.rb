@@ -9,6 +9,8 @@ end.run_action(:install)
 # this symlink confuses chef-workstation and chef client packages and may
 # downgrade/upgrade the chef-client version unintentionally
 # https://github.com/mattray/managed_chef_server-cookbook/issues/36
-link '/usr/bin/chef-client' do
+# https://github.com/mattray/managed_chef_server-cookbook/issues/40
+link '/bin/chef-client' do
   to '/opt/chef/bin/chef-client'
+  only_if { ::File.exist?('/opt/chef/bin/chef-client') }
 end
