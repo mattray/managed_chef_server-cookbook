@@ -1,8 +1,8 @@
 set -e
 rm -rf ~/.chefdk/cache
+rm -rf ~/.chef-workstation/cache
 rm -rf *json
 
-chef install base.rb
 chef install default.rb
 
 chef install data_collector.rb

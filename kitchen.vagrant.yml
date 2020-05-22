@@ -1,7 +1,6 @@
 ---
 driver:
   name: vagrant
-  cache_directory: /tmp/cache
   customize:
     memory: 4096
     cpus: 2

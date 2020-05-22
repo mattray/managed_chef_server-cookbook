@@ -1,5 +1,12 @@
 name 'default'
 
-include_policy 'base', path: './base.lock.json'
+default_source :supermarket
 
-run_list 'managed_chef_server::default'
+cookbook 'managed_chef_server', path: '..'
+
+run_list 'managed_chef_server::default', 'managed_chef_server::managed_organization'
+
+
+override['chef-server']['accept_license'] = true
+override['mcs']['managed_user']['email'] = 'test@foo.com'
+override['mcs']['org']['name'] = 'test_org'

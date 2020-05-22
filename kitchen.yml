@@ -18,6 +18,7 @@ provisioner:
 
 verifier:
   name: inspec
+  color: false
 
 platforms:
   - name: centos-7
@@ -25,102 +26,95 @@ platforms:
 suites:
   - name: 15default
     provisioner:
-      policyfile: policyfiles/default.rb
-      product_name: chef
       product_version: 15
-    verifier:
-      inspec_tests:
-        - test/integration/default
     attributes:
       chef-server:
-        version: 12.19.31
+        package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
+    verifier:
+      inspec_tests:
+        - test/integration/default
   - name: 16default
-    provisioner:
-      policyfile: policyfiles/default.rb
     verifier:
       inspec_tests:
         - test/integration/default
-  - name: data_collector
+  - name: 16backup
     provisioner:
-      policyfile: policyfiles/data_collector.rb
-    verifier:
-      inspec_tests:
-        - test/integration/default
-        - test/integration/data_collector
-  - name: backup
-    provisioner:
-      policyfile: policyfiles/backup.rb
+      named_run_list: backup
+    attributes:
+      mcs:
+        skip_test: true
     verifier:
       inspec_tests:
         - test/integration/default
         - test/integration/backup
-  - name: cron
+  - name: 16cron
     provisioner:
-      policyfile: policyfiles/cron.rb
+      named_run_list: cron
+    attributes:
+      mcs:
+        skip_test: true
     verifier:
       inspec_tests:
         - test/integration/default
         - test/integration/cron
-  - name: 15data_bags
-    provisioner:
-      policyfile: policyfiles/data_bags.rb
-      product_name: chef
-      product_version: 15
-    verifier:
-      inspec_tests:
-        - test/integration/default
-        - test/integration/data_bags
-    attributes:
-      chef-server:
-        version: 12.19.31
   - name: 16data_bags
     provisioner:
-      policyfile: policyfiles/data_bags.rb
+      named_run_list: data_bags
+    attributes:
+      mcs:
+        skip_test: true
     verifier:
       inspec_tests:
         - test/integration/default
         - test/integration/data_bags
-  - name: 15legacy
+  - name: 16data_collector
     provisioner:
-      policyfile: policyfiles/legacy.rb
-      product_name: chef
-      product_version: 15
+      named_run_list: data_collector
+    attributes:
+      mcs:
+        skip_test: true
     verifier:
       inspec_tests:
         - test/integration/default
-        - test/integration/legacy
-    attributes:
-      chef-server:
-        version: 12.19.31
+        - test/integration/data_collector
   - name: 16legacy
     provisioner:
-      policyfile: policyfiles/legacy.rb
+      named_run_list: legacy
+    attributes:
+      mcs:
+        skip_test: true
     verifier:
       inspec_tests:
         - test/integration/default
         - test/integration/legacy
-  - name: 15policyfile
+  - name: 16policyfile
     provisioner:
-      policyfile: policyfiles/policyfile.rb
-      product_name: chef
-      product_version: 15
+      named_run_list: policyfile
+    attributes:
+      mcs:
+        skip_test: true
     verifier:
       inspec_tests:
         - test/integration/default
         - test/integration/policyfiles
+  - name: 15everything
+    provisioner:
+      named_run_list: everything
+      product_version: 15
     attributes:
       chef-server:
-        version: 12.19.31
-  - name: 16policyfile
-    provisioner:
-      policyfile: policyfiles/policyfile.rb
+        package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
     verifier:
       inspec_tests:
         - test/integration/default
+        - test/integration/data_collector
+        - test/integration/backup
+        - test/integration/data_bags
+        - test/integration/legacy
         - test/integration/policyfiles
   - name: 16everything
     provisioner:
-      policyfile: policyfiles/everything.rb
+      named_run_list: everything
     verifier:
       inspec_tests:
         - test/integration/default
@@ -131,21 +125,51 @@ suites:
         - test/integration/policyfiles
   - name: 15restore
     provisioner:
-      policyfile: policyfiles/restore.rb
-      product_name: chef
+      named_run_list: restore
       product_version: 15
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
     verifier:
       inspec_tests:
         - test/integration/default
         - test/integration/data_bags
         - test/integration/policyfiles
         - test/integration/restore
-    attributes:
-      chef-server:
-        version: 12.19.31
   - name: 16restore
     provisioner:
-      policyfile: policyfiles/restore.rb
+      named_run_list: restore
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_bags
+        - test/integration/policyfiles
+        - test/integration/restore
+  - name: 15upgrade
+    provisioner:
+      named_run_list: upgrade
+      product_version: 15
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
+      mcs:
+        upgrade:
+          package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_bags
+        - test/integration/policyfiles
+        - test/integration/restore
+  - name: 16upgrade
+    provisioner:
+      named_run_list: upgrade
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core-13.1.13-1.el7.x86_64.rpm
+      mcs:
+        upgrade:
+          package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
     verifier:
       inspec_tests:
         - test/integration/default

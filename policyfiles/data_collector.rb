@@ -3,7 +3,7 @@ name 'data_collector'
 default_source :supermarket
 
 cookbook 'managed_chef_server', path: '..'
-cookbook 'mattray', path: '../../mattray'
+cookbook 'mattray', git: 'https://github.com/mattray/mattray-cookbook.git' # just for /etc/hosts testing
 
 run_list 'mattray', 'managed_chef_server::default', 'managed_chef_server::managed_organization'
 

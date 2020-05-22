@@ -1,6 +1,6 @@
 name 'policyfile'
 
-include_policy 'base', path: './base.lock.json'
+include_policy 'default', path: './default.lock.json'
 
 run_list 'managed_chef_server::policyfile_loader'
 
