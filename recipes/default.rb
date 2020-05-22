@@ -31,6 +31,22 @@ include_recipe 'managed_chef_server::_nginx'
 # configure data collection with Automate
 include_recipe 'managed_chef_server::_data_collector'
 
+# give everything time to start up
+ruby_block "Wait for the Chef Infra Server to be ready before proceeding" do
+  block do
+    wait = 0
+    while wait < 12 # wait up to 2 minutes, then proceed
+      puts "."
+      if shell_out("chef-server-ctl status").stdout.match?('down')
+        wait += 1
+        shell_out('sleep 10')
+      else
+        wait = 12
+      end
+    end
+  end
+end
+
 execute 'verify the chef-server is working as expected' do
   command 'chef-server-ctl test'
   action :nothing

@@ -20,7 +20,7 @@ execute 'setcap cap_net_bind_service=ep nginx' do
   not_if '/sbin/setcap -v cap_net_bind_service=ep /opt/opscode/embedded/sbin/nginx'
 end
 
-execute 'chef-server-ctl restart nginx; sleep 10' do
+execute 'chef-server-ctl restart nginx' do
   action :nothing
   subscribes :run, 'execute[setcap cap_net_bind_service=ep nginx]', :immediately
 end
