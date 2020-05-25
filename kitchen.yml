@@ -97,32 +97,6 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/policyfiles
-  - name: 15everything
-    provisioner:
-      named_run_list: everything
-      product_version: 15
-    attributes:
-      chef-server:
-        package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
-    verifier:
-      inspec_tests:
-        - test/integration/default
-        - test/integration/data_collector
-        - test/integration/backup
-        - test/integration/data_bags
-        - test/integration/legacy
-        - test/integration/policyfiles
-  - name: 16everything
-    provisioner:
-      named_run_list: everything
-    verifier:
-      inspec_tests:
-        - test/integration/default
-        - test/integration/data_collector
-        - test/integration/backup
-        - test/integration/data_bags
-        - test/integration/legacy
-        - test/integration/policyfiles
   - name: 15restore
     provisioner:
       named_run_list: restore
@@ -158,9 +132,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
-        - test/integration/data_bags
-        - test/integration/policyfiles
-        - test/integration/restore
+        - test/integration/upgrade
   - name: 16upgrade
     provisioner:
       named_run_list: upgrade
@@ -173,6 +145,32 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
+        - test/integration/upgrade
+  - name: 15everything
+    provisioner:
+      named_run_list: everything
+      product_version: 15
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_collector
+        - test/integration/backup
         - test/integration/data_bags
+        - test/integration/legacy
         - test/integration/policyfiles
-        - test/integration/restore
+        - test/integration/upgrade
+  - name: 16everything
+    provisioner:
+      named_run_list: everything
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_collector
+        - test/integration/backup
+        - test/integration/data_bags
+        - test/integration/legacy
+        - test/integration/policyfiles
+        - test/integration/upgrade

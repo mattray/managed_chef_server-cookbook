@@ -10,7 +10,7 @@ for Chef Server 13 (note that Chef Client 14 with Chef Server 13 has issues acce
 
 ## default ##
 
-Installs the Chef Server in a new deployment, wrapping the [Chef-Server](https://github.com/chef-cookbooks/chef-server) cookbook. You will need to use the `managed_organization` recipe or provide your own organizations recipe to use the other recipes. If you wish to configure your Chef Infra Server to report to Automate you will need to provide the following attributes like so:
+Installs the Chef Infra Server in a new deployment, wrapping the [Chef-Server](https://github.com/chef-cookbooks/chef-server) cookbook. You will need to use the `managed_organization` recipe or provide your own organizations recipe to use the other recipes. If you wish to configure your Chef Infra Server to report to Automate you will need to provide the following attributes like so:
 
     node['mcs']['data_collector']['token'] = '1234ABCD5678efjkkPmBsihvwXI='
     node['mcs']['data_collector']['root_url'] = 'https://YOURAUTOMATE/data-collector/v0/'
@@ -23,7 +23,11 @@ This creates a managed Chef organization and an org-managing admin user through 
 
 ## restore ##
 
-Restores the Chef Server in a new deployment, including the `default` recipe. It looks for the existence of a [knife-ec-backup](https://github.com/chef/knife-ec-backup) tarball to restore from, configured with the `node['mcs']['restore']['file']` attribute. If you are using the `managed_organization` recipe it will restore your `/etc/chef/managed/ORG_NAME/ORG_NAME.keys` from the backup.
+Restores the Chef Infra Server in a new deployment, including the `default` recipe. It looks for the existence of a [knife-ec-backup](https://github.com/chef/knife-ec-backup) tarball to restore from, configured with the `node['mcs']['restore']['file']` attribute. If you are using the `managed_organization` recipe it will restore your `/etc/chef/managed/ORG_NAME/ORG_NAME.keys` from the backup.
+
+## upgrade ##
+
+Upgrades the existing Chef Infra Server to a new version with the package provided. The cookbook follows the [Chef Infra Server Standalone Upgrade Documentation](https://docs.chef.io/upgrade_server/#standalone) and will stop the server for the duration of the upgrade and perform the `chef-server-ctl cleanup` at the end. You may provide the appropriate .RPM or .DEB package via the `node['mcs']['upgrade']['package_source']` attribute.
 
 ## backup ##
 
@@ -88,7 +92,7 @@ This has `:create`, `:prune`, `:item_create`, and `:item_prune` for managing the
 
 ## environments_loader
 
-All of the Ruby or JSON environment files in the `directory` will be loaded onto the Chef Server and updated if they change.
+All of the Ruby or JSON environment files in the `directory` will be loaded onto the Chef Infra Server and updated if they change.
 
 ## policyfile_loader
 
@@ -96,52 +100,56 @@ This resource looks for policyfile locks and archives in the `directory` specify
 
 ## roles_loader
 
-All of the Ruby or JSON role files in the `directory` will be loaded onto the Chef Server and updated if they change.
+All of the Ruby or JSON role files in the `directory` will be loaded onto the Chef Infra Server and updated if they change.
 
 # Testing
 
-There is a [kitchen.yml](kitchen.yml) that may be used for testing with Vagrant. The [kitchen.vagrant.yml](kitchen.vagrant.yml) may be symlinked as **kitchen.local.yml** and used with local caches to speed up testing. If you want to use Docker, [kitchen.dokken.yml](kitchen.dokken.yml) may be used but it does not persist changes between runs and is thus not significantly faster (it's slower than Vagrant with caching). The following Suites map to example [policyfiles](policyfiles) that may be repurposed as necessary, with variants for testing Chef 14 and 15 of each:
+There is a [kitchen.yml](kitchen.yml) that may be used for testing with Vagrant. The [kitchen.vagrant.yml](kitchen.vagrant.yml) may be symlinked as **kitchen.local.yml** and used with local caches to speed up testing. If you want to use Docker, [kitchen.dokken.yml](kitchen.dokken.yml) may be used but it does not persist changes between runs and is thus not significantly faster (it's slower than Vagrant with caching). The following Suites map to separate named run lists in the [Policyfile.rb](Policyfile.rb) that may be repurposed as necessary, with 15* variants for testing with Chef Infra Server 12.19 as opposed to 13. The `test` directory will need to be populated with downloaded RPM installers as necessary.
 
-## default
+## 15/16default
 
 Tests simple installation and creation of the managed Chef user and organization.
 
-## data_collector
+## 16data_collector
 
 Tests deploying the Chef Infra Server configured to send data to an external Automate deployment.
 
-## cron
-
-Checks the chef-client is in the crontab
-
-## backup
+## 16backup
 
 Checks the backup script is in the crontab and backup directories are available.
 
-## data_bags
+## 16cron
+
+Checks the chef-client is in the crontab
+
+## 16data_bags
 
 Adds loading data bags from the included [test](test) directory. It restores from a previous data bag backup to ensure pruning and updating work.
 
-## policyfile
-
-Adds loading policyfiles from the included [test](test) directory.
-
-## legacy
+## 16legacy
 
 Adds loading cookbooks, environments and roles from the included [test](test) directory.
 
-## everything
+## 16policyfile
 
-Installs the Chef Infra Server, restores from a backup, attempts to load policyfiles (which are included in the restored backup) and adds backup via cron.
+Adds loading policyfiles from the included [test](test) directory.
 
-## restore
+## 15/16restore
 
 Restores the Chef Infra Server from a backup consisting of the `everything` content. `kitchen verify restore` ensures the policyfiles were restored properly.
+
+## 15/16upgrade
+
+Installs the Chef Infra Server, loads data bags, loads legacy content, loads policyfiles, and adds backup via cron, then upgrades the installed version of Chef Infra Server.
+
+## 15/16everything
+
+Installs the Chef Infra Server, loads data bags, loads legacy content, loads policyfiles, adds backup via cron, and upgrades the installation.
 
 # License and Authors
 
 - Author: Matt Ray [matt@chef.io](mailto:matt@chef.io)
-- Copyright 2018-2019, Chef Software, Inc
+- Copyright 2018-2020, Chef Software, Inc
 
 ```text
 Licensed under the Apache License, Version 2.0 (the "License");

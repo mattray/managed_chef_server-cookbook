@@ -12,9 +12,9 @@ named_run_list :data_collector, 'test_cookbook', 'managed_chef_server', 'managed
 named_run_list :data_bags, 'managed_chef_server', 'managed_chef_server::managed_organization', 'managed_chef_server::data_bag_loader'
 named_run_list :legacy, 'managed_chef_server', 'managed_chef_server::managed_organization', 'managed_chef_server::legacy_loader'
 named_run_list :policyfile, 'managed_chef_server', 'managed_chef_server::managed_organization', 'managed_chef_server::policyfile_loader'
-named_run_list :everything, 'test_cookbook', 'managed_chef_server', 'managed_chef_server::managed_organization', 'managed_chef_server::data_bag_loader', 'managed_chef_server::legacy_loader', 'managed_chef_server::policyfile_loader', 'managed_chef_server::backup'
 named_run_list :restore, 'managed_chef_server::restore', 'managed_chef_server::managed_organization'
-named_run_list :upgrade, 'test_cookbook', 'managed_chef_server', 'managed_chef_server::managed_organization', 'managed_chef_server::data_bag_loader', 'managed_chef_server::legacy_loader', 'managed_chef_server::policyfile_loader', 'managed_chef_server::backup', 'managed_chef_server::upgrade'
+named_run_list :upgrade, 'managed_chef_server', 'managed_chef_server::managed_organization', 'managed_chef_server::upgrade'
+named_run_list :everything, 'test_cookbook', 'managed_chef_server', 'managed_chef_server::managed_organization', 'managed_chef_server::data_bag_loader', 'managed_chef_server::legacy_loader', 'managed_chef_server::policyfile_loader', 'managed_chef_server::backup', 'managed_chef_server::upgrade'
 
 # default settings
 default['chef-server']['accept_license'] = true

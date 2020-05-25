@@ -146,12 +146,19 @@ This file is used to list changes made in each version of the managed_chef_serve
 # 0.18.0
 - dropped Chef 14 support, add Chef 16 support
 - [workstation installation is overwriting chef-client symlink with non-existent destination](https://github.com/mattray/managed_chef_server-cookbook/issues/40)
+- added sleep while loop to wait for startup completion
+- refactored testing policyfiles to be easier to follow
+- move license acceptance into a private recipe.
 - upgrade recipe
 
-## NEXT
+# NEXT
 - organization attributes
 
-## maintenance recipe ##
+# Backlog
+- Chef 16: clean up end.run_action https://docs.chef.io/release_notes/#compile_time-on-all-resources
+- Chef 16: improve property require behavior https://docs.chef.io/release_notes/#improved-property-require-behavior
+
+## maintenance recipe
 Maintaining the Chef server may involve periodically cleaning up stale nodes and unused policies. This is likely to use `knife-tidy` and various `chef` commands. Scheduling and implementation TBD.
 - inspec for configuration checks
   inspec exec https://github.com/mattray/inspec-chef-server/tree/rhel --attrs=config.yml
