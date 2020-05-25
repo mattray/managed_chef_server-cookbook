@@ -16,30 +16,30 @@ action :upgrade do
   end
 
   # Run the following command to make sure all services are in a sane state.
-  execute "chef-server-ctl reconfigure"
+  execute 'chef-server-ctl reconfigure'
 
   # Stop the server.
-  execute "chef-server-ctl stop" do
+  execute 'chef-server-ctl stop' do
     retries 2 # sometimes it's slow to stop
     retry_delay 10
   end
 
   # Install the upgrade package, don't allow downgrades.
-  package "chef-server-core" do
+  package 'chef-server-core' do
     allow_downgrade false
     source upgrade_package
     action :upgrade
   end
 
   # Upgrade the server, assumes the license has been accepted.
-  execute "chef-server-ctl upgrade"
+  execute 'chef-server-ctl upgrade'
 
   # Restart the server.
-  execute "chef-server-ctl start"
+  execute 'chef-server-ctl start'
 
   # After the upgrade process is complete and everything is tested and verified
   # to be working properly, clean up the server by removing all of the old data.
-  execute "chef-server-ctl cleanup"
+  execute 'chef-server-ctl cleanup'
 
   # Mark that the system has already been upgraded. Re-running this process
   # shouldn't be an issue, but this will save time.
