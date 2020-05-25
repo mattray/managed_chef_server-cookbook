@@ -8,5 +8,5 @@ include_recipe 'managed_chef_server::_accept_license'
 
 managed_chef_server_upgrade 'upgrade Chef Infra Server' do
   package_source node['mcs']['upgrade']['package_source']
-  not_if { !defined?(node['mcs']['upgrade']['package_source']) }
+  only_if { ::File.exist?(node['mcs']['upgrade']['package_source']) }
 end

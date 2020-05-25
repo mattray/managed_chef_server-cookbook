@@ -153,6 +153,9 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
+      mcs:
+        upgrade:
+          package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
     verifier:
       inspec_tests:
         - test/integration/default
@@ -165,6 +168,12 @@ suites:
   - name: 16everything
     provisioner:
       named_run_list: everything
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core-13.1.13-1.el7.x86_64.rpm
+      mcs:
+        upgrade:
+          package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
     verifier:
       inspec_tests:
         - test/integration/default
