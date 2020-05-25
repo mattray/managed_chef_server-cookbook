@@ -35,6 +35,7 @@ ruby_block "Wait for the Chef Infra Server to be ready before proceeding" do
       end
     end
   end
+  not_if 'chef-server-ctl status'
 end
 
 execute 'verify the chef-server is working as expected' do
