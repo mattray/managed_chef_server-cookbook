@@ -1,4 +1,5 @@
 resource_name :roles_loader
+provides :roles_loader
 
 property :directory, String, name_property: true
 property :organization, String, required: true

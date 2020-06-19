@@ -1,4 +1,5 @@
 resource_name :managed_chef_server_cron
+provides :managed_chef_server_cron
 
 property :archive, String, name_property: true
 property :minute, String, default: '*'

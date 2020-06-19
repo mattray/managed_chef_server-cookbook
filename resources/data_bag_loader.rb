@@ -1,4 +1,5 @@
 resource_name :data_bag_loader
+provides :data_bag_loader
 
 property :directory, String, name_property: true
 property :organization, String, required: true

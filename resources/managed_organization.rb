@@ -1,4 +1,5 @@
 resource_name :managed_organization
+provides :managed_organization
 
 property :organization, String, name_property: true
 property :full_name, String, default: 'Chef Managed Organization'

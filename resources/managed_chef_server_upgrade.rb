@@ -1,5 +1,6 @@
 # follows https://docs.chef.io/upgrade_server/#standalone
 resource_name :managed_chef_server_upgrade
+provides :managed_chef_server_upgrade
 
 property :package_source, String, name_property: true
 

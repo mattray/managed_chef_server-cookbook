@@ -1,4 +1,5 @@
 resource_name :cookbooks_loader
+provides :cookbooks_loader
 
 property :directory, String, name_property: true
 property :organization, String, required: true

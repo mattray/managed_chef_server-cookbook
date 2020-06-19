@@ -1,4 +1,5 @@
 resource_name :policyfile_loader
+provides :policyfile_loader
 
 property :directory, String, name_property: true
 property :organization, String, required: true

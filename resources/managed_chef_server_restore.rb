@@ -1,4 +1,5 @@
 resource_name :managed_chef_server_restore
+provides :managed_chef_server_restore
 
 property :tarball, String, name_property: true
 

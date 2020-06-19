@@ -1,4 +1,5 @@
 resource_name :environments_loader
+provides :environments_loader
 
 property :directory, String, name_property: true
 property :organization, String, required: true

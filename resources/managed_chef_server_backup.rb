@@ -1,4 +1,5 @@
 resource_name :managed_chef_server_backup
+provides :managed_chef_server_backup
 
 property :directory, String, name_property: true
 property :prefix, String, default: 'chef-server-backup-'
