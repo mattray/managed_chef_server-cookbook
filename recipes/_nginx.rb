@@ -4,6 +4,10 @@
 # system startup of chef nginx to run as opscode user and setting
 # ownership of log directories so opscode can write to them
 
+directory '/opt/opscode/sv/nginx' do
+  recursive true
+end
+
 cookbook_file '/opt/opscode/sv/nginx/run' do
   source 'nginx.run'
   sensitive true
