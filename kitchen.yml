@@ -22,6 +22,7 @@ verifier:
 
 platforms:
   - name: centos-7
+  - name: ubuntu-18.04
 
 suites:
   - name: 15default
@@ -33,6 +34,7 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/default
+    excludes: ["ubuntu-18.04"]
   - name: 16default
     verifier:
       inspec_tests:
@@ -47,6 +49,7 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/backup
+    excludes: ["ubuntu-18.04"]
   - name: 16cron
     provisioner:
       named_run_list: cron
@@ -57,6 +60,7 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/cron
+    excludes: ["ubuntu-18.04"]
   - name: 16data_bags
     provisioner:
       named_run_list: data_bags
@@ -67,6 +71,7 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/data_bags
+    excludes: ["ubuntu-18.04"]
   - name: 16data_collector
     provisioner:
       named_run_list: data_collector
@@ -77,6 +82,7 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/data_collector
+    excludes: ["ubuntu-18.04"]
   - name: 16legacy
     provisioner:
       named_run_list: legacy
@@ -87,6 +93,7 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/legacy
+    excludes: ["ubuntu-18.04"]
   - name: 16policyfile
     provisioner:
       named_run_list: policyfile
@@ -97,6 +104,7 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/policyfiles
+    excludes: ["ubuntu-18.04"]
   - name: 15restore
     provisioner:
       named_run_list: restore
@@ -110,6 +118,7 @@ suites:
         - test/integration/data_bags
         - test/integration/policyfiles
         - test/integration/restore
+    excludes: ["ubuntu-18.04"]
   - name: 16restore
     provisioner:
       named_run_list: restore
@@ -119,6 +128,7 @@ suites:
         - test/integration/data_bags
         - test/integration/policyfiles
         - test/integration/restore
+    excludes: ["ubuntu-18.04"]
   - name: 15upgrade
     provisioner:
       named_run_list: upgrade
@@ -133,6 +143,7 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/upgrade
+    excludes: ["ubuntu-18.04"]
   - name: 16upgrade
     provisioner:
       named_run_list: upgrade
@@ -146,6 +157,7 @@ suites:
       inspec_tests:
         - test/integration/default
         - test/integration/upgrade
+    excludes: ["ubuntu-18.04"]
   - name: 15everything
     provisioner:
       named_run_list: everything
@@ -165,6 +177,7 @@ suites:
         - test/integration/legacy
         - test/integration/policyfiles
         - test/integration/upgrade
+    excludes: ["ubuntu-18.04"]
   - name: 16everything
     provisioner:
       named_run_list: everything
@@ -183,3 +196,4 @@ suites:
         - test/integration/legacy
         - test/integration/policyfiles
         - test/integration/upgrade
+    excludes: ["ubuntu-18.04"]

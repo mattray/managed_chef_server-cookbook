@@ -46,5 +46,5 @@ default['mcs']['policyfile']['dir'] = '/backups/policyfiles'
 default['mcs']['restore']['file'] = '/backups/chef-server-backup-202002192050.tgz'
 
 # package sources, these may be overridden in the kitchen.yml as necessary
-default['chef-server']['package_source'] = '/backups/chef-server-core-13.2.0-1.el7.x86_64.rpm'
-default['chef-workstation']['package_source'] = '/backups/chef-workstation-0.18.3-1.el7.x86_64.rpm'
+# default['chef-server']['package_source'] = '/backups/chef-server-core-13.2.0-1.el7.x86_64.rpm'
+# default['chef-workstation']['package_source'] = '/backups/chef-workstation-0.18.3-1.el7.x86_64.rpm'

@@ -154,6 +154,9 @@ This file is used to list changes made in each version of the managed_chef_serve
 # 0.18.1
 - updated custom resources to account for [breaking Custom Resource change in Chef 16.2](https://discourse.chef.io/t/chef-infra-client-16-2-released/17284)
 
+# 0.18.2
+- attempt to fix issue with missing directory https://github.com/mattray/managed_chef_server-cookbook/issues/42
+
 # NEXT
 - organization attributes
 
