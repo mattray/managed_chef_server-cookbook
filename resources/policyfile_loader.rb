@@ -27,7 +27,8 @@ action :load do
   end
 
   # only load policies that aren't in the hash produced from the server
-  Dir.foreach(policyfile_dir) do |pfile|
+  sorted_dir = Dir.entries(policyfile_dir).sort_by { |x| ::File.mtime(policyfile_dir + '/' + x) } # sort by time
+  sorted_dir.each do |pfile|
     next unless pfile.end_with?(node['mcs']['policyfile']['lockfiletype'])
     # parse the lockfile and set the appropriate policygroup
     policy_lock = JSON.parse(::File.read(policyfile_dir + '/' + pfile))
