@@ -55,10 +55,11 @@ suites:
       named_run_list: cron
     attributes:
       mcs:
+        managed:
+          dir: /root/managed
         skip_test: true
     verifier:
       inspec_tests:
-        - test/integration/default
         - test/integration/cron
     excludes: ["ubuntu-18.04"]
   - name: 16data_bags

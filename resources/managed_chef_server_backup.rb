@@ -22,7 +22,7 @@ action :create do
 cd #{backup_dir}
 PATH=$PATH:/opt/opscode/embedded/bin /opt/opscode/embedded/bin/knife ec backup --with-key-sql --with-user-sql -c /etc/opscode/pivotal.rb backup > backup.log 2>&1
 cd backup
-cp -r /etc/opscode/managed chef_managed_orgs
+cp -r #{node['mcs']['managed']['dir']} chef_managed_orgs
 tar -czf ../#{new_resource.prefix}`date +%Y%m%d%H%M`.tgz *
 cd ..
 rm -rf backup"

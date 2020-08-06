@@ -138,6 +138,9 @@ This file is used to list changes made in each version of the managed_chef_serve
 # 0.18.3
 - sort policyfiles by time to avoid potential race condition
 
+# 0.18.4
+- make location of the directory containing managed users configurable https://github.com/mattray/managed_chef_server-cookbook/issues/45
+
 # NEXT
 - organization attributes
 

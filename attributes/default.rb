@@ -17,6 +17,7 @@ default['mcs']['profiles']['root_url'] = nil
 default['mcs']['restore']['file'] = nil
 
 # managed organization for Chef-managed server
+default['mcs']['managed']['dir'] = '/etc/opscode/managed'
 default['mcs']['org']['name'] = 'chef_managed_org'
 default['mcs']['org']['full_name'] = 'Chef Managed Organization'
 # if you want an email address for the managed organization users

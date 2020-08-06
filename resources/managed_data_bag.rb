@@ -16,7 +16,7 @@ action :create do
   data_bag = new_resource.data_bag
   organization = new_resource.organization
 
-  configrb = "/etc/opscode/managed/#{organization}/config.rb"
+  configrb = "#{node['mcs']['managed']['dir']}/#{organization}/config.rb"
   data_bag_md5s = "#{Chef::Config[:file_cache_path]}/mcs-databags-#{organization}"
 
   shell_out("touch #{data_bag_md5s}")
@@ -35,7 +35,7 @@ action :prune do
   data_bag = new_resource.data_bag
   organization = new_resource.organization
 
-  configrb = "/etc/opscode/managed/#{organization}/config.rb"
+  configrb = "#{node['mcs']['managed']['dir']}/#{organization}/config.rb"
   data_bag_md5s = "#{Chef::Config[:file_cache_path]}/mcs-databags-#{organization}"
 
   bash "knife_data_bag_delete #{data_bag}" do
@@ -54,7 +54,7 @@ action :item_create do
   item_json = new_resource.item
   organization = new_resource.organization
 
-  configrb = "/etc/opscode/managed/#{organization}/config.rb"
+  configrb = "#{node['mcs']['managed']['dir']}/#{organization}/config.rb"
   data_bag_md5s = "#{Chef::Config[:file_cache_path]}/mcs-databags-#{organization}"
 
   item = JSON.parse(::File.read(item_json))
@@ -83,7 +83,7 @@ action :item_prune do
   data_bag = new_resource.data_bag
   item = new_resource.item
 
-  configrb = "/etc/opscode/managed/#{organization}/config.rb"
+  configrb = "#{node['mcs']['managed']['dir']}/#{organization}/config.rb"
 
   execute "knife data bag delete #{data_bag} #{item} from #{organization}" do
     command "knife data bag delete #{data_bag} #{item} -y -c #{configrb}"

@@ -10,7 +10,7 @@ action :load do
   organization = new_resource.organization
   prune = new_resource.prune
 
-  configrb = "/etc/opscode/managed/#{organization}/config.rb"
+  configrb = "#{node['mcs']['managed']['dir']}/#{organization}/config.rb"
   data_bag_md5s = "#{Chef::Config[:file_cache_path]}/mcs-databags-#{organization}"
 
   return if data_bag_dir.nil? || !Dir.exist?(data_bag_dir)

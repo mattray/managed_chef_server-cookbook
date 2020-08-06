@@ -10,8 +10,8 @@ action :load do
 
   return if cookbooks_dir.nil? || !Dir.exist?(cookbooks_dir)
 
-  configrb = "/etc/opscode/managed/#{organization}/config.rb"
-  configjson = "/etc/opscode/managed/#{organization}/config.json"
+  configrb = "#{node['mcs']['managed']['dir']}/#{organization}/config.rb"
+  configjson = "#{node['mcs']['managed']['dir']}/#{organization}/config.json"
 
   cookbooks_temp_dir = Chef::Config[:file_cache_path] + '/mcs-cookbooks'
   # create a temp dir for untarring the cookbooks

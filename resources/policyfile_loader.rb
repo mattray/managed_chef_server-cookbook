@@ -8,7 +8,7 @@ action :load do
   policyfile_dir = new_resource.directory
   organization = new_resource.organization
 
-  configrb = "/etc/opscode/managed/#{organization}/config.rb"
+  configrb = "#{node['mcs']['managed']['dir']}/#{organization}/config.rb"
 
   return if policyfile_dir.nil? || !Dir.exist?(policyfile_dir)
 
