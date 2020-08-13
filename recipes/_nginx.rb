@@ -10,6 +10,7 @@ end
 
 cookbook_file '/opt/opscode/sv/nginx/run' do
   source 'nginx.run'
+  cookbook 'managed_chef_server'
   sensitive true
   mode '0755'
 end

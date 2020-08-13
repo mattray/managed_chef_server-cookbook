@@ -31,6 +31,7 @@ action :create do
   # write a config.rb
   template "#{org_dir}/config.rb" do
     source 'config.rb.erb'
+    cookbook 'managed_chef_server'
     mode '0400'
     variables(
       o_name: org_name,
@@ -43,6 +44,7 @@ action :create do
   # berks config for legacy_loader
   template "#{org_dir}/config.json" do
     source 'config.json.erb'
+    cookbook 'managed_chef_server'
     mode '0400'
     variables(
       o_name: org_name,

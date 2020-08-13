@@ -141,6 +141,9 @@ This file is used to list changes made in each version of the managed_chef_serve
 # 0.18.4
 - make location of the directory containing managed users configurable https://github.com/mattray/managed_chef_server-cookbook/issues/45
 
+# 0.18.5
+- specify cookbook source of files and templates for external custom resource usage
+
 # NEXT
 - organization attributes
 
