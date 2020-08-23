@@ -75,8 +75,6 @@ action :create do
     command "cp #{Chef::Config[:file_cache_path]}/restoredir/chef_managed_orgs/#{org_name}/#{org_name}-validator.pem #{org_dir}/"
     only_if { ::File.exist?("#{Chef::Config[:file_cache_path]}/restoredir/chef_managed_orgs/#{org_name}/#{org_name}-validator.pem") }
     not_if { ::File.exist?("#{org_dir}/#{org_name}-validator.pem") }
-    action :nothing
-    subscribes :run, 'execute[reset managed user key on restore]', :immediately
   end
 
   # chef-server-ctl org-create ORG_NAME ORG_FULL_NAME -f FILE_NAME

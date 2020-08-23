@@ -133,16 +133,19 @@ This file is used to list changes made in each version of the managed_chef_serve
 - updated custom resources to account for [breaking Custom Resource change in Chef 16.2](https://discourse.chef.io/t/chef-infra-client-16-2-released/17284)
 
 # 0.18.2
-- attempt to fix issue with missing directory https://github.com/mattray/managed_chef_server-cookbook/issues/42
+- [attempt to fix issue with missing directory](https://github.com/mattray/managed_chef_server-cookbook/issues/42)
 
 # 0.18.3
 - sort policyfiles by time to avoid potential race condition
 
 # 0.18.4
-- make location of the directory containing managed users configurable https://github.com/mattray/managed_chef_server-cookbook/issues/45
+- [make location of the directory containing managed users configurable](https://github.com/mattray/managed_chef_server-cookbook/issues/45)
 
 # 0.18.5
 - specify cookbook source of files and templates for external custom resource usage
+
+# 0.18.6
+- [on restore, copy the validator.pem without subscribing to the user reset](https://github.com/mattray/managed_chef_server-cookbook/issues/47)
 
 # NEXT
 - organization attributes
