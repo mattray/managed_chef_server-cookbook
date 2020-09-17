@@ -48,7 +48,6 @@ describe file '/etc/opscode/chef-server.rb' do
   its('content') { should match /^postgresql\['log_min_duration_statement'\] = 1000$/ }
 end
 
-
 # cron dir
 describe directory('/tmp/kitchen/cache/mcs-cron') do
   it { should exist }
