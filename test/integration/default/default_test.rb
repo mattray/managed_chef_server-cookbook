@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 # Inspec test for recipe managed_chef_server::default
 
 # This is an example test, replace it with your own test.

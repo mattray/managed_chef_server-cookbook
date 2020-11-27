@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 # Inspec test for recipe managed_chef_server::cron
 
 # defaults brought over, testing with different managed org dir

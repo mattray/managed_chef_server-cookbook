@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 # Inspec test for recipe managed_chef_server::backup
 
 # backup dir
