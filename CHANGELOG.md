@@ -147,6 +147,11 @@ This file is used to list changes made in each version of the managed_chef_serve
 # 0.18.6
 - [on restore, copy the validator.pem without subscribing to the user reset](https://github.com/mattray/managed_chef_server-cookbook/issues/47)
 
+# 0.19.0
+- [fix "undefined method `+' for nil:NilClass" on string additions](https://github.com/mattray/managed_chef_server-cookbook/issues/49)
+- [uninstall ChefDK in favor of Chef Workstation](https://github.com/mattray/managed_chef_server-cookbook/issues/48)
+- expand test coverage for Chef Infra Server 12, 13 and 14. 14 is currently having issues
+
 # NEXT
 - organization attributes
 

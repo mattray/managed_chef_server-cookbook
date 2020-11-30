@@ -3,7 +3,7 @@ maintainer 'Matt Ray'
 maintainer_email 'matt@chef.io'
 license 'Apache-2.0'
 description 'Installs and configures a Chef server'
-version '0.18.6'
+version '0.19.0'
 chef_version '>= 15'
 
 supports 'redhat'
