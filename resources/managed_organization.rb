@@ -10,11 +10,11 @@ action :create do
   # create organization and validator.pem
   org_name = new_resource.organization
   org_full_name = new_resource.full_name
-  org_dir = node['mcs']['managed']['dir'] + '/' + org_name
-  org_key = org_dir + "/#{org_name}-validator.pem"
+  org_dir = "#{node['mcs']['managed']['dir']}/#{org_name}"
+  org_key = "#{org_dir}/#{org_name}-validator.pem"
 
   # create a managed user instead of using the pivotal user
-  user_key = org_dir + "/#{org_name}-user.key"
+  user_key = "#{org_dir}/#{org_name}-user.key"
   user_name = "chef_managed_user_#{org_name}"
   user_email = new_resource.email
   user_first_name = 'Chef'
