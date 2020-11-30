@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 # Inspec test for recipe managed_chef_server::_data_collector
 
 describe file '/etc/opscode/chef-server.rb' do

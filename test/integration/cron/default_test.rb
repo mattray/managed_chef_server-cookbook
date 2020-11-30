@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 # Inspec test for recipe managed_chef_server::cron
 
 # defaults brought over, testing with different managed org dir
@@ -47,7 +45,6 @@ describe file '/etc/opscode/chef-server.rb' do
   its('content') { should match /^postgresql\['checkpoint_segments'\] = 64$/ }
   its('content') { should match /^postgresql\['log_min_duration_statement'\] = 1000$/ }
 end
-
 
 # cron dir
 describe directory('/tmp/kitchen/cache/mcs-cron') do

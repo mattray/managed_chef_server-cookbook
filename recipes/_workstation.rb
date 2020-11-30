@@ -1,3 +1,8 @@
+# uninstall any pre-existing ChefDKs on an upgrade
+chef_ingredient 'chefdk' do
+  action :uninstall
+end.run_action(:uninstall)
+
 # need the Chef Workstation for the 'chef' command
 chef_ingredient 'chef-workstation' do
   action :install
