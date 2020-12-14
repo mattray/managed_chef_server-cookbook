@@ -6,7 +6,7 @@ Deploys and configures the Chef Infra Server in a relatively stateless model. Th
 
     node['chef-server']['accept_license'] = true
 
-for Chef Server 13 (note that Chef Client 14 with Chef Server 13 has issues accepting licenses).
+for Chef Server 13 and 14.
 
 # Recipes
 
@@ -106,7 +106,7 @@ All of the Ruby or JSON role files in the `directory` will be loaded onto the Ch
 
 # Testing
 
-There is a [kitchen.yml](kitchen.yml) that may be used for testing with Vagrant. The [kitchen.vagrant.yml](kitchen.vagrant.yml) may be symlinked as **kitchen.local.yml** and used with local caches to speed up testing. If you want to use Docker, [kitchen.dokken.yml](kitchen.dokken.yml) may be used but it does not persist changes between runs and is thus not significantly faster (it's slower than Vagrant with caching). The following Suites map to separate named run lists in the [Policyfile.rb](Policyfile.rb) that may be repurposed as necessary, with 15* variants for testing with Chef Infra Server 12.19 as opposed to 13. The `test` directory will need to be populated with downloaded RPM installers as necessary.
+There is a [kitchen.yml](kitchen.yml) that may be used for testing with Vagrant. The [kitchen.vagrant.yml](kitchen.vagrant.yml) may be symlinked as **kitchen.local.yml** and used with local caches to speed up testing. If you want to use Docker, [kitchen.dokken.yml](kitchen.dokken.yml) may be used but it does not persist changes between runs and is thus not significantly faster (it's slower than Vagrant with caching). The following Suites map to separate named run lists in the [Policyfile.rb](Policyfile.rb) that may be repurposed as necessary, with 15* variants for testing with Chef Infra Client 15 and -12/13/14 indicating Chef Infra Server tests. The `test` directory will need to be populated with downloaded RPM installers as necessary.
 
 ## 15/16default
 

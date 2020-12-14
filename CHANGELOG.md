@@ -152,6 +152,9 @@ This file is used to list changes made in each version of the managed_chef_serve
 - [uninstall ChefDK in favor of Chef Workstation](https://github.com/mattray/managed_chef_server-cookbook/issues/48)
 - expand test coverage for Chef Infra Server 12, 13 and 14. 14 is currently having issues
 
+# 0.19.1
+- move the `syntax_check_cache_path` out of `/etc/opscode/` into the `Chef::Config[:file_cache_path]/syntaxcache`
+
 # NEXT
 - organization attributes
 

@@ -18,16 +18,26 @@ describe directory('/etc/opscode/managed/test_org') do
 end
 
 # config.rb
-[ '/etc/opscode/managed/test_org/config.rb', '/etc/opscode/managed/test_org/config.json' ].each do |conf|
-  describe file conf do
-    it { should exist }
-    its('mode') { should cmp '0400' }
-    its('content') { should match %r{chef_server_url.*https://localhost/organizations/test_org} }
-    its('content') { should match /validation_client_name.*test_org/ }
-    its('content') { should match %r{validation_key.*/etc/opscode/managed/test_org/test_org-validator.pem} }
-    its('content') { should match %r{client_key.*/etc/opscode/managed/test_org/test_org-user.key} }
-    its('content') { should match /node_name.*chef_managed_user_test_org/ }
-  end
+describe file '/etc/opscode/managed/test_org/config.rb' do
+  it { should exist }
+  its('mode') { should cmp '0400' }
+  its('content') { should match %r{chef_server_url.*https://localhost/organizations/test_org} }
+  its('content') { should match %r{validation_client_name.*test_org} }
+  its('content') { should match %r{validation_key.*/etc/opscode/managed/test_org/test_org-validator.pem} }
+  its('content') { should match %r{client_key.*/etc/opscode/managed/test_org/test_org-user.key} }
+  its('content') { should match %r{node_name.*chef_managed_user_test_org} }
+  its('content') { should match %r{syntax_check_cache_path.*syntaxcache/test_org} }
+end
+
+# config.json
+describe file '/etc/opscode/managed/test_org/config.json' do
+  it { should exist }
+  its('mode') { should cmp '0400' }
+  its('content') { should match %r{chef_server_url.*https://localhost/organizations/test_org} }
+  its('content') { should match %r{validation_client_name.*test_org} }
+  its('content') { should match %r{validation_key.*/etc/opscode/managed/test_org/test_org-validator.pem} }
+  its('content') { should match %r{client_key.*/etc/opscode/managed/test_org/test_org-user.key} }
+  its('content') { should match %r{node_name.*chef_managed_user_test_org} }
 end
 
 describe file '/etc/opscode/managed/test_org/test_org-validator.pem' do

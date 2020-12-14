@@ -12,6 +12,7 @@ action :create do
   org_full_name = new_resource.full_name
   org_dir = "#{node['mcs']['managed']['dir']}/#{org_name}"
   org_key = "#{org_dir}/#{org_name}-validator.pem"
+  org_syntaxcache = "#{Chef::Config[:file_cache_path]}/syntaxcache/#{org_name}"
 
   # create a managed user instead of using the pivotal user
   user_key = "#{org_dir}/#{org_name}-user.key"
@@ -36,6 +37,7 @@ action :create do
     variables(
       o_name: org_name,
       o_key: org_key,
+      o_syntaxcache: org_syntaxcache,
       u_name: user_name,
       u_key: user_key
     )
