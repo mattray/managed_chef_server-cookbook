@@ -3,6 +3,9 @@
 # Attributes:: default
 #
 
+# if you still need deprecated recipes related to tuning Solr and Postgres, set this back to 13 or 12
+default['mcs']['chef_server_version'] = 14
+
 # upgrade package
 default['mcs']['upgrade']['package_source'] = nil
 

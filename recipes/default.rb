@@ -6,17 +6,27 @@
 # Chef Server 13 requires license acceptance
 include_recipe 'managed_chef_server::_accept_license'
 
-# need the ChefDK for the 'berks' and 'chef' commands
+# need the ChefWorkstation for the 'berks' and 'chef' commands
 include_recipe 'managed_chef_server::_workstation'
 
 # performance tuning based off of recommendations in https://docs.chef.io/server_tuning.html#large-node-sizes
-include_recipe 'managed_chef_server::_tuning'
+# deprecated for Chef Infra Server 14
+if node['mcs']['chef_server_version'] < 14
+  include_recipe 'managed_chef_server::_tuning'
+end
+
+# Configure the Chef Server for data collection forwarding by adding the following setting to /etc/opscode/chef-server.rb:
+node.default['chef-server']['configuration'] += "data_collector['root_url'] = '#{node['mcs']['data_collector']['root_url']}'\n" if node['mcs']['data_collector']['root_url']
+# Add for chef client run forwarding
+node.default['chef-server']['configuration'] += "data_collector['proxy'] = #{node['mcs']['data_collector']['proxy']}\n" if node['mcs']['data_collector']['proxy']
+# Add for compliance scanning
+node.default['chef-server']['configuration'] += "profiles['root_url'] = '#{node['mcs']['profiles']['root_url']}'\n" if node['mcs']['profiles']['root_url']
 
 # chef-server install
 include_recipe 'chef-server::default'
 
 # run nginx as a non-root user
-include_recipe 'managed_chef_server::_nginx'
+#include_recipe 'managed_chef_server::_nginx'
 
 # configure data collection with Automate
 include_recipe 'managed_chef_server::_data_collector'
