@@ -19,11 +19,11 @@ end
 
 # these are going to drift because of Berkshelf
 describe command('knife cookbook list -c /etc/opscode/managed/test_org/config.rb') do
-  its('stdout') { should match /^apt\s+7.3.0$/ }
+  its('stdout') { should match /^apt\s+7.4.0$/ }
   its('stdout') { should match /^chef-client\s+11.0.3$/ }
-  its('stdout') { should match /^cron\s+6.3.1$/ }
+  its('stdout') { should match /^cron\s+6.4.0$/ }
   its('stdout') { should match /^iptables\s+4.3.4$/ }
-  its('stdout') { should match /^logrotate\s+2.2.3$/ }
+  its('stdout') { should match /^logrotate\s+2.3.0$/ }
   its('stdout') { should match /^mattray\s+0.8.0$/ }
   its('stdout') { should match /^ntp\s+3.6.0/ }
   its('stdout') { should match /^sudo\s+5.5.0/ }
