@@ -47,10 +47,3 @@ ruby_block 'Wait for the Chef Infra Server to be ready before proceeding' do
   end
   not_if 'chef-server-ctl status'
 end
-
-execute 'verify the chef-server is working as expected' do
-  command 'chef-server-ctl test'
-  action :nothing
-  subscribes :run, 'chef_ingredient[chef-server]'
-  not_if { node['mcs']['skip_test'] }
-end
