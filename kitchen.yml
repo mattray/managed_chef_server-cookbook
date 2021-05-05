@@ -32,6 +32,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 12
     verifier:
       inspec_tests:
         - test/integration/default
@@ -42,6 +44,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -60,6 +64,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 12
     verifier:
       inspec_tests:
         - test/integration/default
@@ -68,6 +74,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -86,6 +94,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -109,6 +119,7 @@ suites:
       chef-server:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
       mcs:
+        chef_server_version: 13
         managed:
           dir: /root/managed
     verifier:
@@ -134,6 +145,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -156,6 +169,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -178,6 +193,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -200,6 +217,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -223,6 +242,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 12
     verifier:
       inspec_tests:
         - test/integration/default
@@ -237,6 +258,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -264,6 +287,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 12
     verifier:
       inspec_tests:
         - test/integration/default
@@ -277,6 +302,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -305,6 +332,7 @@ suites:
       chef-server:
         package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
       mcs:
+        chef_server_version: 13
         upgrade:
           package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
     verifier:
@@ -349,6 +377,7 @@ suites:
       chef-server:
         package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
       mcs:
+        chef_server_version: 13
         upgrade:
           package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
     verifier:
@@ -392,6 +421,7 @@ suites:
       chef-server:
         package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
       mcs:
+        chef_server_version: 13
         upgrade:
           package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
     verifier:
@@ -451,6 +481,7 @@ suites:
       chef-server:
         package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
       mcs:
+        chef_server_version: 13
         upgrade:
           package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
     verifier:
@@ -507,6 +538,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
+      mcs:
+        chef_server_version: 12
     verifier:
       inspec_tests:
         - test/integration/default
@@ -517,6 +550,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core_13.2.0-1_amd64.deb
+      mcs:
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -535,6 +570,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
+      mcs:
+        chef_server_version: 12
     verifier:
       inspec_tests:
         - test/integration/default
@@ -543,6 +580,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core_13.2.0-1_amd64.deb
+      mcs:
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -562,6 +601,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
+      mcs:
+        chef_server_version: 12
     verifier:
       inspec_tests:
         - test/integration/default
@@ -603,6 +644,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
+      mcs:
+        chef_server_version: 12
     verifier:
       inspec_tests:
         - test/integration/default
@@ -616,6 +659,8 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core_13.2.0-1_amd64.deb
+      mcs:
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -644,6 +689,7 @@ suites:
       chef-server:
         package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
       mcs:
+        chef_server_version: 13
         upgrade:
           package_source: /backups/chef-server-core_13.2.0-1_amd64.deb
     verifier:
@@ -688,6 +734,7 @@ suites:
       chef-server:
         package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
       mcs:
+        chef_server_version: 13
         upgrade:
           package_source: /backups/chef-server-core_13.2.0-1_amd64.deb
     verifier:
@@ -731,6 +778,7 @@ suites:
       chef-server:
         package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
       mcs:
+        chef_server_version: 13
         upgrade:
           package_source: /backups/chef-server-core_13.2.0-1_amd64.deb
     verifier:
@@ -790,6 +838,7 @@ suites:
       chef-server:
         package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
       mcs:
+        chef_server_version: 13
         upgrade:
           package_source: /backups/chef-server-core_13.2.0-1_amd64.deb
     verifier:
