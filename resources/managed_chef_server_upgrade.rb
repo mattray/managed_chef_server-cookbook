@@ -21,19 +21,32 @@ action :upgrade do
 
   # Stop the server.
   execute 'chef-server-ctl stop' do
-    retries 2 # sometimes it's slow to stop
-    retry_delay 10
+    retries 3 # sometimes it's slow to stop
+    retry_delay 30
   end
 
   # Install the upgrade package, don't allow downgrades.
-  package 'chef-server-core' do
-    allow_downgrade false
-    source upgrade_package
-    action :upgrade
+  # apt_package doesn't allow source installs, specifying dpkg_package instead
+  if platform_family?('debian')
+    dpkg_package 'chef-server-core' do
+      source upgrade_package
+      action :upgrade
+    end
+  else
+    package 'chef-server-core' do
+      allow_downgrade false
+      source upgrade_package
+      action :upgrade
+    end
   end
 
   # Upgrade the server, assumes the license has been accepted.
-  execute 'chef-server-ctl upgrade'
+  if node['chef-server']['accept_license']
+    execute "CHEF_LICENSE='accept' chef-server-ctl upgrade"
+  else
+    log "Chef license not accepted, exiting."
+    return
+  end
 
   # Restart the server.
   execute 'chef-server-ctl start'

@@ -6,11 +6,21 @@
 # Chef Server 13 requires license acceptance
 include_recipe 'managed_chef_server::_accept_license'
 
-# need the ChefDK for the 'berks' and 'chef' commands
+# need the ChefWorkstation for the 'berks' and 'chef' commands
 include_recipe 'managed_chef_server::_workstation'
 
 # performance tuning based off of recommendations in https://docs.chef.io/server_tuning.html#large-node-sizes
-include_recipe 'managed_chef_server::_tuning'
+# deprecated for Chef Infra Server 14
+if node['mcs']['chef_server_version'] < 14
+  include_recipe 'managed_chef_server::_tuning'
+end
+
+# Configure the Chef Server for data collection forwarding by adding the following setting to /etc/opscode/chef-server.rb:
+node.default['chef-server']['configuration'] += "data_collector['root_url'] = '#{node['mcs']['data_collector']['root_url']}'\n" if node['mcs']['data_collector']['root_url']
+# Add for chef client run forwarding
+node.default['chef-server']['configuration'] += "data_collector['proxy'] = #{node['mcs']['data_collector']['proxy']}\n" if node['mcs']['data_collector']['proxy']
+# Add for compliance scanning
+node.default['chef-server']['configuration'] += "profiles['root_url'] = '#{node['mcs']['profiles']['root_url']}'\n" if node['mcs']['profiles']['root_url']
 
 # chef-server install
 include_recipe 'chef-server::default'
@@ -36,11 +46,4 @@ ruby_block 'Wait for the Chef Infra Server to be ready before proceeding' do
     end
   end
   not_if 'chef-server-ctl status'
-end
-
-execute 'verify the chef-server is working as expected' do
-  command 'chef-server-ctl test'
-  action :nothing
-  subscribes :run, 'chef_ingredient[chef-server]'
-  not_if { node['mcs']['skip_test'] }
 end

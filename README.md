@@ -1,5 +1,3 @@
-**NOTE: Chef Infra Server 14 has been released and is not yet supported.**
-
 # managed_chef_server
 
 Deploys and configures the Chef Infra Server in a relatively stateless model. The included [policyfiles](policyfiles) provide examples of deployment options and the required attributes. You will need to pass
@@ -106,52 +104,54 @@ All of the Ruby or JSON role files in the `directory` will be loaded onto the Ch
 
 # Testing
 
-There is a [kitchen.yml](kitchen.yml) that may be used for testing with Vagrant. The [kitchen.vagrant.yml](kitchen.vagrant.yml) may be symlinked as **kitchen.local.yml** and used with local caches to speed up testing. If you want to use Docker, [kitchen.dokken.yml](kitchen.dokken.yml) may be used but it does not persist changes between runs and is thus not significantly faster (it's slower than Vagrant with caching). The following Suites map to separate named run lists in the [Policyfile.rb](Policyfile.rb) that may be repurposed as necessary, with 15* variants for testing with Chef Infra Client 15 and -12/13/14 indicating Chef Infra Server tests. The `test` directory will need to be populated with downloaded RPM installers as necessary.
+There is a [kitchen.yml](kitchen.yml) that may be used for testing with Vagrant. The [kitchen.vagrant.yml](kitchen.vagrant.yml) may be symlinked as **kitchen.local.yml** and used with local caches to speed up testing. The following Suites map to separate named run lists in the [Policyfile.rb](Policyfile.rb) that may be repurposed as necessary, with `15*` variants for testing with Chef Infra Client 15 and `-12/13/14` indicating Chef Infra Server tests by version. The `test` directory will need to be populated with downloaded DEB and RPM installers as necessary.
 
-## 15/16default
+Testing is primarily on CentOS 7, with `-ubuntu` variants added for the `default`, `restore`, `upgrade`, and `everything` tests. Some Chef 15 Infra client and Chef Infra Server 12 (deprecated) tests have been removed to reduce the number of tested combinations.
+
+## 15/16default-12/13/14
 
 Tests simple installation and creation of the managed Chef user and organization.
 
-## 16data_collector
+## 16backup-13/14
 
-Tests deploying the Chef Infra Server configured to send data to an external Automate deployment.
+Checks the backup script is in the crontab and backup directories are available. Chef Infra Client 15 and Chef Infra Server 12 removed for efficiency.
 
-## 16backup
+## 16cron-13/14
 
-Checks the backup script is in the crontab and backup directories are available.
+Checks the chef-client is in the crontab. Chef Infra Client 15 and Chef Infra Server 12 removed for efficiency.
 
-## 16cron
-
-Checks the chef-client is in the crontab
-
-## 16data_bags
+## 16data_bags-13/14
 
 Adds loading data bags from the included [test](test) directory. It restores from a previous data bag backup to ensure pruning and updating work.
 
-## 16legacy
+## 16data_collector-13/14
+
+Tests deploying the Chef Infra Server configured to send data to an external Automate deployment.
+
+## 16legacy-13/14
 
 Adds loading cookbooks, environments and roles from the included [test](test) directory.
 
-## 16policyfile
+## 16policyfile-13/14
 
 Adds loading policyfiles from the included [test](test) directory.
 
-## 15/16restore
+## 15/16restore-12/13/14
 
 Restores the Chef Infra Server from a backup consisting of the `everything` content. `kitchen verify restore` ensures the policyfiles were restored properly.
 
-## 15/16upgrade
+## 15/16upgrade-12-13/13-14
 
-Installs the Chef Infra Server, loads data bags, loads legacy content, loads policyfiles, and adds backup via cron, then upgrades the installed version of Chef Infra Server.
+Installs the Chef Infra Server, loads data bags, loads legacy content, loads policyfiles, and adds backup via cron, then upgrades the installed version of Chef Infra Server. There are upgrades from Chef Infra Server versions 12 to 13 and from 13 to 14.
 
-## 15/16everything
+## 15/16everything-13/14
 
 Installs the Chef Infra Server, loads data bags, loads legacy content, loads policyfiles, adds backup via cron, and upgrades the installation.
 
 # License and Authors
 
 - Author: Matt Ray [matt@chef.io](mailto:matt@chef.io)
-- Copyright 2018-2020, Chef Software, Inc
+- Copyright 2018-2021, Chef Software, Inc
 
 ```text
 Licensed under the Apache License, Version 2.0 (the "License");

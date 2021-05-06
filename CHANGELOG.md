@@ -155,7 +155,13 @@ This file is used to list changes made in each version of the managed_chef_serve
 # 0.19.1
 - move the `syntax_check_cache_path` out of `/etc/opscode/` into the `Chef::Config[:file_cache_path]/syntaxcache`
 
+# 0.20.0
+- Chef Infra Server 14.3.14 support with Chef Infra 15 & 16 and CentOS 8 support
+- removed pedant tests because they were flaky for testing and of limited production value
+- updated _nginx recipe to support non-root ownership of `/var/opt/opscode/nginx`
+
 # NEXT
+- Chef Infra 17 support (remove Chef Infra 15 support)
 - organization attributes
 
 # Backlog

@@ -22,6 +22,7 @@ verifier:
 
 platforms:
   - name: centos-7
+  - name: centos-8
   - name: ubuntu-18.04
 
 suites:
@@ -31,16 +32,20 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 12
     verifier:
       inspec_tests:
         - test/integration/default
-    excludes: ["ubuntu-18.04"]
+    excludes: ["centos-8", "ubuntu-18.04"]
   - name: 15default-13
     provisioner:
       product_version: 15
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -50,7 +55,7 @@ suites:
       product_version: 15
     attributes:
       chef-server:
-        package_source: /backups/chef-server-core-14.0.65-1.el7.x86_64.rpm
+        package_source: /backups/chef-server-core-14.3.14-1.el7.x86_64.rpm
     verifier:
       inspec_tests:
         - test/integration/default
@@ -59,14 +64,18 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 12
     verifier:
       inspec_tests:
         - test/integration/default
-    excludes: ["ubuntu-18.04"]
+    excludes: ["centos-8", "ubuntu-18.04"]
   - name: 16default-13
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -74,15 +83,11 @@ suites:
   - name: 16default-14
     attributes:
       chef-server:
-        package_source: /backups/chef-server-core-14.0.65-1.el7.x86_64.rpm
+        package_source: /backups/chef-server-core-14.3.14-1.el7.x86_64.rpm
     verifier:
       inspec_tests:
         - test/integration/default
     excludes: ["ubuntu-18.04"]
-  - name: 16default-latest
-    verifier:
-      inspec_tests:
-        - test/integration/default
   - name: 16backup-13
     provisioner:
       named_run_list: backup
@@ -90,7 +95,7 @@ suites:
       chef-server:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
       mcs:
-        skip_test: true
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -101,9 +106,7 @@ suites:
       named_run_list: backup
     attributes:
       chef-server:
-        package_source: /backups/chef-server-core-14.0.65-1.el7.x86_64.rpm
-      mcs:
-        skip_test: true
+        package_source: /backups/chef-server-core-14.3.14-1.el7.x86_64.rpm
     verifier:
       inspec_tests:
         - test/integration/default
@@ -116,9 +119,9 @@ suites:
       chef-server:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
       mcs:
+        chef_server_version: 13
         managed:
           dir: /root/managed
-        skip_test: true
     verifier:
       inspec_tests:
         - test/integration/cron
@@ -128,11 +131,10 @@ suites:
       named_run_list: cron
     attributes:
       chef-server:
-        package_source: /backups/chef-server-core-14.0.65-1.el7.x86_64.rpm
+        package_source: /backups/chef-server-core-14.3.14-1.el7.x86_64.rpm
       mcs:
         managed:
           dir: /root/managed
-        skip_test: true
     verifier:
       inspec_tests:
         - test/integration/cron
@@ -144,7 +146,7 @@ suites:
       chef-server:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
       mcs:
-        skip_test: true
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -155,9 +157,7 @@ suites:
       named_run_list: data_bags
     attributes:
       chef-server:
-        package_source: /backups/chef-server-core-14.0.65-1.el7.x86_64.rpm
-      mcs:
-        skip_test: true
+        package_source: /backups/chef-server-core-14.3.14-1.el7.x86_64.rpm
     verifier:
       inspec_tests:
         - test/integration/default
@@ -170,7 +170,7 @@ suites:
       chef-server:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
       mcs:
-        skip_test: true
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -181,9 +181,7 @@ suites:
       named_run_list: data_collector
     attributes:
       chef-server:
-        package_source: /backups/chef-server-core-14.0.65-1.el7.x86_64.rpm
-      mcs:
-        skip_test: true
+        package_source: /backups/chef-server-core-14.3.14-1.el7.x86_64.rpm
     verifier:
       inspec_tests:
         - test/integration/default
@@ -196,7 +194,7 @@ suites:
       chef-server:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
       mcs:
-        skip_test: true
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -207,9 +205,7 @@ suites:
       named_run_list: legacy
     attributes:
       chef-server:
-        package_source: /backups/chef-server-core-14.0.65-1.el7.x86_64.rpm
-      mcs:
-        skip_test: true
+        package_source: /backups/chef-server-core-14.3.14-1.el7.x86_64.rpm
     verifier:
       inspec_tests:
         - test/integration/default
@@ -222,7 +218,7 @@ suites:
       chef-server:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
       mcs:
-        skip_test: true
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -233,9 +229,7 @@ suites:
       named_run_list: policyfile
     attributes:
       chef-server:
-        package_source: /backups/chef-server-core-14.0.65-1.el7.x86_64.rpm
-      mcs:
-        skip_test: true
+        package_source: /backups/chef-server-core-14.3.14-1.el7.x86_64.rpm
     verifier:
       inspec_tests:
         - test/integration/default
@@ -248,13 +242,15 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 12
     verifier:
       inspec_tests:
         - test/integration/default
         - test/integration/data_bags
         - test/integration/policyfiles
         - test/integration/restore
-    excludes: ["ubuntu-18.04"]
+    excludes: ["centos-8", "ubuntu-18.04"]
   - name: 15restore-13
     provisioner:
       named_run_list: restore
@@ -262,6 +258,52 @@ suites:
     attributes:
       chef-server:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 13
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_bags
+        - test/integration/policyfiles
+        - test/integration/restore
+    excludes: ["ubuntu-18.04"]
+  - name: 15restore-14
+    provisioner:
+      named_run_list: restore
+      product_version: 15
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core-14.3.14-1.el7.x86_64.rpm
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_bags
+        - test/integration/policyfiles
+        - test/integration/restore
+    excludes: ["ubuntu-18.04"]
+  - name: 16restore-12
+    provisioner:
+      named_run_list: restore
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 12
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_bags
+        - test/integration/policyfiles
+        - test/integration/restore
+    excludes: ["centos-8", "ubuntu-18.04"]
+  - name: 16restore-13
+    provisioner:
+      named_run_list: restore
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
+      mcs:
+        chef_server_version: 13
     verifier:
       inspec_tests:
         - test/integration/default
@@ -274,7 +316,7 @@ suites:
       named_run_list: restore
     attributes:
       chef-server:
-        package_source: /backups/chef-server-core-14.0.65-1.el7.x86_64.rpm
+        package_source: /backups/chef-server-core-14.3.14-1.el7.x86_64.rpm
     verifier:
       inspec_tests:
         - test/integration/default
@@ -290,13 +332,29 @@ suites:
       chef-server:
         package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
       mcs:
+        chef_server_version: 13
         upgrade:
           package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
     verifier:
       inspec_tests:
         - test/integration/default
-        - test/integration/upgrade
-    excludes: ["ubuntu-18.04"]
+        - test/integration/upgrade13
+    excludes: ["centos-8", "ubuntu-18.04"]
+  - name: 15upgrade-12-14
+    provisioner:
+      named_run_list: upgrade
+      product_version: 15
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
+      mcs:
+        upgrade:
+          package_source: /backups/chef-server-core-14.3.14-1.el7.x86_64.rpm
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/upgrade14
+    excludes: ["centos-8", "ubuntu-18.04"]
   - name: 15upgrade-13-14
     provisioner:
       named_run_list: upgrade
@@ -306,11 +364,11 @@ suites:
         package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
       mcs:
         upgrade:
-          package_source: /backups/chef-server-core-14.0.65-1.el7.x86_64.rpm
+          package_source: /backups/chef-server-core-14.3.14-1.el7.x86_64.rpm
     verifier:
       inspec_tests:
         - test/integration/default
-        - test/integration/upgrade
+        - test/integration/upgrade14
     excludes: ["ubuntu-18.04"]
   - name: 16upgrade-12-13
     provisioner:
@@ -319,13 +377,28 @@ suites:
       chef-server:
         package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
       mcs:
+        chef_server_version: 13
         upgrade:
           package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
     verifier:
       inspec_tests:
         - test/integration/default
-        - test/integration/upgrade
-    excludes: ["ubuntu-18.04"]
+        - test/integration/upgrade13
+    excludes: ["centos-8", "ubuntu-18.04"]
+  - name: 16upgrade-12-14
+    provisioner:
+      named_run_list: upgrade
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
+      mcs:
+        upgrade:
+          package_source: /backups/chef-server-core-14.3.14-1.el7.x86_64.rpm
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/upgrade14
+    excludes: ["centos-8", "ubuntu-18.04"]
   - name: 16upgrade-13-14
     provisioner:
       named_run_list: upgrade
@@ -334,11 +407,11 @@ suites:
           package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
       mcs:
         upgrade:
-          package_source: /backups/chef-server-core-14.0.65-1.el7.x86_64.rpm
+          package_source: /backups/chef-server-core-14.3.14-1.el7.x86_64.rpm
     verifier:
       inspec_tests:
         - test/integration/default
-        - test/integration/upgrade
+        - test/integration/upgrade14
     excludes: ["ubuntu-18.04"]
   - name: 15everything-12-13
     provisioner:
@@ -348,6 +421,7 @@ suites:
       chef-server:
         package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
       mcs:
+        chef_server_version: 13
         upgrade:
           package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
     verifier:
@@ -358,8 +432,28 @@ suites:
         - test/integration/data_bags
         - test/integration/legacy
         - test/integration/policyfiles
-        - test/integration/upgrade
-    excludes: ["ubuntu-18.04"]
+        - test/integration/upgrade13
+    excludes: ["centos-8", "ubuntu-18.04"]
+  - name: 15everything-12-14
+    provisioner:
+      named_run_list: everything
+      product_version: 15
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
+      mcs:
+        upgrade:
+          package_source: /backups/chef-server-core-14.3.14-1.el7.x86_64.rpm
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_collector
+        - test/integration/backup
+        - test/integration/data_bags
+        - test/integration/legacy
+        - test/integration/policyfiles
+        - test/integration/upgrade14
+    excludes: ["centos-8", "ubuntu-18.04"]
   - name: 15everything-13-14
     provisioner:
       named_run_list: everything
@@ -369,7 +463,7 @@ suites:
           package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
       mcs:
         upgrade:
-          package_source: /backups/chef-server-core-14.0.65-1.el7.x86_64.rpm
+          package_source: /backups/chef-server-core-14.3.14-1.el7.x86_64.rpm
     verifier:
       inspec_tests:
         - test/integration/default
@@ -378,7 +472,7 @@ suites:
         - test/integration/data_bags
         - test/integration/legacy
         - test/integration/policyfiles
-        - test/integration/upgrade
+        - test/integration/upgrade14
     excludes: ["ubuntu-18.04"]
   - name: 16everything-12-13
     provisioner:
@@ -387,6 +481,7 @@ suites:
       chef-server:
         package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
       mcs:
+        chef_server_version: 13
         upgrade:
           package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
     verifier:
@@ -397,8 +492,27 @@ suites:
         - test/integration/data_bags
         - test/integration/legacy
         - test/integration/policyfiles
-        - test/integration/upgrade
-    excludes: ["ubuntu-18.04"]
+        - test/integration/upgrade13
+    excludes: ["centos-8", "ubuntu-18.04"]
+  - name: 16everything-12-14
+    provisioner:
+      named_run_list: everything
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core-12.19.31-1.el7.x86_64.rpm
+      mcs:
+        upgrade:
+          package_source: /backups/chef-server-core-14.3.14-1.el7.x86_64.rpm
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_collector
+        - test/integration/backup
+        - test/integration/data_bags
+        - test/integration/legacy
+        - test/integration/policyfiles
+        - test/integration/upgrade14
+    excludes: ["centos-8", "ubuntu-18.04"]
   - name: 16everything-13-14
     provisioner:
       named_run_list: everything
@@ -407,7 +521,7 @@ suites:
           package_source: /backups/chef-server-core-13.2.0-1.el7.x86_64.rpm
       mcs:
         upgrade:
-          package_source: /backups/chef-server-core-14.0.65-1.el7.x86_64.rpm
+          package_source: /backups/chef-server-core-14.3.14-1.el7.x86_64.rpm
     verifier:
       inspec_tests:
         - test/integration/default
@@ -416,5 +530,362 @@ suites:
         - test/integration/data_bags
         - test/integration/legacy
         - test/integration/policyfiles
-        - test/integration/upgrade
+        - test/integration/upgrade14
     excludes: ["ubuntu-18.04"]
+  - name: 15default-12-ubuntu
+    provisioner:
+      product_version: 15
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
+      mcs:
+        chef_server_version: 12
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    excludes: ["centos-7", "centos-8"]
+  - name: 15default-13-ubuntu
+    provisioner:
+      product_version: 15
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_13.2.0-1_amd64.deb
+      mcs:
+        chef_server_version: 13
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    excludes: ["centos-7", "centos-8"]
+  - name: 15default-14-ubuntu
+    provisioner:
+      product_version: 15
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_14.3.14-1_amd64.deb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    excludes: ["centos-7", "centos-8"]
+  - name: 16default-12-ubuntu
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
+      mcs:
+        chef_server_version: 12
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    excludes: ["centos-7", "centos-8"]
+  - name: 16default-13-ubuntu
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_13.2.0-1_amd64.deb
+      mcs:
+        chef_server_version: 13
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    excludes: ["centos-7", "centos-8"]
+  - name: 16default-14-ubuntu
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_14.3.14-1_amd64.deb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    excludes: ["centos-7", "centos-8"]
+  - name: 15restore-12-ubuntu
+    provisioner:
+      named_run_list: restore
+      product_version: 15
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
+      mcs:
+        chef_server_version: 12
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_bags
+        - test/integration/policyfiles
+        - test/integration/restore
+    excludes: ["centos-7", "centos-8"]
+  - name: 15restore-13-ubuntu
+    provisioner:
+      named_run_list: restore
+      product_version: 15
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_13.2.0-1_amd64.deb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_bags
+        - test/integration/policyfiles
+        - test/integration/restore
+    excludes: ["centos-7", "centos-8"]
+  - name: 15restore-14-ubuntu
+    provisioner:
+      named_run_list: restore
+      product_version: 15
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_14.3.14-1_amd64.deb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_bags
+        - test/integration/policyfiles
+        - test/integration/restore
+    excludes: ["centos-7", "centos-8"]
+  - name: 16restore-12-ubuntu
+    provisioner:
+      named_run_list: restore
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
+      mcs:
+        chef_server_version: 12
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_bags
+        - test/integration/policyfiles
+        - test/integration/restore
+    excludes: ["centos-7", "centos-8"]
+  - name: 16restore-13-ubuntu
+    provisioner:
+      named_run_list: restore
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_13.2.0-1_amd64.deb
+      mcs:
+        chef_server_version: 13
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_bags
+        - test/integration/policyfiles
+        - test/integration/restore
+    excludes: ["centos-7", "centos-8"]
+  - name: 16restore-14-ubuntu
+    provisioner:
+      named_run_list: restore
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_14.3.14-1_amd64.deb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_bags
+        - test/integration/policyfiles
+        - test/integration/restore
+    excludes: ["centos-7", "centos-8"]
+  - name: 15upgrade-12-13-ubuntu
+    provisioner:
+      named_run_list: upgrade
+      product_version: 15
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
+      mcs:
+        chef_server_version: 13
+        upgrade:
+          package_source: /backups/chef-server-core_13.2.0-1_amd64.deb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/upgrade13
+    excludes: ["centos-7", "centos-8"]
+  - name: 15upgrade-12-14-ubuntu
+    provisioner:
+      named_run_list: upgrade
+      product_version: 15
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
+      mcs:
+        upgrade:
+          package_source: /backups/chef-server-core_14.3.14-1_amd64.deb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/upgrade14
+    excludes: ["centos-7", "centos-8"]
+  - name: 15upgrade-13-14-ubuntu
+    provisioner:
+      named_run_list: upgrade
+      product_version: 15
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_13.2.0-1_amd64.deb
+      mcs:
+        upgrade:
+          package_source: /backups/chef-server-core_14.3.14-1_amd64.deb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/upgrade14
+    excludes: ["centos-7", "centos-8"]
+  - name: 16upgrade-12-13-ubuntu
+    provisioner:
+      named_run_list: upgrade
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
+      mcs:
+        chef_server_version: 13
+        upgrade:
+          package_source: /backups/chef-server-core_13.2.0-1_amd64.deb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/upgrade13
+    excludes: ["centos-7", "centos-8"]
+  - name: 16upgrade-12-14-ubuntu
+    provisioner:
+      named_run_list: upgrade
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
+      mcs:
+        upgrade:
+          package_source: /backups/chef-server-core_14.3.14-1_amd64.deb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/upgrade14
+    excludes: ["centos-7", "centos-8"]
+  - name: 16upgrade-13-14-ubuntu
+    provisioner:
+      named_run_list: upgrade
+    attributes:
+      chef-server:
+          package_source: /backups/chef-server-core_13.2.0-1_amd64.deb
+      mcs:
+        upgrade:
+          package_source: /backups/chef-server-core_14.3.14-1_amd64.deb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/upgrade14
+    excludes: ["centos-7", "centos-8"]
+  - name: 15everything-12-13-ubuntu
+    provisioner:
+      named_run_list: everything
+      product_version: 15
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
+      mcs:
+        chef_server_version: 13
+        upgrade:
+          package_source: /backups/chef-server-core_13.2.0-1_amd64.deb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_collector
+        - test/integration/backup
+        - test/integration/data_bags
+        - test/integration/legacy
+        - test/integration/policyfiles
+        - test/integration/upgrade13
+    excludes: ["centos-7", "centos-8"]
+  - name: 15everything-12-14-ubuntu
+    provisioner:
+      named_run_list: everything
+      product_version: 15
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
+      mcs:
+        upgrade:
+          package_source: /backups/chef-server-core_14.3.14-1_amd64.deb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_collector
+        - test/integration/backup
+        - test/integration/data_bags
+        - test/integration/legacy
+        - test/integration/policyfiles
+        - test/integration/upgrade14
+    excludes: ["centos-7", "centos-8"]
+  - name: 15everything-13-14-ubuntu
+    provisioner:
+      named_run_list: everything
+      product_version: 15
+    attributes:
+      chef-server:
+          package_source: /backups/chef-server-core_13.2.0-1_amd64.deb
+      mcs:
+        upgrade:
+          package_source: /backups/chef-server-core_14.3.14-1_amd64.deb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_collector
+        - test/integration/backup
+        - test/integration/data_bags
+        - test/integration/legacy
+        - test/integration/policyfiles
+        - test/integration/upgrade14
+    excludes: ["centos-7", "centos-8"]
+  - name: 16everything-12-13-ubuntu
+    provisioner:
+      named_run_list: everything
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
+      mcs:
+        chef_server_version: 13
+        upgrade:
+          package_source: /backups/chef-server-core_13.2.0-1_amd64.deb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_collector
+        - test/integration/backup
+        - test/integration/data_bags
+        - test/integration/legacy
+        - test/integration/policyfiles
+        - test/integration/upgrade13
+    excludes: ["centos-7", "centos-8"]
+  - name: 16everything-12-14-ubuntu
+    provisioner:
+      named_run_list: everything
+    attributes:
+      chef-server:
+        package_source: /backups/chef-server-core_12.19.31-1_amd64.deb
+      mcs:
+        upgrade:
+          package_source: /backups/chef-server-core_14.3.14-1_amd64.deb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_collector
+        - test/integration/backup
+        - test/integration/data_bags
+        - test/integration/legacy
+        - test/integration/policyfiles
+        - test/integration/upgrade14
+    excludes: ["centos-7", "centos-8"]
+  - name: 16everything-13-14-ubuntu
+    provisioner:
+      named_run_list: everything
+    attributes:
+      chef-server:
+          package_source: /backups/chef-server-core_13.2.0-1_amd64.deb
+      mcs:
+        upgrade:
+          package_source: /backups/chef-server-core_14.3.14-1_amd64.deb
+    verifier:
+      inspec_tests:
+        - test/integration/default
+        - test/integration/data_collector
+        - test/integration/backup
+        - test/integration/data_bags
+        - test/integration/legacy
+        - test/integration/policyfiles
+        - test/integration/upgrade14
+    excludes: ["centos-7", "centos-8"]

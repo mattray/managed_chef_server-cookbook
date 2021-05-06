@@ -2,6 +2,8 @@
 # Cookbook:: managed_chef_server
 # Recipe:: _tuning
 #
+# DEPRECATED, these are no longer valid for Chef Infra Server 14
+
 # private recipe for performance tuning based off of recommendations in
 # https://docs.chef.io/server_tuning.html#large-node-sizes
 # http://irvingpop.github.io/blog/2015/04/20/tuning-the-chef-server-for-scale/
@@ -44,10 +46,3 @@ postgresql['checkpoint_completion_target'] = 0.9
 postgresql['checkpoint_segments'] = 64
 postgresql['log_min_duration_statement'] = 1000
 EOS
-
-# Next, configure the Chef Server for data collection forwarding by adding the following setting to /etc/opscode/chef-server.rb:
-node.default['chef-server']['configuration'] += "data_collector['root_url'] = '#{node['mcs']['data_collector']['root_url']}'\n" if node['mcs']['data_collector']['root_url']
-# Add for chef client run forwarding
-node.default['chef-server']['configuration'] += "data_collector['proxy'] = #{node['mcs']['data_collector']['proxy']}\n" if node['mcs']['data_collector']['proxy']
-# Add for compliance scanning
-node.default['chef-server']['configuration'] += "profiles['root_url'] = '#{node['mcs']['profiles']['root_url']}'\n" if node['mcs']['profiles']['root_url']
