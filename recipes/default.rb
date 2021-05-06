@@ -26,7 +26,7 @@ node.default['chef-server']['configuration'] += "profiles['root_url'] = '#{node[
 include_recipe 'chef-server::default'
 
 # run nginx as a non-root user
-#include_recipe 'managed_chef_server::_nginx'
+include_recipe 'managed_chef_server::_nginx'
 
 # configure data collection with Automate
 include_recipe 'managed_chef_server::_data_collector'

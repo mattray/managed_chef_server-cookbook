@@ -16,8 +16,8 @@ cookbook_file '/opt/opscode/sv/nginx/run' do
 end
 
 execute 'chown nginx logs' do
-  command 'chown -R opscode:opscode /var/log/opscode/nginx /opt/opscode/embedded/nginx'
-  only_if 'ls -al /var/log/opscode/nginx | grep root' || 'ls -al /opt/opscode/embedded/nginx | grep root'
+  command 'chown -R opscode:opscode /var/log/opscode/nginx /opt/opscode/embedded/nginx /var/opt/opscode/nginx'
+  only_if 'ls -al /var/log/opscode/nginx | grep root' || 'ls -al /opt/opscode/embedded/nginx | grep root' || 'ls -al /var/opt/opscode/nginx | grep root'
 end
 
 execute 'setcap cap_net_bind_service=ep nginx' do

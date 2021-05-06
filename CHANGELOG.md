@@ -158,6 +158,7 @@ This file is used to list changes made in each version of the managed_chef_serve
 # 0.20.0
 - Chef Infra Server 14.3.14 support
 - removed pedant tests because they were flaky for testing and of limited production value
+- updated _nginx recipe to support non-root ownership of `/var/opt/opscode/nginx`
 
 # NEXT
 - organization attributes
